@@ -120,6 +120,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   i: Integer;
 begin
+  CZ := 4;
   sf.FromPath := ExtractFilePath(Application.ExeName);
   sf.MaskInclude.Add('*.mdl');
   sf.SubDirectories := False;
