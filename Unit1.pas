@@ -17,7 +17,7 @@ unit Unit1;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,Winapi.ShellAPI,
   Dialogs, AppEvnts, Unit3DS, OpenGL,DSE_SearchFiles, Vcl.StdCtrls, Vcl.ExtCtrls;
 
 type
@@ -26,6 +26,8 @@ type
     Panel1: TPanel;
     ListBox1: TListBox;
     sf: SE_SearchFiles;
+    Button6: TButton;
+    Button7: TButton;
     procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -34,6 +36,8 @@ type
     procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure FormCreate(Sender: TObject);
     procedure ListBox1Click(Sender: TObject);
+    procedure Button6Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -50,14 +54,13 @@ var
   Form1: TForm1;
   Ax, Mx:Single;
   Ay, My:Single;
+  CX,CY,CZ: Single;
 
 implementation
 
 uses UglContext;
 
 {$R *.dfm}
-
-
 procedure TForm1.FormShow(Sender: TObject);
 var
   i:Integer;
@@ -76,13 +79,32 @@ var
 begin
 //  Model.LoadFromFile ('sulaco.3ds');  // Load the 3DS file
   Model.LoadFromFileMDL ( ExtractFilePath(Application.ExeName) {+ 'mdl\'} + ListBox1.Items[ListBox1.ItemIndex] );  // Load the MDL file
-
   for i := 0 to Model.ObjectCount -1 do begin
     Model.Objects[i].Material.Diffuse.Color:= clSilver;
     Model.Objects[i].Material.Ambient.Color:= clAqua;
   end;
 
 //  Model.Objects[0].Selected := True;
+
+end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+begin
+  CZ := CZ +1;
+  ResetModelView;
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity;
+  gluLookAt( 2 , -5, CZ, 0, 0, 0, 0, 1, 0); // Set position and orientation
+
+end;
+
+procedure TForm1.Button7Click(Sender: TObject);
+begin
+  CZ := CZ -1;
+  ResetModelView;
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity;
+  gluLookAt( 2 , -5, CZ, 0, 0, 0, 0, 1, 0); // Set position and orientation
 
 end;
 
@@ -98,7 +120,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   i: Integer;
 begin
-  sf.FromPath := ExtractFilePath(Application.ExeName){+ 'mdl\'};
+  sf.FromPath := ExtractFilePath(Application.ExeName);
   sf.MaskInclude.Add('*.mdl');
   sf.SubDirectories := False;
   sf.Execute;
@@ -147,7 +169,8 @@ end;
 procedure TForm1.Render;
 begin
   ClearGL;     // Clear frame buffer
-  ResetModelView;
+ // ResetModelView;
+  SetModelView ( 2, -5,CZ );
 // ********************************** NEW NEW **********************************
   glRotatef(Ax, 1, 0, 0);
   glRotatef(-Ay, 0, 1, 0);

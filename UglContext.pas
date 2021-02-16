@@ -25,6 +25,8 @@ procedure ClearGL;
 
 procedure ResetModelView;
 
+procedure SetModelView ( CX ,CY ,CZ : Single);
+
 var Dc:hDc;
     glContext:hglrc;
 
@@ -52,6 +54,12 @@ begin
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity;
   gluLookAt(2, -5, 4, 0, 0, 0, 0, 1, 0); // Set position and orientation
+end;
+procedure SetModelView ( CX ,CY ,CZ : Single);
+begin
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity;
+  gluLookAt(CX ,CY ,CZ, 0, 0, 0, 0, 1, 0); // Set position and orientation
 end;
 
 // Set Viewport and Aspect Ratio for Projection Matrix

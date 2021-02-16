@@ -23,7 +23,7 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 113
-    Height = 257
+    Height = 401
     TabOrder = 0
     object ListBox1: TListBox
       Left = 0
@@ -34,6 +34,24 @@ object Form1: TForm1
       TabOrder = 0
       OnClick = ListBox1Click
     end
+    object Button6: TButton
+      Left = 0
+      Top = 358
+      Width = 58
+      Height = 25
+      Caption = 'Zoom In'
+      TabOrder = 1
+      OnClick = Button6Click
+    end
+    object Button7: TButton
+      Left = 56
+      Top = 358
+      Width = 58
+      Height = 25
+      Caption = 'Zoom Out'
+      TabOrder = 2
+      OnClick = Button7Click
+    end
   end
   object ApplicationEvents1: TApplicationEvents
     OnIdle = ApplicationEvents1Idle
@@ -42,7 +60,7 @@ object Form1: TForm1
   end
   object sf: SE_SearchFiles
     SubDirectories = True
-    Left = 16
-    Top = 272
+    Left = 136
+    Top = 208
   end
 end

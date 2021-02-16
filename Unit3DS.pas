@@ -1510,12 +1510,12 @@ begin
           ParentObject3d := FindObject( Object3d.ParentObjectName );
           TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
 
-         { while ParentObject3d.ParentObjectName <> 'NULL' do begin
+       {   while ParentObject3d.ParentObjectName <> 'NULL' do begin
             ParentObject3d := FindObject( ParentObject3d.ParentObjectName );
             if ParentObject3d <> nil  then begin
               TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
             end;
-          end;   }
+          end;  }
 
           Object3d.position := TmpVector;
 
@@ -1539,11 +1539,12 @@ begin
       end
 
       else if  leftstr ( aString, 6) = 'bitmap' then begin
-        if Object3d.Material.FMaterialFile = '' then begin
-         // Object3d.Material.FMaterialFile :=  JustNameL( filename) + '.tga';
+         if ExtractWordL (2,aString,' ') <> 'NULL' then begin
           Object3d.Material.FMaterialFile := ExtractWordL (2,aString,' ') + '.tga';
-          Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
-        end;
+        //  Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
+          Object3d.Material.FHasTexture:=LoadTexture( 'F:\nwnR\MainData\Textures\' + Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
+         end;
+
       end
       else if  leftstr (  aString , 5) = 'verts' then begin
         Object3d.VertexCount := StrToInt( ExtractWordL (2,aString,' '));
