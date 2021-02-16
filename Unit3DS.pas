@@ -5,8 +5,15 @@
 // ******************* juanjo.montero@telefonica.net *************************
 // *********************** Release 19/11/2003 ********************************
 // ***************************************************************************
-
-// + MDL Neverwinter Night
+     { TODO : multiple materials }
+     { TODO : model,anims (name: string + time:single, positionkey, rotationkey: array of TVerts  }
+     { TODO :
+  wirecolor 1.0 0.862745 0.494118
+  ambient 1.0 1.0 1.0
+  diffuse 1.0 1.0 1.0
+  specular 0.05 0.05 0.05
+  shininess 26.0 }
+// + MDL Neverwinter Night Gabriele Canazza
 unit Unit3DS;
 
 
@@ -1472,8 +1479,7 @@ var
   fModel :  TextFile;
   aString : string;
   i,o: Integer;
-  bmp: TBitmap;
-  Object3d,ParentObject3d,tmpobj : T3DObject;
+  Object3d,ParentObject3d : T3DObject;
   TempY: Single;
   FirstVertice: Boolean;
   TmpVector : TVector3D;
@@ -1493,7 +1499,7 @@ begin
     Readln ( fModel, aString);
     aString := TrimLeft(aString);
 
-  if  (Leftstr(  aString , 12) = 'node trimesh') or ( Leftstr(  aString , 10) = 'node dummy') then begin
+  if  (Leftstr(  aString , 12) = 'node trimesh') or ( Leftstr(  aString , 10) = 'node dummy') or ( Leftstr(  aString , 15) = 'node danglymesh')  then begin
 
       Object3d :=  AddObject;
       Object3d.ObjectName := ExtractWordL (3,aString,' ');
