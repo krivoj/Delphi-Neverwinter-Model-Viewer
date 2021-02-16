@@ -68,7 +68,7 @@ var
   i:Integer;
 begin
 //  Model.LoadFromFile ('sulaco.3ds');  // Load the 3DS file
-  Model.LoadFromFileMDL ( ExtractFilePath(Application.ExeName) {+ 'mdl\'} + ListBox1.Items[ListBox1.ItemIndex] );  // Load the 3DS file
+  Model.LoadFromFileMDL ( ExtractFilePath(Application.ExeName) {+ 'mdl\'} + ListBox1.Items[ListBox1.ItemIndex] );  // Load the MDL file
 
   for i := 0 to Model.ObjectCount -1 do begin
     Model.Objects[i].Material.Diffuse.Color:= clSilver;
