@@ -4,7 +4,14 @@
 // ******************* gabriele.canazza@gmail.com *************************
 
 // This sample shows how to load a MDL Aurora file
-
+     { TODO : check Uv Mesh tverts }
+     { TODO : model,anims (name: string + time:single, positionkey, rotationkey: array of TVerts  }
+     { TODO :
+  wirecolor 1.0 0.862745 0.494118
+  ambient 1.0 1.0 1.0
+  diffuse 1.0 1.0 1.0
+  specular 0.05 0.05 0.05
+  shininess 26.0 }
 unit Unit1;
 
 interface

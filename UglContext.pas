@@ -51,7 +51,7 @@ procedure ResetModelView;
 begin
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity;
-  gluLookAt(-2, -5, 2, 0, 0, 0, 0, 1, 0); // Set position and orientation
+  gluLookAt(2, -5, 4, 0, 0, 0, 0, 1, 0); // Set position and orientation
 end;
 
 // Set Viewport and Aspect Ratio for Projection Matrix

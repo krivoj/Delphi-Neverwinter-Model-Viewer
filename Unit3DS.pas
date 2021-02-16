@@ -1493,7 +1493,7 @@ begin
     Readln ( fModel, aString);
     aString := TrimLeft(aString);
 
-    if  (Leftstr(  aString , 12) = 'node trimesh') or ( Leftstr(  aString , 10) = 'node dummy') then begin
+  if  (Leftstr(  aString , 12) = 'node trimesh') or ( Leftstr(  aString , 10) = 'node dummy') then begin
 
       Object3d :=  AddObject;
       Object3d.ObjectName := ExtractWordL (3,aString,' ');
