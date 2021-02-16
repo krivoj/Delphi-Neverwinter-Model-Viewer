@@ -1508,13 +1508,14 @@ begin
 
         if Object3d.ParentObjectName <> 'NULL' then begin
           ParentObject3d := FindObject( Object3d.ParentObjectName );
+          TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
 
-        {  TmpVector.X := TmpVector.X + ParentObject3d.Position.X; TmpVector.Y := TmpVector.Y + ParentObject3d.Position.Y;TmpVector.Z := TmpVector.Z + ParentObject3d.Position.Z;
-          while ParentObject3d.ParentObjectName <> 'NULL' do begin
+         { while ParentObject3d.ParentObjectName <> 'NULL' do begin
             ParentObject3d := FindObject( ParentObject3d.ParentObjectName );
-            if ParentObject3d <> nil  then
-            TmpVector.X := TmpVector.X + ParentObject3d.Position.X; TmpVector.Y := TmpVector.Y + ParentObject3d.Position.Y;TmpVector.Z := TmpVector.Z + ParentObject3d.Position.Z;
-          end; }
+            if ParentObject3d <> nil  then begin
+              TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
+            end;
+          end;   }
 
           Object3d.position := TmpVector;
 
@@ -1523,14 +1524,14 @@ begin
         end
       end
       else if  (leftstr ( aString, 11) = 'orientation') and   (leftstr ( aString, 14) <> 'orientationkey') then begin
-      TmpVector := MakeVector3Dp ( aString );
-
-       { TmpVector.X := TmpVector.X + ParentObject3d.orientation.X; TmpVector.Y := TmpVector.Y + ParentObject3d.orientation.Y;TmpVector.Z := TmpVector.Z + ParentObject3d.orientation.Z;
-        while ParentObject3d.ParentObjectName <> 'NULL' do begin
+        TmpVector := MakeVector3Dp ( aString );
+        TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
+       { while ParentObject3d.ParentObjectName <> 'NULL' do begin
           ParentObject3d := FindObject( ParentObject3d.ParentObjectName );
-          if ParentObject3d <> nil then
-          TmpVector.X := TmpVector.X + ParentObject3d.orientation.X; TmpVector.X := TmpVector.Y + ParentObject3d.orientation.Y;TmpVector.Z := TmpVector.Z + ParentObject3d.orientation.Z;
-        end;              }
+          if ParentObject3d <> nil then begin
+            TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
+          end;
+        end;    }
 
         Object3d.orientation := TmpVector;
 
