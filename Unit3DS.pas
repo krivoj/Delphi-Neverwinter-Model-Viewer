@@ -1541,8 +1541,7 @@ begin
       else if  leftstr ( aString, 6) = 'bitmap' then begin
          if ExtractWordL (2,aString,' ') <> 'NULL' then begin
           Object3d.Material.FMaterialFile := ExtractWordL (2,aString,' ') + '.tga';
-        //  Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
-          Object3d.Material.FHasTexture:=LoadTexture( 'F:\nwnR\MainData\Textures\' + Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
+          Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
          end;
 
       end
