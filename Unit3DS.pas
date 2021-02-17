@@ -223,7 +223,21 @@ end;
     property Emission:TMaterialProperties read FEmission;
 end;
 
+  TObjectAnimation = record
+    msTime : Single;
+    PositionKey,OrientationKey : TVector3D;
+  end;
 
+  TAnimation = class(TObject)
+  private
+    FAnimationName:string;
+    FAnimObjectsCount : Integer;
+    FAnimationIndex:Integer;
+  public
+    AnimObjects : array of TObjectAnimation;
+    constructor Create;
+    destructor Destroy;override;
+  end;
 // This class stores the complete definition for each 3ds object. Is used to
 // draw it in the scene also.
   T3DObject = class(TObject)
@@ -283,14 +297,17 @@ end;
     FRootChunk:TChunk;
     function GetMaterialCount: Integer;
     function GetObjectCount: Integer;
+    function GetAnimationCount: Integer;
     procedure CleanUp;
     procedure ComputeNormals;
   public
     Objects:array of T3DObject;
+    Animations: array of TAnimation;
     constructor Create;
     destructor Destroy;override;
     function AddMaterial:TMaterial;
     function AddObject:T3DObject;
+    function AddAnimation:TAnimation;
     procedure Clear;
     procedure VisibleAll;
     function LoadFromFile(const FileName:string):Boolean;
@@ -304,6 +321,7 @@ end;
     procedure Draw;
     property ObjectCount:Integer read GetObjectCount;
     property MaterialCount:Integer read GetMaterialCount;
+    property AnimationCount:Integer read GetAnimationCount;
 end;
 function HasExtensionL(const Name : String; var DotPos : Cardinal) : Boolean;
 function JustFilenameL(const PathName : String) : String;
@@ -907,6 +925,22 @@ end;
 
 // ************************** END TMATERIAL ***********************************
 
+// ************************** TANIMATION **************************************
+
+constructor TAnimation.Create;
+begin
+  inherited;
+  AnimObjects:=nil;
+end;
+
+destructor TAnimation.Destroy;
+begin
+  Finalize(AnimObjects);
+  inherited;
+end;
+
+// ************************** END TANIMATION **************************************
+
 // ************************** T3DOBJECT **************************************
 
 
@@ -1225,6 +1259,16 @@ begin
   Objects[C]:=Result;
 end;
 
+function T3DModel.AddAnimation: TAnimation;
+var C, I:Integer;
+begin
+  Result:=TAnimation.Create;
+  C:=AnimationCount;
+  I:=C + 1;
+  Result.FAnimationIndex:=I;
+  SetLength(Animations, I);
+  Animations[C]:=Result;
+end;
 
 function T3DModel.GetMaterialCount: Integer;
 begin
@@ -1234,6 +1278,10 @@ end;
 function T3DModel.GetObjectCount: Integer;
 begin
   Result:=Length(Objects);
+end;
+function T3DModel.GetAnimationCount: Integer;
+begin
+  Result:=Length(Animations);
 end;
 
 function T3DModel.LoadFromFile(const FileName:string): Boolean;
@@ -1514,11 +1562,11 @@ begin
   multiplier 1
   color 0 0 0
 }
-    // DecodeNodeLight ( fmodel AddSceneLights (TLight)   -->  while Leftstr(  aString , 7) <> 'endnode' do begin
+    // ProcessNodeLight ( fmodel AddSceneLights (TLight)   -->  while Leftstr(  aString , 7) <> 'endnode' do begin
     // sul draw creo le luci
     end
     else if (Leftstr(  aString , 7) = 'newanim') then begin
-//    DecodeNewAnim  ( fmodel  --> Anims addAnim come addobject Anims ha al suointerno altri array di tuttigli object3d, come objects
+//    ProcessNewAnim  ( fmodel  --> Anims addAnim come addobject Anims ha al suointerno altri array di tuttigli object3d, come objects
     {newanim ca1slashl c_GolemIron
   length 1
   transtime 0.25
@@ -1543,7 +1591,7 @@ begin
     end
     else if (Leftstr(  aString , 12) = 'node trimesh') or  ( Leftstr(  aString , 10) = 'node dummy')
     or ( Leftstr(  aString , 15) = 'node danglymesh')   then begin
-        { TODO : decodeNodevarious }
+        { TODO : processNodevarious }
         Object3d :=  AddObject;
         Object3d.ObjectName := ExtractWordL (3,aString,' ');
       while Leftstr(  aString , 7) <> 'endnode' do begin
