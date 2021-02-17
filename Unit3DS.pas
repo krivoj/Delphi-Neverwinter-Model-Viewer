@@ -1499,9 +1499,51 @@ begin
       Readln ( fModel, aString);
       aString := TrimLeft(aString);
 
-    if (Leftstr(  aString , 12) = 'node trimesh') or  ( Leftstr(  aString , 10) = 'node dummy')
-    or ( Leftstr(  aString , 15) = 'node danglymesh') {( Leftstr(  aString , ??) = 'node lights??') } then begin
-
+    if (Leftstr(  aString , 10) = 'node light') then begin
+{  parent TCN01_A20_02
+  ambientonly 0
+  shadow 0
+  isdynamic 0
+  affectdynamic 1
+  lightpriority 5
+  fadingLight 1
+  flareradius 0
+  position 0 0 5
+  orientation 0 0 0 0
+  radius 14
+  multiplier 1
+  color 0 0 0
+}
+    // DecodeNodeLight ( fmodel AddSceneLights (TLight)   -->  while Leftstr(  aString , 7) <> 'endnode' do begin
+    // sul draw creo le luci
+    end
+    else if (Leftstr(  aString , 7) = 'newanim') then begin
+//    DecodeNewAnim  ( fmodel  --> Anims addAnim come addobject Anims ha al suointerno altri array di tuttigli object3d, come objects
+    {newanim ca1slashl c_GolemIron
+  length 1
+  transtime 0.25
+  event 0.5 hit
+  node dummy c_GolemIron
+    parent NULL
+  endnode
+  node dummy IroGolem_rootdummy
+    parent c_GolemIron
+    positionkey 9
+         0.0000000    0.0000000   -0.0440400    1.7228600
+         0.1000000   -0.0114712   -0.1929970    1.6681300
+    orientationkey 9
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         1.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy IroGolem_Hips
+    parent IroGolem_rootdummy
+    positionkey 4
+         0.0000000    0.0000000    0.0000000   -0.0000002
+}
+    end
+    else if (Leftstr(  aString , 12) = 'node trimesh') or  ( Leftstr(  aString , 10) = 'node dummy')
+    or ( Leftstr(  aString , 15) = 'node danglymesh')   then begin
+        { TODO : decodeNodevarious }
         Object3d :=  AddObject;
         Object3d.ObjectName := ExtractWordL (3,aString,' ');
       while Leftstr(  aString , 7) <> 'endnode' do begin
@@ -1516,14 +1558,6 @@ begin
           if Object3d.ParentObjectName <> 'NULL' then begin
             ParentObject3d := FindObject( Object3d.ParentObjectName );
             TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
-
-         {   while ParentObject3d.ParentObjectName <> 'NULL' do begin
-              ParentObject3d := FindObject( ParentObject3d.ParentObjectName );
-              if ParentObject3d <> nil  then begin
-                TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
-              end;
-            end;  }
-
             Object3d.position := TmpVector;
             Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
 
@@ -1532,16 +1566,10 @@ begin
         else if  (leftstr ( aString, 11) = 'orientation') and   (leftstr ( aString, 14) <> 'orientationkey') then begin
           TmpVector := MakeVector3Dp ( aString );
           TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
-         { while ParentObject3d.ParentObjectName <> 'NULL' do begin
-            ParentObject3d := FindObject( ParentObject3d.ParentObjectName );
-            if ParentObject3d <> nil then begin
-              TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
-            end;
-          end;    }
-
           Object3d.orientation := TmpVector;
           Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
         end
+
 
         else if  leftstr ( aString, 6) = 'bitmap' then begin
            if ExtractWordL (2,aString,' ') <> 'NULL' then begin
