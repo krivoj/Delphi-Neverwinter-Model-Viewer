@@ -37,6 +37,7 @@ type
 
 // ********************************** NEW NEW **********************************
     Model:T3DModel;  // Variable for instancing T3DModel
+    Tcn:T3DModel;  // Variable for instancing T3DModel
 // ********************************** END NEW **********************************
 
     procedure Render;
@@ -47,7 +48,8 @@ var
   Ax, Mx:Single;
   Ay, My:Single;
   CX,CY,CZ: Single;
-
+  nFrames : Integer;
+  lastTickCount, msTotal : Integer;
 implementation
 
 uses UglContext;
@@ -61,8 +63,10 @@ begin
 // ********************************** NEW NEW **********************************
   // ********************************** END NEW **********************************
   Model:=T3DModel.Create;            // Instance of T3DModel
+  Tcn:=T3DModel.Create;            // Instance of T3DModel
   glEnable(GL_LIGHT0);    // Enable Light0
   glEnable(GL_LIGHTING);  // Enable Lighting
+  glenable(GL_COLOR_MATERIAL);
 end;
 
 procedure TForm1.ListBox1Click(Sender: TObject);
@@ -70,13 +74,10 @@ var
   i:Integer;
 begin
 //  Model.LoadFromFile ('sulaco.3ds');  // Load the 3DS file
-  Model.LoadFromFileMDL ( ExtractFilePath(Application.ExeName) {+ 'mdl\'} + ListBox1.Items[ListBox1.ItemIndex] );  // Load the MDL file
-  for i := 0 to Model.ObjectCount -1 do begin
-    Model.Objects[i].Material.Diffuse.Color:= clSilver;
-    Model.Objects[i].Material.Ambient.Color:= clAqua;
-  end;
+  Model.LoadFromFileMDL ( ExtractFilePath(Application.ExeName) + ListBox1.Items[ListBox1.ItemIndex] );  // Load the MDL file
+  tcn.LoadFromFileMDL ( ExtractFilePath(Application.ExeName)  + 'tcn01_a20_02.mdl' );  // Load the MDL file
+  { TODO : node lights in unit3ds }
 
-//  Model.Objects[0].Selected := True;
 
 end;
 
@@ -104,6 +105,7 @@ procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
 // ********************************** NEW NEW **********************************
   Model.Free;        // Free instance (and memory)
+  Tcn.Free;
 // ********************************** END NEW **********************************
   DestroyGLContext; // Free device context created for opengl
 end;
@@ -160,17 +162,46 @@ begin
 end;
 
 procedure TForm1.Render;
+var
+  ms,i :Integer;
+  Text : string;
+  List : GLuint;
 begin
+  Inc(nFrames);
+
   ClearGL;     // Clear frame buffer
  // ResetModelView;
   SetModelView ( 2, -5,CZ );
-// ********************************** NEW NEW **********************************
+
   glRotatef(Ax, 1, 0, 0);
   glRotatef(-Ay, 0, 1, 0);
-// ********************************** END NEW **********************************
-// ********************************** NEW NEW **********************************
-  Model.Draw;  // Draws the complete 3DS file
-// ********************************** END NEW **********************************
+  Model.Draw;  // Draws the complete MDL file
+  Tcn.Draw;
+ {  ms := GetTickCount;
+  msTotal := msTotal + (ms - lastTickCount);
+  LastTickCount := ms;
+
+ if msTotal > 1000 then begin
+    msTotal := 0;
+    Caption := 'Framerate :' + IntToStr(nFrames);
+    nFrames := 0;
+//   glColor4fv(@Font.FColorVector);
+   glColor4fv(@LastTickCount);   // random color
+
+   glPushMatrix;
+   glLoadIdentity;
+   glRasterPos2i(100, 10);
+   text := Caption;
+   for i := 1 to Length(text) do  begin
+      wglUseFontBitmapsW(dc, Ord(text[i]), 1, list);
+      glCallList(list);
+   end;
+   glDeleteLists(list, 1);
+  // glColor4fv(@FPenColor);
+   glPopMatrix;
+
+  end;   }
+
   SwapGL;     // Swap buffers
 end;
 

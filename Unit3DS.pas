@@ -1093,7 +1093,7 @@ begin
   if FSelected then
    DrawBox;
   Material.SetMaterial;
-  glPushName(FObjectIndex);
+  glPushName(FObjectIndex); { TODO : con molti modelli? }
   glBegin(FRMode);
   glEnable( GL_TEXTURE_2D );
   glEnable( GL_TEXTURE_GEN_T );
@@ -1496,90 +1496,89 @@ begin
     Faces:array of TFace;  }
 
   while not Eof(fModel) do begin
-    Readln ( fModel, aString);
-    aString := TrimLeft(aString);
-
-  if  (Leftstr(  aString , 12) = 'node trimesh') or ( Leftstr(  aString , 10) = 'node dummy') or ( Leftstr(  aString , 15) = 'node danglymesh')  then begin
-
-      Object3d :=  AddObject;
-      Object3d.ObjectName := ExtractWordL (3,aString,' ');
-    while Leftstr(  aString , 7) <> 'endnode' do begin
       Readln ( fModel, aString);
       aString := TrimLeft(aString);
-      if  leftstr ( aString, 6) = 'parent' then begin
-        Object3d.ParentObjectName := ExtractWordL (2,aString,' ');
-      end
-      else if  (leftstr ( aString, 8) = 'position') and (leftstr ( aString, 11) <> 'positionkey') then begin
-        TmpVector := MakeVector3Dp ( aString );
 
-        if Object3d.ParentObjectName <> 'NULL' then begin
-          ParentObject3d := FindObject( Object3d.ParentObjectName );
-          TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
+    if (Leftstr(  aString , 12) = 'node trimesh') or  ( Leftstr(  aString , 10) = 'node dummy')
+    or ( Leftstr(  aString , 15) = 'node danglymesh') {( Leftstr(  aString , ??) = 'node lights??') } then begin
 
-       {   while ParentObject3d.ParentObjectName <> 'NULL' do begin
+        Object3d :=  AddObject;
+        Object3d.ObjectName := ExtractWordL (3,aString,' ');
+      while Leftstr(  aString , 7) <> 'endnode' do begin
+        Readln ( fModel, aString);
+        aString := TrimLeft(aString);
+        if  leftstr ( aString, 6) = 'parent' then begin
+          Object3d.ParentObjectName := ExtractWordL (2,aString,' ');
+        end
+        else if  (leftstr ( aString, 8) = 'position') and (leftstr ( aString, 11) <> 'positionkey') then begin
+          TmpVector := MakeVector3Dp ( aString );
+
+          if Object3d.ParentObjectName <> 'NULL' then begin
+            ParentObject3d := FindObject( Object3d.ParentObjectName );
+            TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
+
+         {   while ParentObject3d.ParentObjectName <> 'NULL' do begin
+              ParentObject3d := FindObject( ParentObject3d.ParentObjectName );
+              if ParentObject3d <> nil  then begin
+                TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
+              end;
+            end;  }
+
+            Object3d.position := TmpVector;
+            Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
+
+          end
+        end
+        else if  (leftstr ( aString, 11) = 'orientation') and   (leftstr ( aString, 14) <> 'orientationkey') then begin
+          TmpVector := MakeVector3Dp ( aString );
+          TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
+         { while ParentObject3d.ParentObjectName <> 'NULL' do begin
             ParentObject3d := FindObject( ParentObject3d.ParentObjectName );
-            if ParentObject3d <> nil  then begin
-              TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
+            if ParentObject3d <> nil then begin
+              TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
             end;
-          end;  }
+          end;    }
 
-          Object3d.position := TmpVector;
+          Object3d.orientation := TmpVector;
+          Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
+        end
 
-         Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
+        else if  leftstr ( aString, 6) = 'bitmap' then begin
+           if ExtractWordL (2,aString,' ') <> 'NULL' then begin
+            Object3d.Material.FMaterialFile := ExtractWordL (2,aString,' ') + '.tga';
+            Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
+           end;
 
         end
-      end
-      else if  (leftstr ( aString, 11) = 'orientation') and   (leftstr ( aString, 14) <> 'orientationkey') then begin
-        TmpVector := MakeVector3Dp ( aString );
-        TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
-       { while ParentObject3d.ParentObjectName <> 'NULL' do begin
-          ParentObject3d := FindObject( ParentObject3d.ParentObjectName );
-          if ParentObject3d <> nil then begin
-            TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
+        else if  leftstr (  aString , 5) = 'verts' then begin
+          Object3d.VertexCount := StrToInt( ExtractWordL (2,aString,' '));
+          SetLength(Object3d.Verts,Object3d.VertexCount);
+
+          for I := 0 to Object3d.VertexCount -1 do begin
+            Readln ( fModel, aString);
+            Object3d.Verts[i] := MakeVector3D (aString );
           end;
-        end;    }
-
-        Object3d.orientation := TmpVector;
-
-       Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
-      end
-
-      else if  leftstr ( aString, 6) = 'bitmap' then begin
-         if ExtractWordL (2,aString,' ') <> 'NULL' then begin
-          Object3d.Material.FMaterialFile := ExtractWordL (2,aString,' ') + '.tga';
-          Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
-         end;
-
-      end
-      else if  leftstr (  aString , 5) = 'verts' then begin
-        Object3d.VertexCount := StrToInt( ExtractWordL (2,aString,' '));
-        SetLength(Object3d.Verts,Object3d.VertexCount);
-
-        for I := 0 to Object3d.VertexCount -1 do begin
-          Readln ( fModel, aString);
-          Object3d.Verts[i] := MakeVector3D (aString );
-        end;
-      end
-      else if  leftstr (  aString , 5) = 'faces' then begin
-        Object3d.FaceCount := StrToInt( ExtractWordL (2,aString,' '));
-        SetLength(Object3d.Faces,Object3d.FaceCount);
-        for I := 0 to Object3d.FaceCount -1 do begin
-          Readln ( fModel, aString);
-          Object3d.Faces[i] := MakeFace (aString );
-        end;
-      end
-      else if  leftstr (  aString , 6) = 'tverts' then begin
-        Object3d.TexVertexCount := StrToInt( ExtractWordL (2,aString,' '));
-        SetLength(Object3d.TexVerts,Object3d.TexVertexCount);
-        for I := 0 to Object3d.TexVertexCount -1 do begin
-          Readln ( fModel, aString);
-          Object3d.TexVerts[i] := MakeVector2D (aString );
+        end
+        else if  leftstr (  aString , 5) = 'faces' then begin
+          Object3d.FaceCount := StrToInt( ExtractWordL (2,aString,' '));
+          SetLength(Object3d.Faces,Object3d.FaceCount);
+          for I := 0 to Object3d.FaceCount -1 do begin
+            Readln ( fModel, aString);
+            Object3d.Faces[i] := MakeFace (aString );
+          end;
+        end
+        else if  leftstr (  aString , 6) = 'tverts' then begin
+          Object3d.TexVertexCount := StrToInt( ExtractWordL (2,aString,' '));
+          SetLength(Object3d.TexVerts,Object3d.TexVertexCount);
+          for I := 0 to Object3d.TexVertexCount -1 do begin
+            Readln ( fModel, aString);
+            Object3d.TexVerts[i] := MakeVector2D (aString );
+          end;
         end;
       end;
-    end;
 
+    end;
   end;
-end;
 
   CloseFile(fModel);
   {
