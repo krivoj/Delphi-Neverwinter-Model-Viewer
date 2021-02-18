@@ -223,20 +223,33 @@ end;
     property Emission:TMaterialProperties read FEmission;
 end;
 
-  TObjectAnimation = record
+  TAnimatedFrame = record
+    FrameIndex : Integer;
     msTime : Single;
     PositionKey,OrientationKey : TVector3D;
+  end;
+
+  TAnimatedObject = class(TObject)
+  private
+  public
+    FramesCount : Integer;
+    Frames : array of TAnimatedFrame;
+    function AddFrame: TAnimatedFrame;
+    constructor Create;
+    destructor Destroy;override;
   end;
 
   TAnimation = class(TObject)
   private
     FAnimationName:string;
-    FAnimObjectsCount : Integer;
+    FAnimationModelName: string;
+    FAnimatedObjectsCount : Integer;
     FAnimationIndex:Integer;
   public
-    AnimObjects : array of TObjectAnimation;
+    AnimatedObjects : array of TAnimatedObject;
     constructor Create;
     destructor Destroy;override;
+    function AddAnimatedObject: TAnimatedObject;
   end;
 // This class stores the complete definition for each 3ds object. Is used to
 // draw it in the scene also.
@@ -312,6 +325,7 @@ end;
     procedure VisibleAll;
     function LoadFromFile(const FileName:string):Boolean;
     function LoadFromFileMDL(const FileName:string):Boolean;
+      procedure ProcessNewAnim  ( const fmodel: TextFile; FirstString: string );
     function MakeVector3D (aString: string): TVector3D;
     function MakeVector3Dp (aString: string): TVector3D;
     function MakeFace (aString: string): TFace;
@@ -930,16 +944,49 @@ end;
 constructor TAnimation.Create;
 begin
   inherited;
-  AnimObjects:=nil;
+  AnimatedObjects:=nil;
 end;
 
 destructor TAnimation.Destroy;
 begin
-  Finalize(AnimObjects);
+  Finalize(AnimatedObjects);
   inherited;
+end;
+function TAnimation.AddAnimatedObject: TAnimatedObject;
+var C, I:Integer;
+begin
+  Result:=TAnimatedObject.Create;
+  C:=FAnimatedObjectsCount;
+  SetLength(AnimatedObjects, C+1);
+  AnimatedObjects[C]:=Result;
 end;
 
 // ************************** END TANIMATION **************************************
+
+// ************************** TANIMATEDOBJECT**************************************
+
+constructor TAnimatedObject.Create;
+begin
+  inherited;
+  Frames:=nil;
+end;
+
+destructor TAnimatedObject.Destroy;
+begin
+  Finalize(Frames);
+  inherited;
+end;
+function TAnimatedObject.AddFrame: TAnimatedFrame;
+var C, I:Integer;
+begin
+  C:=FramesCount;
+  SetLength(Frames, C+1);
+  Frames[C]:=Result;
+end;
+
+
+// ************************** END TANIMATEDOBJECT **************************************
+
 
 // ************************** T3DOBJECT **************************************
 
@@ -1538,10 +1585,6 @@ begin
 
   AssignFile(fModel,filename);
   Reset(fModel);
-  {  Verts:array of TVector3D;
-    Normals:array of TVector3D;
-    TexVerts:array of TVector2D;
-    Faces:array of TFace;  }
 
   while not Eof(fModel) do begin
       Readln ( fModel, aString);
@@ -1566,28 +1609,7 @@ begin
     // sul draw creo le luci
     end
     else if (Leftstr(  aString , 7) = 'newanim') then begin
-//    ProcessNewAnim  ( fmodel  --> Anims addAnim come addobject Anims ha al suointerno altri array di tuttigli object3d, come objects
-    {newanim ca1slashl c_GolemIron
-  length 1
-  transtime 0.25
-  event 0.5 hit
-  node dummy c_GolemIron
-    parent NULL
-  endnode
-  node dummy IroGolem_rootdummy
-    parent c_GolemIron
-    positionkey 9
-         0.0000000    0.0000000   -0.0440400    1.7228600
-         0.1000000   -0.0114712   -0.1929970    1.6681300
-    orientationkey 9
-         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
-         1.0000000    0.0000000    0.0000000    0.0000000    0.0000000
-  endnode
-  node dummy IroGolem_Hips
-    parent IroGolem_rootdummy
-    positionkey 4
-         0.0000000    0.0000000    0.0000000   -0.0000002
-}
+//    ProcessNewAnim  ( const fmodel  --> Anims addAnim come addobject Anims ha al suointerno altri array di tuttigli object3d, come objects
     end
     else if (Leftstr(  aString , 12) = 'node trimesh') or  ( Leftstr(  aString , 10) = 'node dummy')
     or ( Leftstr(  aString , 15) = 'node danglymesh')   then begin
@@ -1657,38 +1679,58 @@ begin
   end;
 
   CloseFile(fModel);
-  {
-  for o := 0 to ObjectCount -1 do begin
-    Object3d := Objects[0];
-    FirstVertice := false;
-    for I:=0 to Object3d.FVertexCount-1 do  begin
-       TempY:=Object3d.Verts[I].Y;
-       Object3d.Verts[I].Y:=Object3d.Verts[I].Z;
-       Object3d.Verts[I].Z:=-TempY;
-       if not FirstVertice then
-        begin
-          Object3d.FMaxVector:=Object3d.Verts[I];
-          Object3d.FMinVector:=Object3d.FMaxVector;
-          FirstVertice:=True;
-        end;
-       Object3d.FMaxVector.X:=Max(Object3d.FMaxVector.X, Object3d.Verts[I].X);
-       Object3d.FMaxVector.Y:=Max(Object3d.FMaxVector.Y, Object3d.Verts[I].Y);
-       Object3d.FMaxVector.Z:=Max(Object3d.FMaxVector.Z, Object3d.Verts[I].Z);
-       Object3d.FMinVector.X:=Min(Object3d.FMinVector.X, Object3d.Verts[I].X);
-       Object3d.FMinVector.Y:=Min(Object3d.FMinVector.Y, Object3d.Verts[I].Y);
-       Object3d.FMinVector.Z:=Min(Object3d.FMinVector.Z, Object3d.Verts[I].Z);
-    end;
-    Object3d.FMidVector:=VectorSub(Object3d.FMaxVector, Object3d.FMinVector);
-
-  end;
-
-  }
-
   ComputeNormals;
   CleanUp;
   Result:=True;
 
 end;
+procedure T3DModel.ProcessNewAnim  ( const fmodel: TextFile; FirstString: string );
+var
+  Anim:TAnimation;
+  aString : string;
+  AnimatedObject : TAnimatedObject;
+begin
+  Anim :=  AddAnimation;
+  Anim.FAnimationName := ExtractWordL (2,FirstString,' ');
+  Anim.FAnimationModelName := ExtractWordL (3,FirstString,' ');
+  while Leftstr(  aString , 7) <> 'endnode' do begin
+    Readln ( fModel, aString);
+    aString := TrimLeft(aString);
+    if  leftstr ( aString, 10) = 'node dummy' then begin
+      AnimatedObject := Anim.AddAnimatedObject;
+//      AnimatedObject.FramesCount := imax (PoistionKeyCount,OrienationkeyCount )
+//      AnimatedObject.length
+      while Leftstr(  aString , 7) <> 'endnode' do begin
+//        SetLength(Object3d.Faces,Object3d.FaceCount);
+
+//        ObjectAnim.PositionKey := StrtoFloat (ExtractWordL (2,aString,' '));
+      end;
+    end
+  end;
+    {newanim ca1slashl c_GolemIron
+  length 1
+  transtime 0.25
+  event 0.5 hit
+  node dummy c_GolemIron
+    parent NULL
+  endnode
+  node dummy IroGolem_rootdummy
+    parent c_GolemIron
+    positionkey 2
+         0.0000000    0.0000000   -0.0440400    1.7228600
+         0.1000000   -0.0114712   -0.1929970    1.6681300
+    orientationkey 2
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         1.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy IroGolem_Hips
+    parent IroGolem_rootdummy
+    positionkey 4
+         0.0000000    0.0000000    0.0000000   -0.0000002
+}
+
+end;
+
 function T3DModel.MakeVector3D (aString: string ): TVector3D;
 begin
 
