@@ -117,6 +117,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   i: Integer;
 begin
+  FormatSettings.DecimalSeparator :='.';
   CZ := 4;
   sf.FromPath := ExtractFilePath(Application.ExeName);
   sf.MaskInclude.Add('*.mdl');
@@ -193,7 +194,7 @@ begin
 //  Ref := @Models[Count];
 //  i := -Models.Count;  // Assign NEGATIVE count here
 //  while i < 0 do begin // and count UP to zero
-//  T3DModel(Ref[i]).Anim;
+//  T3DModel(Ref[i]).Anim(msTotal);     msTotal ...
 //  T3DModel(Ref[i]).Draw;
 //  T3DModel(Ref[i+1]).Anim;
 //  T3DModel(Ref[i+1]).Draw;
@@ -205,7 +206,7 @@ begin
   msTotal := msTotal + (ms - lastTickCount);
   LastTickCount := ms;
 
- if msTotal > 1000 then begin
+ if msTotal >= 1000 then begin
     msTotal := 0;
     Caption := 'Framerate :' + IntToStr(nFrames);
     nFrames := 0;
