@@ -175,6 +175,9 @@ begin
 
   glRotatef(Ax, 1, 0, 0);
   glRotatef(-Ay, 0, 1, 0);
+//  Model.Anim;
+//  for i := Modelcount -1 downto 0 do begin
+//  end;
   Model.Draw;  // Draws the complete MDL file
   Tcn.Draw;
  {  ms := GetTickCount;

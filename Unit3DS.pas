@@ -223,18 +223,23 @@ end;
     property Emission:TMaterialProperties read FEmission;
 end;
 
-  TAnimatedFrame = record
-    FrameIndex : Integer;
+
+  TAnimatedFrame = record   // same for Position and orientation
+    Index : Integer;
     msTime : Single;
-    PositionKey,OrientationKey : TVector3D;
+    KeyValue : TVector3D;
+    ValueA : Single; // only orientation
   end;
 
   TAnimatedObject = class(TObject)
   private
   public
-    FramesCount : Integer;
-    Frames : array of TAnimatedFrame;
-    function AddFrame: TAnimatedFrame;
+    PositionKeyCount : Integer;
+    OrientationKeyCount : Integer;
+    PositionFrames: array of TAnimatedFrame;
+    OrientationFrames: array of TAnimatedFrame;
+    function AddPositionKey: TAnimatedFrame;
+    function AddOrientationKey: TAnimatedFrame;
     constructor Create;
     destructor Destroy;override;
   end;
@@ -245,6 +250,10 @@ end;
     FAnimationModelName: string;
     FAnimatedObjectsCount : Integer;
     FAnimationIndex:Integer;
+
+    FCurrentKeyTime: Single;
+  //  FCurrentFrame: Integer;
+    FLoop : Boolean;
   public
     AnimatedObjects : array of TAnimatedObject;
     constructor Create;
@@ -316,6 +325,7 @@ end;
   public
     Objects:array of T3DObject;
     Animations: array of TAnimation;
+    ActiveAnimationName: string;    // if <> '' then process animation by name in model.draw event
     constructor Create;
     destructor Destroy;override;
     function AddMaterial:TMaterial;
@@ -332,6 +342,7 @@ end;
     function MakeVector2D (aString: string): TVector2D;
     function FindObject(const aName:string):T3DObject;
     function Select(const Index:Integer):T3DObject;
+    procedure Anim (ms: Single) ;
     procedure Draw;
     property ObjectCount:Integer read GetObjectCount;
     property MaterialCount:Integer read GetMaterialCount;
@@ -968,20 +979,29 @@ end;
 constructor TAnimatedObject.Create;
 begin
   inherited;
-  Frames:=nil;
+  PositionFrames:=nil;
+  OrientationFrames:=nil;
 end;
 
 destructor TAnimatedObject.Destroy;
 begin
-  Finalize(Frames);
+  Finalize(PositionFrames);
+  Finalize(OrientationFrames);
   inherited;
 end;
-function TAnimatedObject.AddFrame: TAnimatedFrame;
+function TAnimatedObject.AddPositionKey: TAnimatedFrame;
 var C, I:Integer;
 begin
-  C:=FramesCount;
-  SetLength(Frames, C+1);
-  Frames[C]:=Result;
+  C:=PositionKeyCount;
+  SetLength(PositionFrames, C+1);
+  PositionFrames[C]:=Result;
+end;
+function TAnimatedObject.AddOrientationKey: TAnimatedFrame;
+var C, I:Integer;
+begin
+  C:=OrientationKeyCount;
+  SetLength(OrientationFrames, C+1);
+  OrientationFrames[C]:=Result;
 end;
 
 
@@ -1385,6 +1405,15 @@ begin
     Objects[I].Draw;
 end;
 
+procedure T3DModel.Anim (ms: Single) ;
+//var I:Integer;
+begin
+//  for I:=0 to ObjectCount-1 do begin
+//   if Objects[I].Visible then begin
+//    Animations[i].FCurrentKeyTime
+//    Objects[I].
+//  end;
+end;
 
 function T3DModel.FindObject(const aName: string): T3DObject;
 var I:Integer;
