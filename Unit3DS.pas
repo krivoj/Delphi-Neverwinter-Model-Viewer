@@ -5,15 +5,26 @@
 // ******************* juanjo.montero@telefonica.net *************************
 // *********************** Release 19/11/2003 ********************************
 // ***************************************************************************
-     { TODO : multiple materials }
-     { TODO : model,anims (name: string + time:single, positionkey, rotationkey: array of TVerts  }
-     { TODO :
-  wirecolor 1.0 0.862745 0.494118
-  ambient 1.0 1.0 1.0
-  diffuse 1.0 1.0 1.0
-  specular 0.05 0.05 0.05
-  shininess 26.0 }
 // + MDL Neverwinter Night Gabriele Canazza
+
+     { TODO :
+i := maxcount;
+if Odd(maxcount) then
+begin
+  process(Data[i]);
+  Dec(i);
+end;
+maxcount := i;
+
+i := -maxcountCount;  // Assign NEGATIVE count here
+
+while i < 0 do
+begin
+  process(Data[i]);
+  process(Data[i+1];
+  Inc(i, 2);
+end;   }
+   { TODO : ZeroMem32 }
 unit Unit3DS;
 
 
@@ -250,10 +261,13 @@ end;
     FAnimationModelName: string;
     FAnimatedObjectsCount : Integer;
     FAnimationIndex:Integer;
-
     FCurrentKeyTime: Single;
-  //  FCurrentFrame: Integer;
+
+//    AnimationRoot: animroot <node_name> //The animations entry point. This is useful for only animating part of the model and having the rest play a different animation. This used in the torch an shield holding animations to only influence the movement of a single arm.
+
     FLoop : Boolean;
+    FLength: Single;
+    FTranstime: Single;  // 0.25  Time in seconds where the animation overlaps with other animation to ensure a smooth transitions.
   public
     AnimatedObjects : array of TAnimatedObject;
     constructor Create;
@@ -348,6 +362,7 @@ end;
     property MaterialCount:Integer read GetMaterialCount;
     property AnimationCount:Integer read GetAnimationCount;
 end;
+procedure ZeroMem32(P:Pointer;Size:integer);
 function HasExtensionL(const Name : String; var DotPos : Cardinal) : Boolean;
 function JustFilenameL(const PathName : String) : String;
 function JustNameL(const PathName : String) : String;
@@ -372,6 +387,29 @@ Const DosDelimSet  : set of AnsiChar = ['\', ':', #0];
 Const stMaxFileLen  = 260;
 
 // utils
+procedure ZeroMem32(P:Pointer;Size:integer);
+// Size=number of dword elements to fill
+// assumes that Size>4
+asm
+  push edi
+  mov ecx,edx
+  xor edx,edx
+  mov dword ptr [eax],edx
+  mov dword ptr [eax+4],edx
+  mov dword ptr [eax+8],edx
+  mov dword ptr [eax+12],edx
+  mov edx,eax
+  add edx,15
+  and edx,-16
+  mov edi,edx
+  sub edx,eax
+  shr edx,2
+  sub ecx,edx
+  xor eax,eax
+  rep stosd
+  pop edi
+end;
+
 function GetNextToken  (Const S: string;   Separator: char;   var StartPos: integer): String;
 var Index: integer;
 begin
@@ -1738,7 +1776,7 @@ begin
   end;
     {newanim ca1slashl c_GolemIron
   length 1
-  transtime 0.25
+  transtime 0.25  Time in seconds where the animation overlaps with other animation to ensure a smooth transitions.
   event 0.5 hit
   node dummy c_GolemIron
     parent NULL
@@ -1788,7 +1826,6 @@ begin
   Result.y := StrToFloat( ExtractWordL (2,aString,' '));
 
 end;
-
 
 
 end.
