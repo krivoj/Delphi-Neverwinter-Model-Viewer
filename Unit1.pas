@@ -11,6 +11,9 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,Winapi.ShellAPI,
   Dialogs, AppEvnts, Unit3DS, OpenGL,DSE_SearchFiles, Vcl.StdCtrls, Vcl.ExtCtrls;
+type
+  TRef = array[0..0] of T3DModel;
+  PRef = ^TRef;
 
 type
   TForm1 = class(TForm)
@@ -166,17 +169,35 @@ var
   ms,i :Integer;
   Text : string;
   List : GLuint;
+//  Ref: PRef;
+
 begin
   Inc(nFrames);
 
   ClearGL;     // Clear frame buffer
  // ResetModelView;
-  SetModelView ( 2, -5,CZ );
+  SetModelView ( 2, -5, CZ );
 
   glRotatef(Ax, 1, 0, 0);
   glRotatef(-Ay, 0, 1, 0);
 //  Model.Anim;
-//  for i := Modelcount -1 downto 0 do begin
+
+//if Odd(Models.Count) then begin
+//  Models[0].Anim;
+//  Models[0].Draw;
+
+//  Count := (Models.Count)-1;
+//end;
+
+
+//  Ref := @Models[Count];
+//  i := -Models.Count;  // Assign NEGATIVE count here
+//  while i < 0 do begin // and count UP to zero
+//  T3DModel(Ref[i]).Anim;
+//  T3DModel(Ref[i]).Draw;
+//  T3DModel(Ref[i+1]).Anim;
+//  T3DModel(Ref[i+1]).Draw;
+//    Inc(i,2);
 //  end;
   Model.Draw;  // Draws the complete MDL file
   Tcn.Draw;

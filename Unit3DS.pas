@@ -8,22 +8,8 @@
 // + MDL Neverwinter Night Gabriele Canazza
 
      { TODO :
-i := maxcount;
-if Odd(maxcount) then
-begin
-  process(Data[i]);
-  Dec(i);
-end;
-maxcount := i;
 
-i := -maxcountCount;  // Assign NEGATIVE count here
-
-while i < 0 do
-begin
-  process(Data[i]);
-  process(Data[i+1];
-  Inc(i, 2);
-end;   }
+   }
    { TODO : ZeroMem32 }
 unit Unit3DS;
 
