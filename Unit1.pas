@@ -23,6 +23,7 @@ type
     sf: SE_SearchFiles;
     Button6: TButton;
     Button7: TButton;
+    Button1: TButton;
     procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -33,6 +34,7 @@ type
     procedure ListBox1Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -84,6 +86,12 @@ begin
   Model.LoadFromFileMDL ( MdlPath + ListBox1.Items[ListBox1.ItemIndex], TexturePath,SuperModelPath );  // Load the MDL file
   tcn.LoadFromFileMDL ( MdlPath +'tcn01_a20_02.mdl',TexturePath,SuperModelPath );  // Load the MDL file
 
+
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+Model.Anim (ElapsedTime);
 
 end;
 
@@ -213,7 +221,8 @@ begin
   ms := GetTickCount;
   ElapsedTime := 1000 / (ms - lastTickCount);
   LastTickCount := ms;
- // Model.Anim (ElapsedTime);  // anim the complete MDL file
+  //if ElapsedTime > 0.200  then
+  //Model.Anim (ElapsedTime);  // anim the complete MDL file
   Model.Draw;  // Draws the complete MDL file
   Tcn.Draw;
  {  ms := GetTickCount;

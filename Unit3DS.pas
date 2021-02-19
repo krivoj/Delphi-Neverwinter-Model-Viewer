@@ -264,6 +264,7 @@ end;
     procedure SetRenderMode(const Value: TRenderMode);
     procedure DrawBox;
   public
+    CURRENTPK,CURRENTOK : Integer;
     Verts:array of TVector3D;
     Normals:array of TVector3D;
     TexVerts:array of TVector2D;
@@ -1261,15 +1262,24 @@ procedure T3DObject.Anim( ms: Single);
 var F, ao, pk,ok,PointIndex:Integer;
 begin
 //  FTransformList.Push;
+  //glBegin(FRMode);
 
 
     FModel.ActiveAnimationName := FModel.Animations[0].FAnimationName; // debug
     For ao := 0 to FModel.Animations[0].FAnimatedObjectsCount -1 do begin
       if FModel.Animations[0].AnimatedObjects [ao].ObjectName = FObjectName then begin  // this Object
-        for pk := 0 to FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount -1 do begin //!! 2
+        CurrentPK := CurrentPK + 1;
+        CurrentOK := CurrentOK + 1;
+        if CurrentPK > FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount-1 then
+          CurrentPK := 0;
+        if CurrentOK > FModel.Animations[0].AnimatedObjects [ao].OrientationKeyCount-1 then
+          CurrentOK := 0;
+
+      //  for pk := 0 to FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount -1 do begin //!! 2
       //    if (ms >= FModel.Animations[0].AnimatedObjects [ao].PositionKeys [pk].KeyTime) and
       //    (ms <= FModel.Animations[0].AnimatedObjects [ao].PositionKeys [pk+1].KeyTime)
            // begin
+
 
 
            // TransformList.AddTransformEx (  ttTranslate , 0,
@@ -1277,14 +1287,16 @@ begin
            // FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk+1].KeyValue.Y,
            // FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk+1].KeyValue.Z);
        //    end;
+            if FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount > 0 then begin
+
             TransformList.AddTransformEx (  ttTranslate , 0,
-            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk].KeyValue.X,
-            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk].KeyValue.Y,
-            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk].KeyValue.Z);
+            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[CurrentPK].KeyValue.X,
+            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[CurrentPK].KeyValue.Y,
+            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[CurrentPK].KeyValue.Z);
+            end;
 
-
-        end;
-        for ok := 0 to FModel.Animations[0].AnimatedObjects [ao].OrientationKeyCount -1 do begin
+     //   end;
+        //for ok := 0 to FModel.Animations[0].AnimatedObjects [ao].OrientationKeyCount -1 do begin
        //   if (ms >= FModel.Animations[0].AnimatedObjects [ao].OrientationKeys [ok].KeyTime) and
        //   (ms <= FModel.Animations[0].AnimatedObjects [ao].OrientationKeys [ok+1].KeyTime)
       //     then begin
@@ -1293,16 +1305,20 @@ begin
             //FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[pk+1].KeyValue.Y,
            // FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[pk+1].KeyValue.Z);
        //    end;
+            if FModel.Animations[0].AnimatedObjects [ao].OrientationKeyCount > 0 then begin
             TransformList.AddTransformEx (  ttRotate , 0,
-            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[ok].KeyValue.X,
-            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[ok].KeyValue.Y,
-            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[ok].KeyValue.Z);
-
-        end;
+            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[CurrentOK].KeyValue.X,
+            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[CurrentOK].KeyValue.Y,
+            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[CurrentOK].KeyValue.Z);
+            end;
+       // end;
       end;
 
     end;
-//  FTransformList.Pop;
+
+  //glEnd;
+
+    //  FTransformList.Pop;
 end;
 
 procedure T3DObject.DrawBox;

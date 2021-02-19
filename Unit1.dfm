@@ -52,6 +52,15 @@ object Form1: TForm1
       TabOrder = 2
       OnClick = Button7Click
     end
+    object Button1: TButton
+      Left = 16
+      Top = 312
+      Width = 75
+      Height = 25
+      Caption = 'test'
+      TabOrder = 3
+      OnClick = Button1Click
+    end
   end
   object ApplicationEvents1: TApplicationEvents
     OnIdle = ApplicationEvents1Idle
