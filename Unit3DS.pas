@@ -6,7 +6,7 @@
 // *********************** Release 19/11/2003 ********************************
 // ***************************************************************************
 // + MDL Neverwinter Night Gabriele Canazza
-     { TODO : a_ba.mdl animations }
+     { TODO : a_ba.mdl animations supermodel }
      { TODO : Array Texture
 
    }
@@ -321,6 +321,7 @@ end;
     function GetObjectCount: Integer;
     function GetAnimationCount: Integer;
     procedure CleanUp;
+    procedure CleanUpMdl;
     procedure ComputeNormals;
   public
     Objects:array of T3DObject;
@@ -334,7 +335,7 @@ end;
     procedure Clear;
     procedure VisibleAll;
     function LoadFromFile(const FileName:string):Boolean;
-    function LoadFromFileMDL(const FileName:string):Boolean;
+    function LoadFromFileMDL(const FileName, TexturePath, SuperModelPath:string ): Boolean;
       procedure ProcessNewAnim  ( const fmodel: TextFile; FirstString: string );
     function MakeVector3D (aString: string): TVector3D;
     function MakeVector3Dp (aString: string): TVector3D;
@@ -1425,6 +1426,13 @@ begin
   FRootChunk:=nil;
   FileClose(FFileHandle);
 end;
+procedure T3DModel.CleanUpMdl;
+var I:Integer;
+begin
+  for I:=0 to MaterialCount-1 do
+   FMaterials[I].Free;
+  Finalize(FMaterials);
+end;
 
 procedure T3DModel.ComputeNormals;
 var I:Integer;
@@ -1645,10 +1653,10 @@ begin
   CurAlpha:=FVector.Alpha;
   FVector:=ColorToVector4f(Value, CurAlpha);
 end;
-function T3DModel.LoadFromFileMDL(const FileName:string): Boolean;
+function T3DModel.LoadFromFileMDL(const FileName, TexturePath, SuperModelPath:string ): Boolean;
 var
   fModel :  TextFile;
-  aString : string;
+  aString, supermodel : string;
   i: Integer;
   Object3d,ParentObject3d : T3DObject;
   TmpVector : TVector3D;
@@ -1656,14 +1664,14 @@ var
 begin
   Clear;
 
-
   AssignFile(fModel,filename);
   Reset(fModel);
 
   while not Eof(fModel) do begin
     Readln ( fModel, aString);
     aString := TrimLeft(aString);
-    if (Leftstr(  aString , 14) = 'beginmodelgeom') then begin
+    if Leftstr(  aString , 13) = 'setsupermodel' then supermodel:= ExtractWordL (3,aString,' ') + '.mdl'
+    else if (Leftstr(  aString , 14) = 'beginmodelgeom') then begin
       while Leftstr(  aString , 12) <> 'endmodelgeom' do begin
         Readln ( fModel, aString);
         if (Leftstr(  aString , 12) = 'node trimesh') or  ( Leftstr(  aString , 10) = 'node dummy') or ( Leftstr(  aString , 15) = 'node danglymesh')   then begin
@@ -1696,7 +1704,7 @@ begin
 
             else if  leftstr ( aString, 6) = 'bitmap' then begin
                if ExtractWordL (2,aString,' ') <> 'NULL' then begin
-                Object3d.Material.FMaterialFile :=  JustPathL(filename) + ExtractWordL (2,aString,' ') + '.tga';
+                Object3d.Material.FMaterialFile :=  TexturePath + ExtractWordL (2,aString,' ') + '.tga';
                 Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
                end;
 
@@ -1751,13 +1759,31 @@ begin
       end;
     end
     else if (Leftstr(  aString , 7) = 'newanim') then begin
-     // ProcessNewAnim  ( fmodel , aString );
+    //  ProcessNewAnim  ( fmodel , aString );
     end;
   end;
 
   CloseFile(fModel);
   ComputeNormals;
-  CleanUp;
+  CleanUpMdl;
+
+
+  if supermodel <> 'NULL.mdl' then begin
+
+    AssignFile(fModel,SuperModelPath + supermodel);
+    Reset(fModel);
+
+    while not Eof(fModel) do begin
+      Readln ( fModel, aString);
+      aString := TrimLeft(aString);
+      if (Leftstr(  aString , 7) = 'newanim') then begin
+        ProcessNewAnim  ( fmodel , aString );
+      end;
+    end;
+
+    CloseFile(fModel);
+  end;
+
   Result:=True;
 
 end;

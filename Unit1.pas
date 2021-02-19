@@ -53,6 +53,7 @@ var
   CX,CY,CZ: Single;
   nFrames : Integer;
   lastTickCount, msTotal : Integer;
+  MdlPath,TexturePath,SuperModelPath: string;
 implementation
 
 uses UglContext;
@@ -77,8 +78,8 @@ var
   i:Integer;
 begin
 //  Model.LoadFromFile ('sulaco.3ds');  // Load the 3DS file
-  Model.LoadFromFileMDL ( ExtractFilePath(Application.ExeName) +  'mdl\' + ListBox1.Items[ListBox1.ItemIndex] );  // Load the MDL file
-  tcn.LoadFromFileMDL ( ExtractFilePath(Application.ExeName)  + 'mdl\'+'tcn01_a20_02.mdl' );  // Load the MDL file
+  Model.LoadFromFileMDL ( MdlPath + ListBox1.Items[ListBox1.ItemIndex], TexturePath,SuperModelPath );  // Load the MDL file
+  tcn.LoadFromFileMDL ( MdlPath +'tcn01_a20_02.mdl',TexturePath,SuperModelPath );  // Load the MDL file
 
 
 end;
@@ -117,8 +118,11 @@ var
   i: Integer;
 begin
   FormatSettings.DecimalSeparator :='.';
+  MdlPath := ExtractFilePath(Application.ExeName) + 'mdl\';
+  TexturePath := ExtractFilePath(Application.ExeName) + 'Textures\';
+  SuperModelPath := ExtractFilePath(Application.ExeName) + 'SuperModels\';
   CZ := 4;
-  sf.FromPath := ExtractFilePath(Application.ExeName) + 'mdl\';
+  sf.FromPath := MdlPath;
   sf.MaskInclude.Add('*.mdl');
   sf.SubDirectories := False;
   sf.Execute;
