@@ -247,6 +247,7 @@ end;
   private
     FVisible:Boolean;
     FObjectName:string;
+    FObjectType:string;
     FParentObjectName:string;
     FPosition,FOrientation : TVector3D;
     FMaterial:TMaterial;
@@ -278,6 +279,7 @@ end;
     // procedure Transform(const Transformation:TTransformObject; const T, X, Y, Z:Single);
     property Visible:Boolean read FVisible write FVisible;
     property ObjectName:string read FObjectName write FObjectName;
+    property ObjectType:string read FObjectType write FObjectType;
     property ParentObjectName:string read FParentObjectName write FParentObjectName;
     property Position : TVector3D read fPosition write fPosition;
     property Orientation : TVector3D read FOrientation write FOrientation;
@@ -1674,9 +1676,12 @@ begin
     else if (Leftstr(  aString , 14) = 'beginmodelgeom') then begin
       while Leftstr(  aString , 12) <> 'endmodelgeom' do begin
         Readln ( fModel, aString);
-        if (Leftstr(  aString , 12) = 'node trimesh') or  ( Leftstr(  aString , 10) = 'node dummy') or ( Leftstr(  aString , 15) = 'node danglymesh')   then begin
+{ A Dummy is a single point in space without any data - no geometry, no surface, no volume, nothing. Therefore it is never rendered. Dummies are
+used to group objects or indicate special locations to the engine like target coordinates for spells and projectiles.}
+        if (Leftstr(  aString , 12) = 'node trimesh') or ( Leftstr(  aString , 10) = 'node dummy')   or ( Leftstr(  aString , 15) = 'node danglymesh')   then begin
             Object3d :=  AddObject;
             Object3d.ObjectName := ExtractWordL (3,aString,' ');
+            Object3d.ObjectType :=  ExtractWordL (2,aString,' ');
           while Leftstr(  aString , 7) <> 'endnode' do begin
             Readln ( fModel, aString);
             aString := TrimLeft(aString);
@@ -1695,10 +1700,13 @@ begin
               end
             end
             else if  (leftstr ( aString, 11) = 'orientation') and   (leftstr ( aString, 14) <> 'orientationkey') then begin
-              TmpVector := MakeVector3Dp ( aString );
-              TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
-              Object3d.orientation := TmpVector;
-              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
+              if Object3d.ParentObjectName <> 'NULL' then begin
+                ParentObject3d := FindObject( Object3d.ParentObjectName );
+                TmpVector := MakeVector3Dp ( aString );
+                TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
+                Object3d.orientation := TmpVector;
+                Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
+              end
             end
 
 

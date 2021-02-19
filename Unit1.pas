@@ -121,6 +121,9 @@ begin
   MdlPath := ExtractFilePath(Application.ExeName) + 'mdl\';
   TexturePath := ExtractFilePath(Application.ExeName) + 'Textures\';
   SuperModelPath := ExtractFilePath(Application.ExeName) + 'SuperModels\';
+  {This command references other model files. A model may have a (super)model from which it inherits animations. If there is no supermodel the
+  second parameter has to be NULL. The model may overwrite any animation from its supermodel. The structure of the two models must to match, i.e.
+  the order of the objects in both files must be the same.}
   CZ := 4;
   sf.FromPath := MdlPath;
   sf.MaskInclude.Add('*.mdl');
