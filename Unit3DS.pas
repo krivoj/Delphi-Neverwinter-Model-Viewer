@@ -1767,7 +1767,7 @@ used to group objects or indicate special locations to the engine like target co
       end;
     end
     else if (Leftstr(  aString , 7) = 'newanim') then begin
-    //  ProcessNewAnim  ( fmodel , aString );
+      ProcessNewAnim  ( fmodel , aString );  // some model have  NULL supermodels, animation are inside here
     end;
   end;
 
