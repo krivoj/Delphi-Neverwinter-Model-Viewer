@@ -77,9 +77,8 @@ var
   i:Integer;
 begin
 //  Model.LoadFromFile ('sulaco.3ds');  // Load the 3DS file
-  Model.LoadFromFileMDL ( ExtractFilePath(Application.ExeName) + ListBox1.Items[ListBox1.ItemIndex] );  // Load the MDL file
-  tcn.LoadFromFileMDL ( ExtractFilePath(Application.ExeName)  + 'tcn01_a20_02.mdl' );  // Load the MDL file
-  { TODO : node lights in unit3ds }
+  Model.LoadFromFileMDL ( ExtractFilePath(Application.ExeName) +  'mdl\' + ListBox1.Items[ListBox1.ItemIndex] );  // Load the MDL file
+  tcn.LoadFromFileMDL ( ExtractFilePath(Application.ExeName)  + 'mdl\'+'tcn01_a20_02.mdl' );  // Load the MDL file
 
 
 end;
@@ -119,7 +118,7 @@ var
 begin
   FormatSettings.DecimalSeparator :='.';
   CZ := 4;
-  sf.FromPath := ExtractFilePath(Application.ExeName);
+  sf.FromPath := ExtractFilePath(Application.ExeName) + 'mdl\';
   sf.MaskInclude.Add('*.mdl');
   sf.SubDirectories := False;
   sf.Execute;
@@ -184,8 +183,8 @@ begin
 //  Model.Anim;
 
 //if Odd(Models.Count) then begin
-//  Models[0].Anim;
 //  Models[0].Draw;
+//  Models[0].Anim;
 
 //  Count := (Models.Count)-1;
 //end;
@@ -194,13 +193,14 @@ begin
 //  Ref := @Models[Count];
 //  i := -Models.Count;  // Assign NEGATIVE count here
 //  while i < 0 do begin // and count UP to zero
-//  T3DModel(Ref[i]).Anim(msTotal);     msTotal ...
 //  T3DModel(Ref[i]).Draw;
-//  T3DModel(Ref[i+1]).Anim;
+//  T3DModel(Ref[i]).Anim(msTotal);     msTotal ...
 //  T3DModel(Ref[i+1]).Draw;
+//  T3DModel(Ref[i+1]).Anim;
 //    Inc(i,2);
 //  end;
   Model.Draw;  // Draws the complete MDL file
+//  Model.Anim;  // Draws the complete MDL file
   Tcn.Draw;
  {  ms := GetTickCount;
   msTotal := msTotal + (ms - lastTickCount);

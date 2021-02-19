@@ -7,7 +7,7 @@
 // ***************************************************************************
 // + MDL Neverwinter Night Gabriele Canazza
 
-     { TODO :
+     { TODO : Array Texture
 
    }
    { TODO : ZeroMem32 }
@@ -222,8 +222,7 @@ end;
 
 
   TAnimatedFrame = record   // same for Position and orientation
-    Index : Integer;
-    msTime : Single;
+    KeyTime : Single;
     KeyValue : TVector3D;
     ValueA : Single; // only orientation
   end;
@@ -231,35 +230,17 @@ end;
   TAnimatedObject = class(TObject)
   private
   public
+    ObjectName : string;
     PositionKeyCount : Integer;
     OrientationKeyCount : Integer;
-    PositionFrames: array of TAnimatedFrame;
-    OrientationFrames: array of TAnimatedFrame;
+    PositionKeys: array of TAnimatedFrame;
+    OrientationKeys: array of TAnimatedFrame;
     function AddPositionKey: TAnimatedFrame;
     function AddOrientationKey: TAnimatedFrame;
     constructor Create;
     destructor Destroy;override;
   end;
 
-  TAnimation = class(TObject)
-  private
-    FAnimationName:string;
-    FAnimationModelName: string;
-    FAnimatedObjectsCount : Integer;
-    FAnimationIndex:Integer;
-    FCurrentKeyTime: Single;
-
-//    AnimationRoot: animroot <node_name> //The animations entry point. This is useful for only animating part of the model and having the rest play a different animation. This used in the torch an shield holding animations to only influence the movement of a single arm.
-
-    FLoop : Boolean;
-    FLength: Single;
-    FTranstime: Single;  // 0.25  Time in seconds where the animation overlaps with other animation to ensure a smooth transitions.
-  public
-    AnimatedObjects : array of TAnimatedObject;
-    constructor Create;
-    destructor Destroy;override;
-    function AddAnimatedObject: TAnimatedObject;
-  end;
 // This class stores the complete definition for each 3ds object. Is used to
 // draw it in the scene also.
   T3DObject = class(TObject)
@@ -277,6 +258,7 @@ end;
     FRMode:Cardinal;
     FRenderMode: TRenderMode;
     FTransformList: TTransformList;
+
     procedure SetRenderMode(const Value: TRenderMode);
     procedure DrawBox;
   public
@@ -310,6 +292,24 @@ end;
     property Selected:Boolean read FSelected write FSelected;
 end;
 
+  TAnimation = class(TObject)
+  private
+    FAnimationName:string;
+    FAnimationModelName: string;
+    FAnimatedObjectsCount : Integer;
+    FAnimationIndex:Integer;
+    FCurrentKeyTime: Single;
+    FLoop : Boolean;
+    FLength: Integer;
+    FTranstime: Single;  // 0.25  Time in seconds where the animation overlaps with other animation to ensure a smooth transitions.
+    AnimationRoot: string;// <node_name> //The animations entry point. This is useful for only animating part of the model and having the rest play a different animation. This used in the torch an shield holding animations to only influence the movement of a single arm.
+  public
+    AnimatedObjects : array of TAnimatedObject;
+    function AddAnimatedObject: TAnimatedObject;
+    constructor Create;
+    destructor Destroy;override;
+    Property AnimationName : string read FAnimationName Write FAnimationName;
+  end;
 
 // This class is the core of this unit. It is used to load, draw all and more
   T3DModel = class(TObject)
@@ -341,6 +341,7 @@ end;
     function MakeFace (aString: string): TFace;
     function MakeVector2D (aString: string): TVector2D;
     function FindObject(const aName:string):T3DObject;
+    function FindAnimation(const aName:string):TAnimation;
     function Select(const Index:Integer):T3DObject;
     procedure Anim (ms: Single) ;
     procedure Draw;
@@ -351,6 +352,7 @@ end;
 procedure ZeroMem32(P:Pointer;Size:integer);
 function HasExtensionL(const Name : String; var DotPos : Cardinal) : Boolean;
 function JustFilenameL(const PathName : String) : String;
+function JustPathL(const PathName : String) : String;
 function JustNameL(const PathName : String) : String;
 function CharExistsL(const S : String; C : Char) : Boolean;
 function WordPositionL(N : Cardinal; const S, WordDelims : String;
@@ -623,6 +625,18 @@ begin
     Dec(I);
   until (I = 0) or (PathName[I] in DosDelimSet);
   Result := System.Copy(PathName, Succ(I), StMaxFileLen);
+end;
+function JustPathL(const PathName : String) : String;
+var
+  I : Cardinal;
+begin
+  Result := '';
+  if PathName = '' then Exit;
+  I := Succ(Cardinal(Length(PathName)));
+  repeat
+    Dec(I);
+  until (I = 0) or (PathName[I] in DosDelimSet);
+  Result := System.Copy(PathName, 0, Succ(I-1));
 end;
 
 // Convert TColor to RGBA
@@ -979,6 +993,7 @@ end;
 constructor TAnimation.Create;
 begin
   inherited;
+  FLoop := False;
   AnimatedObjects:=nil;
 end;
 
@@ -995,37 +1010,34 @@ begin
   SetLength(AnimatedObjects, C+1);
   AnimatedObjects[C]:=Result;
 end;
-
 // ************************** END TANIMATION **************************************
-
 // ************************** TANIMATEDOBJECT**************************************
 
 constructor TAnimatedObject.Create;
 begin
   inherited;
-  PositionFrames:=nil;
-  OrientationFrames:=nil;
+  PositionKeys:=nil;
+  OrientationKeys:=nil;
 end;
-
 destructor TAnimatedObject.Destroy;
 begin
-  Finalize(PositionFrames);
-  Finalize(OrientationFrames);
+  Finalize(PositionKeys);
+  Finalize(OrientationKeys);
   inherited;
 end;
 function TAnimatedObject.AddPositionKey: TAnimatedFrame;
 var C, I:Integer;
 begin
   C:=PositionKeyCount;
-  SetLength(PositionFrames, C+1);
-  PositionFrames[C]:=Result;
+  SetLength(PositionKeys, C+1);
+  PositionKeys[C]:=Result;
 end;
 function TAnimatedObject.AddOrientationKey: TAnimatedFrame;
 var C, I:Integer;
 begin
   C:=OrientationKeyCount;
-  SetLength(OrientationFrames, C+1);
-  OrientationFrames[C]:=Result;
+  SetLength(OrientationKeys, C+1);
+  OrientationKeys[C]:=Result;
 end;
 
 
@@ -1432,10 +1444,9 @@ end;
 procedure T3DModel.Anim (ms: Single) ;
 //var I:Integer;
 begin
+// Animroot mi dice da quale index iniziare
 //  for I:=0 to ObjectCount-1 do begin
 //   if Objects[I].Visible then begin
-//    Animations[i].FCurrentKeyTime
-//    Objects[I].
 //  end;
 end;
 
@@ -1449,6 +1460,18 @@ begin
       Result:=Objects[I];
       Break;
     end;
+end;
+function T3DModel.FindAnimation(const aName:string):TAnimation;
+var I:Integer;
+begin
+  Result:=nil;
+  for I:=0 to ObjectCount-1 do
+   if SameText(aName, Animations[I].AnimationName) then
+    begin
+      Result:=Animations[I];
+      Break;
+    end;
+
 end;
 
 
@@ -1626,10 +1649,8 @@ function T3DModel.LoadFromFileMDL(const FileName:string): Boolean;
 var
   fModel :  TextFile;
   aString : string;
-  i,o: Integer;
+  i: Integer;
   Object3d,ParentObject3d : T3DObject;
-  TempY: Single;
-  FirstVertice: Boolean;
   TmpVector : TVector3D;
   label Done;
 begin
@@ -1640,11 +1661,77 @@ begin
   Reset(fModel);
 
   while not Eof(fModel) do begin
-      Readln ( fModel, aString);
-      aString := TrimLeft(aString);
+    Readln ( fModel, aString);
+    aString := TrimLeft(aString);
+    if (Leftstr(  aString , 14) = 'beginmodelgeom') then begin
+      while Leftstr(  aString , 12) <> 'endmodelgeom' do begin
+        Readln ( fModel, aString);
+        if (Leftstr(  aString , 12) = 'node trimesh') or  ( Leftstr(  aString , 10) = 'node dummy') or ( Leftstr(  aString , 15) = 'node danglymesh')   then begin
+            Object3d :=  AddObject;
+            Object3d.ObjectName := ExtractWordL (3,aString,' ');
+          while Leftstr(  aString , 7) <> 'endnode' do begin
+            Readln ( fModel, aString);
+            aString := TrimLeft(aString);
+            if  leftstr ( aString, 6) = 'parent' then begin
+              Object3d.ParentObjectName := ExtractWordL (2,aString,' ');
+            end
+            else if  (leftstr ( aString, 8) = 'position') and (leftstr ( aString, 11) <> 'positionkey') then begin
+              TmpVector := MakeVector3Dp ( aString );
 
-    if (Leftstr(  aString , 10) = 'node light') then begin
-{  parent TCN01_A20_02
+              if Object3d.ParentObjectName <> 'NULL' then begin
+                ParentObject3d := FindObject( Object3d.ParentObjectName );
+                TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
+                Object3d.position := TmpVector;
+                Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
+
+              end
+            end
+            else if  (leftstr ( aString, 11) = 'orientation') and   (leftstr ( aString, 14) <> 'orientationkey') then begin
+              TmpVector := MakeVector3Dp ( aString );
+              TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
+              Object3d.orientation := TmpVector;
+              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
+            end
+
+
+            else if  leftstr ( aString, 6) = 'bitmap' then begin
+               if ExtractWordL (2,aString,' ') <> 'NULL' then begin
+                Object3d.Material.FMaterialFile :=  JustPathL(filename) + ExtractWordL (2,aString,' ') + '.tga';
+                Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
+               end;
+
+            end
+            else if  leftstr (  aString , 5) = 'verts' then begin
+              Object3d.VertexCount := StrToInt( ExtractWordL (2,aString,' '));
+              SetLength(Object3d.Verts,Object3d.VertexCount);
+
+              for I := 0 to Object3d.VertexCount -1 do begin
+                Readln ( fModel, aString);
+                Object3d.Verts[i] := MakeVector3D (aString );
+              end;
+            end
+            else if  leftstr (  aString , 5) = 'faces' then begin
+              Object3d.FaceCount := StrToInt( ExtractWordL (2,aString,' '));
+              SetLength(Object3d.Faces,Object3d.FaceCount);
+              for I := 0 to Object3d.FaceCount -1 do begin
+                Readln ( fModel, aString);
+                Object3d.Faces[i] := MakeFace (aString );
+              end;
+            end
+            else if  leftstr (  aString , 6) = 'tverts' then begin
+              Object3d.TexVertexCount := StrToInt( ExtractWordL (2,aString,' '));
+              SetLength(Object3d.TexVerts,Object3d.TexVertexCount);
+              for I := 0 to Object3d.TexVertexCount -1 do begin
+                Readln ( fModel, aString);
+                Object3d.TexVerts[i] := MakeVector2D (aString );
+              end;
+            end;
+          end;
+
+        end;
+//        else   { TODO : node lights  }
+{    if (Leftstr(  aString , 10) = 'node light') then begin
+  parent TCN01_A20_02
   ambientonly 0
   shadow 0
   isdynamic 0
@@ -1657,77 +1744,14 @@ begin
   radius 14
   multiplier 1
   color 0 0 0
-}
-    // ProcessNodeLight ( fmodel AddSceneLights (TLight)   -->  while Leftstr(  aString , 7) <> 'endnode' do begin
     // sul draw creo le luci
     end
-    else if (Leftstr(  aString , 7) = 'newanim') then begin
-//    ProcessNewAnim  ( const fmodel  --> Anims addAnim come addobject Anims ha al suointerno altri array di tuttigli object3d, come objects
-    end
-    else if (Leftstr(  aString , 12) = 'node trimesh') or  ( Leftstr(  aString , 10) = 'node dummy')
-    or ( Leftstr(  aString , 15) = 'node danglymesh')   then begin
-        { TODO : processNodevarious }
-        Object3d :=  AddObject;
-        Object3d.ObjectName := ExtractWordL (3,aString,' ');
-      while Leftstr(  aString , 7) <> 'endnode' do begin
-        Readln ( fModel, aString);
-        aString := TrimLeft(aString);
-        if  leftstr ( aString, 6) = 'parent' then begin
-          Object3d.ParentObjectName := ExtractWordL (2,aString,' ');
-        end
-        else if  (leftstr ( aString, 8) = 'position') and (leftstr ( aString, 11) <> 'positionkey') then begin
-          TmpVector := MakeVector3Dp ( aString );
+}
 
-          if Object3d.ParentObjectName <> 'NULL' then begin
-            ParentObject3d := FindObject( Object3d.ParentObjectName );
-            TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
-            Object3d.position := TmpVector;
-            Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
-
-          end
-        end
-        else if  (leftstr ( aString, 11) = 'orientation') and   (leftstr ( aString, 14) <> 'orientationkey') then begin
-          TmpVector := MakeVector3Dp ( aString );
-          TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
-          Object3d.orientation := TmpVector;
-          Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
-        end
-
-
-        else if  leftstr ( aString, 6) = 'bitmap' then begin
-           if ExtractWordL (2,aString,' ') <> 'NULL' then begin
-            Object3d.Material.FMaterialFile := ExtractWordL (2,aString,' ') + '.tga';
-            Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
-           end;
-
-        end
-        else if  leftstr (  aString , 5) = 'verts' then begin
-          Object3d.VertexCount := StrToInt( ExtractWordL (2,aString,' '));
-          SetLength(Object3d.Verts,Object3d.VertexCount);
-
-          for I := 0 to Object3d.VertexCount -1 do begin
-            Readln ( fModel, aString);
-            Object3d.Verts[i] := MakeVector3D (aString );
-          end;
-        end
-        else if  leftstr (  aString , 5) = 'faces' then begin
-          Object3d.FaceCount := StrToInt( ExtractWordL (2,aString,' '));
-          SetLength(Object3d.Faces,Object3d.FaceCount);
-          for I := 0 to Object3d.FaceCount -1 do begin
-            Readln ( fModel, aString);
-            Object3d.Faces[i] := MakeFace (aString );
-          end;
-        end
-        else if  leftstr (  aString , 6) = 'tverts' then begin
-          Object3d.TexVertexCount := StrToInt( ExtractWordL (2,aString,' '));
-          SetLength(Object3d.TexVerts,Object3d.TexVertexCount);
-          for I := 0 to Object3d.TexVertexCount -1 do begin
-            Readln ( fModel, aString);
-            Object3d.TexVerts[i] := MakeVector2D (aString );
-          end;
-        end;
       end;
-
+    end
+    else if (Leftstr(  aString , 7) = 'newanim') then begin
+     // ProcessNewAnim  ( fmodel , aString );
     end;
   end;
 
@@ -1742,23 +1766,46 @@ var
   Anim:TAnimation;
   aString : string;
   AnimatedObject : TAnimatedObject;
+  TmpVector :TVector3D;
+  I: Integer;
 begin
   Anim :=  AddAnimation;
   Anim.FAnimationName := ExtractWordL (2,FirstString,' ');
   Anim.FAnimationModelName := ExtractWordL (3,FirstString,' ');
-  while Leftstr(  aString , 7) <> 'endnode' do begin
-    Readln ( fModel, aString);
-    aString := TrimLeft(aString);
-    if  leftstr ( aString, 10) = 'node dummy' then begin
-      AnimatedObject := Anim.AddAnimatedObject;
-//      AnimatedObject.FramesCount := imax (PoistionKeyCount,OrienationkeyCount )
-//      AnimatedObject.length
-      while Leftstr(  aString , 7) <> 'endnode' do begin
-//        SetLength(Object3d.Faces,Object3d.FaceCount);
+  while Leftstr(  aString , 8) <> 'doneanim' do begin
+    Readln ( fModel, aString);  aString := TrimLeft(aString);
+    if Leftstr(  aString , 6) ='length' then Anim.FLength := Trunc(StrToFloat(ExtractWordL( 2,aString,' ' ))*1000) // Milliseconds
+    else if Leftstr(  aString , 9) ='transtime' then Anim.FTranstime:= StrToFloat(ExtractWordL( 2,aString,' ' ))
+    else if Leftstr(  aString , 8) ='animroot' then Anim.AnimationRoot:= ExtractWordL( 2,aString,' ' )
+   // else if Leftstr(  aString , 8) ='event' then Anim.AnimationRoot:= ExtractWordL( 2,aString,' ' ) { TODO : event 0.5 hit }
 
-//        ObjectAnim.PositionKey := StrtoFloat (ExtractWordL (2,aString,' '));
-      end;
-    end
+    else if  leftstr ( aString, 10) = 'node dummy' then begin
+      AnimatedObject:=Anim.AddAnimatedObject;
+      AnimatedObject.ObjectName :=  ExtractWordL( 3,aString,' ' ) ;
+      { TODO : parent? }
+      while Leftstr(  aString , 7) <> 'endnode' do begin
+        Readln ( fModel, aString); aString := TrimLeft(aString);
+        if Leftstr(  aString , 11) ='positionkey' then begin
+          AnimatedObject.PositionKeyCount := StrToInt( ExtractWordL( 2,aString,' ' ));
+          SetLength(AnimatedObject.PositionKeys ,AnimatedObject.PositionKeyCount);
+          for I:= 0 to AnimatedObject.PositionKeyCount -1 do begin
+            Readln ( fModel, aString); aString := TrimLeft(aString);
+            AnimatedObject.PositionKeys[I].KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
+            AnimatedObject.PositionKeys[I].KeyValue := MakeVector3D ( ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ') );
+          end;
+        end
+        else if Leftstr(  aString , 14) ='orientationkey' then begin
+          AnimatedObject.orientationkeyCount := StrToInt( ExtractWordL( 2,aString,' ' ));
+          SetLength(AnimatedObject.OrientationKeys ,AnimatedObject.orientationkeyCount);
+          for I:= 0 to AnimatedObject.OrientationKeyCount -1 do begin
+            Readln ( fModel, aString); aString := TrimLeft(aString);
+            AnimatedObject.OrientationKeys[I].KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
+            AnimatedObject.OrientationKeys[I].ValueA := StrToFloat( ExtractWordL( 4,aString,' '));
+            AnimatedObject.orientationKeys[I].KeyValue  := MakeVector3D ( ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ') );
+          end;
+        end;
+      end
+    end;
   end;
     {newanim ca1slashl c_GolemIron
   length 1
