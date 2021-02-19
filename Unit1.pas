@@ -52,7 +52,8 @@ var
   Ay, My:Single;
   CX,CY,CZ: Single;
   nFrames : Integer;
-  lastTickCount, msTotal : Integer;
+  lastTickCount  : Integer;
+  ElapsedTime: Single;
   MdlPath,TexturePath,SuperModelPath: string;
 implementation
 
@@ -71,6 +72,8 @@ begin
   glEnable(GL_LIGHT0);    // Enable Light0
   glEnable(GL_LIGHTING);  // Enable Lighting
   glenable(GL_COLOR_MATERIAL);
+  LastTickCount := GetTickCount;
+
 end;
 
 procedure TForm1.ListBox1Click(Sender: TObject);
@@ -179,6 +182,7 @@ var
 //  Ref: PRef;
 
 begin
+
   Inc(nFrames);
 
   ClearGL;     // Clear frame buffer
@@ -206,8 +210,11 @@ begin
 //  T3DModel(Ref[i+1]).Anim;
 //    Inc(i,2);
 //  end;
+  ms := GetTickCount;
+  ElapsedTime := 1000 / (ms - lastTickCount);
+  LastTickCount := ms;
+ // Model.Anim (ElapsedTime);  // anim the complete MDL file
   Model.Draw;  // Draws the complete MDL file
-//  Model.Anim;  // Draws the complete MDL file
   Tcn.Draw;
  {  ms := GetTickCount;
   msTotal := msTotal + (ms - lastTickCount);

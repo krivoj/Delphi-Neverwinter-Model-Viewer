@@ -245,6 +245,7 @@ end;
 // draw it in the scene also.
   T3DObject = class(TObject)
   private
+    FModel: T3DModel;
     FVisible:Boolean;
     FObjectName:string;
     FObjectType:string;
@@ -270,6 +271,7 @@ end;
     constructor Create;
     destructor Destroy;override;
     procedure Draw;
+    procedure Anim ( ms: Single);
     procedure ProcessNextObjectChunk(PreviousChunk:TChunk);
     procedure ReadVertices(PreviousChunk:TChunk);
     procedure ReadVertexIndices(PreviousChunk:TChunk);
@@ -302,7 +304,7 @@ end;
     FAnimationIndex:Integer;
     FCurrentKeyTime: Single;
     FLoop : Boolean;
-    FLength: Integer;
+    FLength: Single;
     FTranstime: Single;  // 0.25  Time in seconds where the animation overlaps with other animation to ensure a smooth transitions.
     AnimationRoot: string;// <node_name> //The animations entry point. This is useful for only animating part of the model and having the rest play a different animation. This used in the torch an shield holding animations to only influence the movement of a single arm.
   public
@@ -998,6 +1000,7 @@ begin
   inherited;
   FLoop := False;
   AnimatedObjects:=nil;
+  FAnimatedObjectsCount:=0;
 end;
 
 destructor TAnimation.Destroy;
@@ -1011,6 +1014,7 @@ begin
   Result:=TAnimatedObject.Create;
   C:=FAnimatedObjectsCount;
   SetLength(AnimatedObjects, C+1);
+  inc(FAnimatedObjectsCount);
   AnimatedObjects[C]:=Result;
 end;
 // ************************** END TANIMATION **************************************
@@ -1233,7 +1237,7 @@ begin
   if FSelected then
    DrawBox;
   Material.SetMaterial;
-  glPushName(FObjectIndex); { TODO : con molti modelli? }
+  glPushName(FObjectIndex);
   glBegin(FRMode);
   glEnable( GL_TEXTURE_2D );
   glEnable( GL_TEXTURE_GEN_T );
@@ -1253,7 +1257,53 @@ begin
   glPopName;
   FTransformList.Pop;
 end;
+procedure T3DObject.Anim( ms: Single);
+var F, ao, pk,ok,PointIndex:Integer;
+begin
+//  FTransformList.Push;
 
+
+    FModel.ActiveAnimationName := FModel.Animations[0].FAnimationName; // debug
+    For ao := 0 to FModel.Animations[0].FAnimatedObjectsCount -1 do begin
+      if FModel.Animations[0].AnimatedObjects [ao].ObjectName = FObjectName then begin  // this Object
+        for pk := 0 to FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount -1 do begin //!! 2
+      //    if (ms >= FModel.Animations[0].AnimatedObjects [ao].PositionKeys [pk].KeyTime) and
+      //    (ms <= FModel.Animations[0].AnimatedObjects [ao].PositionKeys [pk+1].KeyTime)
+           // begin
+
+
+           // TransformList.AddTransformEx (  ttTranslate , 0,
+           // FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk+1].KeyValue.X,
+           // FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk+1].KeyValue.Y,
+           // FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk+1].KeyValue.Z);
+       //    end;
+            TransformList.AddTransformEx (  ttTranslate , 0,
+            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk].KeyValue.X,
+            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk].KeyValue.Y,
+            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk].KeyValue.Z);
+
+
+        end;
+        for ok := 0 to FModel.Animations[0].AnimatedObjects [ao].OrientationKeyCount -1 do begin
+       //   if (ms >= FModel.Animations[0].AnimatedObjects [ao].OrientationKeys [ok].KeyTime) and
+       //   (ms <= FModel.Animations[0].AnimatedObjects [ao].OrientationKeys [ok+1].KeyTime)
+      //     then begin
+            //TransformList.AddTransformEx (  ttRotate , 0,
+           // FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[pk+1].KeyValue.X,
+            //FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[pk+1].KeyValue.Y,
+           // FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[pk+1].KeyValue.Z);
+       //    end;
+            TransformList.AddTransformEx (  ttRotate , 0,
+            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[ok].KeyValue.X,
+            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[ok].KeyValue.Y,
+            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[ok].KeyValue.Z);
+
+        end;
+      end;
+
+    end;
+//  FTransformList.Pop;
+end;
 
 procedure T3DObject.DrawBox;
 //var OldLineWidth:Single;
@@ -1452,12 +1502,14 @@ begin
 end;
 
 procedure T3DModel.Anim (ms: Single) ;
-//var I:Integer;
+var I:Integer;
 begin
 // Animroot mi dice da quale index iniziare
-//  for I:=0 to ObjectCount-1 do begin
-//   if Objects[I].Visible then begin
-//  end;
+  for I:=0 to ObjectCount-1 do begin
+   if Objects[I].Visible then
+    Objects[I].Anim (ms) ;
+
+  end;
 end;
 
 function T3DModel.FindObject(const aName: string): T3DObject;
@@ -1680,6 +1732,8 @@ begin
 used to group objects or indicate special locations to the engine like target coordinates for spells and projectiles.}
         if (Leftstr(  aString , 12) = 'node trimesh') or ( Leftstr(  aString , 10) = 'node dummy')   or ( Leftstr(  aString , 15) = 'node danglymesh')   then begin
             Object3d :=  AddObject;
+            Object3d.FModel:= Self;
+
             Object3d.ObjectName := ExtractWordL (3,aString,' ');
             Object3d.ObjectType :=  ExtractWordL (2,aString,' ');
           while Leftstr(  aString , 7) <> 'endnode' do begin
@@ -1808,7 +1862,7 @@ begin
   Anim.FAnimationModelName := ExtractWordL (3,FirstString,' ');
   while Leftstr(  aString , 8) <> 'doneanim' do begin
     Readln ( fModel, aString);  aString := TrimLeft(aString);
-    if Leftstr(  aString , 6) ='length' then Anim.FLength := Trunc(StrToFloat(ExtractWordL( 2,aString,' ' ))*1000) // Milliseconds
+    if Leftstr(  aString , 6) ='length' then Anim.FLength := StrToFloat(ExtractWordL( 2,aString,' ' )) // Milliseconds
     else if Leftstr(  aString , 9) ='transtime' then Anim.FTranstime:= StrToFloat(ExtractWordL( 2,aString,' ' ))
     else if Leftstr(  aString , 8) ='animroot' then Anim.AnimationRoot:= ExtractWordL( 2,aString,' ' )
    // else if Leftstr(  aString , 8) ='event' then Anim.AnimationRoot:= ExtractWordL( 2,aString,' ' ) { TODO : event 0.5 hit }
