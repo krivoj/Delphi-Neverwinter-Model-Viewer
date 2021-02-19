@@ -6,7 +6,7 @@
 // *********************** Release 19/11/2003 ********************************
 // ***************************************************************************
 // + MDL Neverwinter Night Gabriele Canazza
-
+     { TODO : a_ba.mdl animations }
      { TODO : Array Texture
 
    }
