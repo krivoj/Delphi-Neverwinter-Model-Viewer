@@ -84,6 +84,7 @@ var
 begin
 //  Model.LoadFromFile ('sulaco.3ds');  // Load the 3DS file
   Model.LoadFromFileMDL ( MdlPath + ListBox1.Items[ListBox1.ItemIndex], TexturePath,SuperModelPath );  // Load the MDL file
+  Model.Name:='skeleton';
   tcn.LoadFromFileMDL ( MdlPath +'tcn01_a20_02.mdl',TexturePath,SuperModelPath );  // Load the MDL file
 
 
@@ -219,10 +220,10 @@ begin
 //    Inc(i,2);
 //  end;
   ms := GetTickCount;
-  ElapsedTime := 1000 / (ms - lastTickCount);
+  ElapsedTime := (ms - lastTickCount) / 1000;
   LastTickCount := ms;
-  //if ElapsedTime > 0.200  then
-  //Model.Anim (ElapsedTime);  // anim the complete MDL file
+//  if ElapsedTime > 0.20  then
+ //Model.Anim (ElapsedTime);  // anim the complete MDL file
   Model.Draw;  // Draws the complete MDL file
   Tcn.Draw;
  {  ms := GetTickCount;

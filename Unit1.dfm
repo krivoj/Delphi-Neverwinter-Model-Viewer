@@ -59,6 +59,7 @@ object Form1: TForm1
       Height = 25
       Caption = 'test'
       TabOrder = 3
+      Visible = False
       OnClick = Button1Click
     end
   end

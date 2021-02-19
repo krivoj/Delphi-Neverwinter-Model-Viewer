@@ -224,7 +224,7 @@ end;
   TAnimatedFrame = record   // same for Position and orientation
     KeyTime : Single;
     KeyValue : TVector3D;
-    ValueA : Single; // only orientation
+    Angle : Single; // only orientation
   end;
 
   TAnimatedObject = class(TObject)
@@ -264,7 +264,8 @@ end;
     procedure SetRenderMode(const Value: TRenderMode);
     procedure DrawBox;
   public
-    CURRENTPK,CURRENTOK : Integer;
+    Rot  : Single;
+    TT0, TO0 : TTransformation;
     Verts:array of TVector3D;
     Normals:array of TVector3D;
     TexVerts:array of TVector2D;
@@ -329,6 +330,7 @@ end;
     procedure CleanUpMdl;
     procedure ComputeNormals;
   public
+    Name : string;
     Objects:array of T3DObject;
     Animations: array of TAnimation;
     ActiveAnimationName: string;    // if <> '' then process animation by name in model.draw event
@@ -1234,6 +1236,19 @@ end;
 procedure T3DObject.Draw;
 var F, iVertex, PointIndex:Integer;
 begin
+
+  //Anim (20);
+
+  if TT0 <> nil then begin
+
+ // TO0.Angle:=Rot;             // Rotate Sulaco Object in the axis defined in the transformation
+//  if fModel.name  <> 'skeleton' then
+
+//  TT0.Z:=TT0.Z-0.1;//   Sin(Rot/60)*180/pi;  // Move Geosphere Object in Z axis
+ // if fModel.name  = 'skeleton' then
+
+ // TO0.angle:=TO0.angle-1;//   Sin(Rot/60)*180/pi;  // Move Geosphere Object in Z axis
+  end;
   FTransformList.Push;
   if FSelected then
    DrawBox;
@@ -1257,23 +1272,23 @@ begin
   glEnd;
   glPopName;
   FTransformList.Pop;
+
+//  Rot:=Rot + 1;
+//  if Rot>=360 then
+//   Rot:=0.0;
+
 end;
 procedure T3DObject.Anim( ms: Single);
-var F, ao, pk,ok,PointIndex:Integer;
+var F, ao, pk,ok,aRnd:Integer; TmpVector: TVector3D;ParentObject3d: T3DObject;
 begin
 //  FTransformList.Push;
   //glBegin(FRMode);
 
+    if FModel.AnimationCount <= 0 then Exit;
 
-    FModel.ActiveAnimationName := FModel.Animations[0].FAnimationName; // debug
-    For ao := 0 to FModel.Animations[0].FAnimatedObjectsCount -1 do begin
-      if FModel.Animations[0].AnimatedObjects [ao].ObjectName = FObjectName then begin  // this Object
-        CurrentPK := CurrentPK + 1;
-        CurrentOK := CurrentOK + 1;
-        if CurrentPK > FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount-1 then
-          CurrentPK := 0;
-        if CurrentOK > FModel.Animations[0].AnimatedObjects [ao].OrientationKeyCount-1 then
-          CurrentOK := 0;
+    FModel.ActiveAnimationName := FModel.Animations[4].FAnimationName; // debug
+    For ao := 0 to FModel.Animations[4].FAnimatedObjectsCount -1 do begin
+      if FModel.Animations[4].AnimatedObjects [ao].ObjectName = FObjectName then begin  // this Object
 
       //  for pk := 0 to FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount -1 do begin //!! 2
       //    if (ms >= FModel.Animations[0].AnimatedObjects [ao].PositionKeys [pk].KeyTime) and
@@ -1288,11 +1303,17 @@ begin
            // FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk+1].KeyValue.Z);
        //    end;
             if FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount > 0 then begin
+              if ParentObjectName <> 'NULL' then begin
+                TmpVector := FModel.Animations[0].AnimatedObjects [ao].PositionKeys[aRnd].KeyValue;
+                ParentObject3d := fmodel.FindObject( ParentObjectName );
+                TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
 
-            TransformList.AddTransformEx (  ttTranslate , 0,
-            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[CurrentPK].KeyValue.X,
-            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[CurrentPK].KeyValue.Y,
-            FModel.Animations[0].AnimatedObjects [ao].PositionKeys[CurrentPK].KeyValue.Z);
+                aRnd := RandomRange(0,FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount-1);
+                TT0.X := TmpVector.X;// VectorAdd(  ) FModel.Animations[0].AnimatedObjects [ao].PositionKeys[aRnd].KeyValue.X;
+                TT0.Y := TmpVector.Y;
+                TT0.Z := TmpVector.Z;
+              end;
+
             end;
 
      //   end;
@@ -1306,10 +1327,19 @@ begin
            // FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[pk+1].KeyValue.Z);
        //    end;
             if FModel.Animations[0].AnimatedObjects [ao].OrientationKeyCount > 0 then begin
-            TransformList.AddTransformEx (  ttRotate , 0,
-            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[CurrentOK].KeyValue.X,
-            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[CurrentOK].KeyValue.Y,
-            FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[CurrentOK].KeyValue.Z);
+                TmpVector := FModel.Animations[0].AnimatedObjects [ao].orientationKeys[aRnd].KeyValue;
+                ParentObject3d := fmodel.FindObject( ParentObjectName );
+                TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
+
+                aRnd := RandomRange(0,FModel.Animations[0].AnimatedObjects [ao].orientationKeyCount-1);
+                TO0.X := TmpVector.X;// VectorAdd(  ) FModel.Animations[0].AnimatedObjects [ao].orientationKeys[aRnd].KeyValue.X;
+                TO0.Y := TmpVector.Y;
+                TO0.Z := TmpVector.Z;
+                TO0.Angle:= FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[aRnd].KeyValue.Z;
+//if fModel.name  = 'skeleton' then
+
+//TO0.angle:=TO0.angle-1;//   Sin(Rot/60)*180/pi;  // Move Geosphere Object in Z axis
+
             end;
        // end;
       end;
@@ -1765,7 +1795,7 @@ used to group objects or indicate special locations to the engine like target co
                 ParentObject3d := FindObject( Object3d.ParentObjectName );
                 TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
                 Object3d.position := TmpVector;
-                Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
+                Object3d.TT0:=Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
 
               end
             end
@@ -1775,7 +1805,7 @@ used to group objects or indicate special locations to the engine like target co
                 TmpVector := MakeVector3Dp ( aString );
                 TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
                 Object3d.orientation := TmpVector;
-                Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
+                Object3d.TO0 := Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
               end
             end
 
@@ -1904,7 +1934,7 @@ begin
           for I:= 0 to AnimatedObject.OrientationKeyCount -1 do begin
             Readln ( fModel, aString); aString := TrimLeft(aString);
             AnimatedObject.OrientationKeys[I].KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
-            AnimatedObject.OrientationKeys[I].ValueA := StrToFloat( ExtractWordL( 4,aString,' '));
+            AnimatedObject.OrientationKeys[I].Angle := StrToFloat( ExtractWordL( 4,aString,' '));
             AnimatedObject.orientationKeys[I].KeyValue  := MakeVector3D ( ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ') );
           end;
         end;
@@ -1963,6 +1993,8 @@ begin
   Result.y := StrToFloat( ExtractWordL (2,aString,' '));
 
 end;
+initialization
+  Randomize;
 
 
 end.
