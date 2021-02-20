@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Visible = True
   OnClose = FormClose
   OnCreate = FormCreate
   OnMouseDown = FormMouseDown
@@ -59,6 +60,7 @@ object Form1: TForm1
       Height = 25
       Caption = 'test'
       TabOrder = 3
+      Visible = False
       OnClick = Button1Click
     end
     object ComboBox1: TComboBox
@@ -100,6 +102,7 @@ object Form1: TForm1
       Height = 18
       Caption = 'to0'
       TabOrder = 8
+      Visible = False
       OnClick = Button2Click
     end
     object ComboBox2: TComboBox

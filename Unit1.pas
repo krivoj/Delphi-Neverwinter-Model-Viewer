@@ -11,6 +11,25 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,Winapi.ShellAPI,
   Dialogs, AppEvnts, Unit3DS, OpenGL,DSE_SearchFiles, Vcl.StdCtrls, Vcl.ExtCtrls, CnSpin;
+const
+  HITBUFFERCOUNT = 64;
+
+
+type
+  PHit = ^THit;
+  THit = packed record
+    NCount, DNear, DFar:GLuint;
+    Names:array[1..32] of GLuint;
+end;
+
+type
+  TViewPort = packed record
+    Left, Bottom, Width, Height:GLint;
+end;
+
+type
+  THitBuffer = array[1..HITBUFFERCOUNT] of GLuint;
+
 type
   TRef = array[0..0] of T3DModel;
   PRef = ^TRef;
@@ -47,6 +66,9 @@ type
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
+    procedure Selection(const X, Y: GLdouble);
+    function SelectionDone:Integer;
+    function Selected(const X, Y:Integer): Integer;
   public
     { Public declarations }
 
@@ -55,6 +77,7 @@ type
     Tcn:T3DModel;  // Variable for instancing T3DModel
 // ********************************** END NEW **********************************
 
+    HitBuffer:THitBuffer;
     procedure Render;
   end;
 
@@ -66,8 +89,9 @@ var
   nFrames : Integer;
   lastTickCount : Integer;
   ElapsedTime: Single;
-  GlobalTo0:TTransformation;
   MdlPath,TexturePath,SuperModelPath: string;
+  ModelLoaded: Boolean;
+  SelectedObject: T3DObject;
 implementation
 
 uses UglContext;
@@ -97,17 +121,17 @@ begin
   Model.LoadFromFileMDL ( MdlPath + ListBox1.Items[ListBox1.ItemIndex], MdlPath, TexturePath,SuperModelPath );  // Load the MDL file
   Model.Name:='skeleton';
   ComboBox1.Clear;
+  ComboBox2.Clear;
   for i :=0 to Model.AnimationCount -1 do begin
     ComboBox1.AddItem( Model.Animations[i].AnimationName,nil );
   end;
-  ComboBox2.Clear;
   for i :=0 to Model.ObjectCount -1 do begin
     ComboBox2.AddItem( Model.Objects[i].ObjectName,nil );
   end;
 
 
   tcn.LoadFromFileMDL ( MdlPath +'tcn01_a20_02.mdl',MdlPath,TexturePath,SuperModelPath );  // Load the MDL file
-
+  ModelLoaded:= True;
 
 end;
 
@@ -118,11 +142,10 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  GlobalTo0.TransformType := ttTranslate;
-  GlobalTo0.X := StrToFloat(Edit1.text);
-  GlobalTo0.Y := StrToFloat(Edit2.text);
-  GlobalTo0.Z := StrToFloat(Edit3.text);
-  GlobalTo0.Angle := StrToFloat(Edit4.text);
+  TTransformation(SelectedObject.TransformList.Items[0]).Angle := StrToFloat(Edit4.text);
+  TTransformation(SelectedObject.TransformList.Items[0]).X := StrToFloat(Edit1.text);
+  TTransformation(SelectedObject.TransformList.Items[0]).Y := StrToFloat(Edit2.text);
+  TTransformation(SelectedObject.TransformList.Items[0]).Z := StrToFloat(Edit3.text);
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);
@@ -148,14 +171,21 @@ end;
 procedure TForm1.ComboBox1CloseUp(Sender: TObject);
 begin
   Model.ActiveAnimationName := ComboBox1.Items[ComboBox1.ItemIndex];
+
 end;
 
 procedure TForm1.ComboBox2CloseUp(Sender: TObject);
-var
-  node : T3DObject;
 begin
-  node := Model.FindObject( ComboBox2.Items[ComboBox2.ItemIndex]  );
-  GlobalTo0:= node.TO0;
+  SelectedObject := Model.FindObject( ComboBox2.Items[ComboBox2.ItemIndex]  );
+
+  Edit1.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).x  );
+  Edit2.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).y  );
+  Edit3.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).z  );
+  Edit4.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).angle  );
+
+ { Edit1.Text := FloatToStr( SelectedObject.Position.x  );
+  Edit2.Text := FloatToStr( SelectedObject.Position.y  );
+  Edit3.Text := FloatToStr( SelectedObject.Position.z  );   }
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -198,7 +228,20 @@ procedure TForm1.FormMouseDown(Sender: TObject; Button: TMouseButton; Shift: TSh
 begin
   Mx:=X;   // captures new positions ...
   My:=Y;   // ... for next call to MouseMove event
+// ********************************** NEW NEW **********************************
+// Selected(X, Y) returns the index of the object selected. Passing this index
+// to the Select method of T3DModel class, the object is "selected". As you will
+// see in later samples, the Select method of T3DModel class also returns
+// an object pointer to the selected object. You can use this pointer for
+// changing color for example.
+ // SelectedObject:= Model.Select(Selected(X, Y));
+// ********************************** END NEW **********************************
+//  Edit1.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).x  );
+//  Edit2.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).y  );
+ // Edit3.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).z  );
+ // Edit4.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).angle  );
 
+ // Caption:= SelectedObject.ObjectName;
 end;
 
 procedure TForm1.FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
@@ -222,7 +265,7 @@ procedure TForm1.ApplicationEvents1Idle(Sender: TObject;
   var Done: Boolean);
 begin
   Done:=False;
-  Render;      // Render the scene
+  if ModelLoaded then Render;      // Render the scene
 end;
 
 procedure TForm1.Render;
@@ -235,6 +278,7 @@ var
 begin
 
   Inc(nFrames);
+ // Model.Anim (ElapsedTime);  // anim the complete MDL file
 
   ClearGL;     // Clear frame buffer
  // ResetModelView;
@@ -263,16 +307,51 @@ begin
 //  end;
  ms := GetTickCount;
  ElapsedTime := (ms - lastTickCount) / 1000;
- Caption := FloatToStr(ElapsedTime) ;
+// Caption := FloatToStr(ElapsedTime) ;
  //ElapsedTime := 0;
  LastTickCount := ms;
-// Model.Anim (ElapsedTime);  // anim the complete MDL file
 
   Model.Draw;  // Draws the complete MDL file
   Tcn.Draw;
 
 
   SwapGL;     // Swap buffers
+end;
+function TForm1.Selected(const X, Y:Integer): Integer;
+begin
+  Selection(X, Y);
+  Render;
+  result:=SelectionDone;
+end;
+procedure TForm1.Selection(const X, Y: GLdouble);
+var ViewPort:TViewPort;
+    Py:GLdouble;
+begin
+  glSelectBuffer(HITBUFFERCOUNT, @HitBuffer);
+  glRenderMode(GL_SELECT);
+  glInitNames;
+  glPushName(0);
+  glMatrixMode(GL_PROJECTION);
+  glPushMatrix;
+  glLoadIdentity;
+  glGetIntegerv(GL_VIEWPORT, @ViewPort);
+  Py:=ViewPort.Height - Y;
+  gluPickMatrix(X, Py, 30.0, 30.0, @ViewPort);
+  gluPerspective(45, Width/Height, 1, 300);
+end;
+
+function TForm1.SelectionDone:Integer;
+var Hits:GLint;
+    Hit:PHit;
+begin
+  Result:=-1;
+  glMatrixMode(GL_PROJECTION);
+  glPopMatrix;
+  Hits:=glRenderMode(GL_RENDER);
+  if Hits=0 then
+   Exit;
+  Hit:=@HitBuffer[1];
+  Result:=Hit^.Names[Hit^.NCount];
 end;
 
 
