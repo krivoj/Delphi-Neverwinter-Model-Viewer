@@ -6,7 +6,8 @@
 // *********************** Release 19/11/2003 ********************************
 // ***************************************************************************
 // + MDL Neverwinter Night Gabriele Canazza
-     { TODO : a_ba.mdl animations supermodel }
+     { TODO : a_ba.mdl animations supermodel + a_ba non combat , spells ecc...}
+     { TODO : Rifare load : prima la geometria e qui settare rootdummy, poi maxanim per le animazioni, }
      { TODO : Array Texture
 
    }
@@ -232,14 +233,16 @@ end;
   public
     ObjectName : string;
     ParentAnimatedObjectName : string;
-    PositionKeyCount : Integer;
-    OrientationKeyCount : Integer;
     PositionKeys: array of TAnimatedFrame;
     OrientationKeys: array of TAnimatedFrame;
     function AddPositionKey: TAnimatedFrame;
     function AddOrientationKey: TAnimatedFrame;
+    function GetPositionCount: Integer;
+    function GetOrientationCount: Integer;
     constructor Create;
     destructor Destroy;override;
+    property PositionKeyCount : Integer read GetPositionCount;
+    property OrientationKeyCount : Integer read GetOrientationCount;
   end;
 
 // This class stores the complete definition for each 3ds object. Is used to
@@ -1054,6 +1057,14 @@ begin
   SetLength(OrientationKeys, C+1);
   OrientationKeys[C]:=Result;
 end;
+function TAnimatedObject.GetPositionCount: Integer;
+begin
+  Result:=Length(PositionKeys);
+end;
+function TAnimatedObject.GetOrientationCount: Integer;
+begin
+  Result:=Length(OrientationKeys);
+end;
 
 
 // ************************** END TANIMATEDOBJECT **************************************
@@ -1791,6 +1802,8 @@ begin
   Reset(fModel);
 
   while not Eof(fModel) do begin
+    //loadgeometry
+    //loadanimations
     Readln ( fModel, aString);
     aString := TrimLeft(aString);
     if Leftstr(  aString , 13) = 'setsupermodel' then supermodel:= ExtractWordL (3,aString,' ') + '.mdl'
@@ -1925,6 +1938,7 @@ var
   AnimatedObject : TAnimatedObject;
   object3d: T3DObject;
   TmpVector :TVector3D;
+  PositionKey, OrientationKey : TAnimatedFrame;
   I: Integer;
 begin
   Anim :=  AddAnimation;
@@ -1954,25 +1968,23 @@ begin
             TORootDummy := object3d.TO0;
           end;
 
-          AnimatedObject.PositionKeyCount := StrToInt( ExtractWordL( 2,aString,' ' ));
-          SetLength(AnimatedObject.PositionKeys ,AnimatedObject.PositionKeyCount);
-          for I:= 0 to AnimatedObject.PositionKeyCount -1 do begin
+          for I:= 0 to StrToInt( ExtractWordL( 2,aString,' ' )) -1 do begin
             Readln ( fModel, aString); aString := TrimLeft(aString);
-            AnimatedObject.PositionKeys[I].KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
+            PositionKey := AnimatedObject.AddPositionKey;
+            PositionKey.KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
             tmp := ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ');
-            AnimatedObject.PositionKeys[I].KeyValue := MakeVector3D ( tmp );
+            PositionKey.KeyValue := MakeVector3D ( tmp );
           end;
-        end
+        end               { TODO : while endlist nell'altra versione if wordcount = 1   }
         else if Leftstr(  aString , 14) ='orientationkey' then begin
 
-          AnimatedObject.orientationkeyCount := StrToInt( ExtractWordL( 2,aString,' ' ));
-          SetLength(AnimatedObject.OrientationKeys ,AnimatedObject.orientationkeyCount);
-          for I:= 0 to AnimatedObject.OrientationKeyCount -1 do begin
+          for I:= 0 to StrToInt( ExtractWordL( 2,aString,' ' )) -1 do begin
             Readln ( fModel, aString); aString := TrimLeft(aString);
-            AnimatedObject.OrientationKeys[I].KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
-            AnimatedObject.OrientationKeys[I].Angle := StrToFloat( ExtractWordL( 5,aString,' '));
+            OrientationKey := AnimatedObject.AddOrientationKey;
+            OrientationKey.KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
+            OrientationKey.Angle := StrToFloat( ExtractWordL( 5,aString,' '));
             tmp :=  ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ');
-            AnimatedObject.orientationKeys[I].KeyValue  := MakeVector3D ( tmp );
+            OrientationKey.KeyValue  := MakeVector3D ( tmp );
           end;
         end;
       end
