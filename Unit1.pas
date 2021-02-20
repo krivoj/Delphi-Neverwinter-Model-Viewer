@@ -24,6 +24,7 @@ type
     Button6: TButton;
     Button7: TButton;
     Button1: TButton;
+    ComboBox1: TComboBox;
     procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -35,6 +36,7 @@ type
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure ComboBox1CloseUp(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,8 +56,9 @@ var
   Ay, My:Single;
   CX,CY,CZ: Single;
   nFrames : Integer;
-  lastTickCount  : Integer;
+  lastTickCount : Integer;
   ElapsedTime: Single;
+
   MdlPath,TexturePath,SuperModelPath: string;
 implementation
 
@@ -85,6 +88,10 @@ begin
 //  Model.LoadFromFile ('sulaco.3ds');  // Load the 3DS file
   Model.LoadFromFileMDL ( MdlPath + ListBox1.Items[ListBox1.ItemIndex], TexturePath,SuperModelPath );  // Load the MDL file
   Model.Name:='skeleton';
+  ComboBox1.Clear;
+  for i :=0 to Model.AnimationCount -1 do begin
+    ComboBox1.AddItem( Model.Animations[i].AnimationName,nil );
+  end;
   tcn.LoadFromFileMDL ( MdlPath +'tcn01_a20_02.mdl',TexturePath,SuperModelPath );  // Load the MDL file
 
 
@@ -92,7 +99,7 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-Model.Anim (ElapsedTime);
+Model.Anim (0.1);
 
 end;
 
@@ -114,6 +121,11 @@ begin
   glLoadIdentity;
   gluLookAt( 2 , -5, CZ, 0, 0, 0, 0, 1, 0); // Set position and orientation
 
+end;
+
+procedure TForm1.ComboBox1CloseUp(Sender: TObject);
+begin
+  Model.ActiveAnimationName := ComboBox1.Items[ComboBox1.ItemIndex];
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -219,37 +231,16 @@ begin
 //  T3DModel(Ref[i+1]).Anim;
 //    Inc(i,2);
 //  end;
-  ms := GetTickCount;
-  ElapsedTime := (ms - lastTickCount) / 1000;
-  LastTickCount := ms;
-//  if ElapsedTime > 0.20  then
- //Model.Anim (ElapsedTime);  // anim the complete MDL file
+ ms := GetTickCount;
+ ElapsedTime := (ms - lastTickCount) / 1000;
+ Caption := FloatToStr(ElapsedTime) ;
+ //ElapsedTime := 0;
+ LastTickCount := ms;
+// Model.Anim (ElapsedTime);  // anim the complete MDL file
+
   Model.Draw;  // Draws the complete MDL file
   Tcn.Draw;
- {  ms := GetTickCount;
-  msTotal := msTotal + (ms - lastTickCount);
-  LastTickCount := ms;
 
- if msTotal >= 1000 then begin
-    msTotal := 0;
-    Caption := 'Framerate :' + IntToStr(nFrames);
-    nFrames := 0;
-//   glColor4fv(@Font.FColorVector);
-   glColor4fv(@LastTickCount);   // random color
-
-   glPushMatrix;
-   glLoadIdentity;
-   glRasterPos2i(100, 10);
-   text := Caption;
-   for i := 1 to Length(text) do  begin
-      wglUseFontBitmapsW(dc, Ord(text[i]), 1, list);
-      glCallList(list);
-   end;
-   glDeleteLists(list, 1);
-  // glColor4fv(@FPenColor);
-   glPopMatrix;
-
-  end;   }
 
   SwapGL;     // Swap buffers
 end;

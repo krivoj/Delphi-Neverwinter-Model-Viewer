@@ -23,20 +23,20 @@ object Form1: TForm1
     Left = 0
     Top = 0
     Width = 113
-    Height = 401
+    Height = 505
     TabOrder = 0
     object ListBox1: TListBox
       Left = 0
       Top = 0
       Width = 113
-      Height = 257
+      Height = 289
       ItemHeight = 13
       TabOrder = 0
       OnClick = ListBox1Click
     end
     object Button6: TButton
       Left = 0
-      Top = 358
+      Top = 462
       Width = 58
       Height = 25
       Caption = 'Zoom In'
@@ -44,8 +44,8 @@ object Form1: TForm1
       OnClick = Button6Click
     end
     object Button7: TButton
-      Left = 56
-      Top = 358
+      Left = 55
+      Top = 462
       Width = 58
       Height = 25
       Caption = 'Zoom Out'
@@ -54,13 +54,20 @@ object Form1: TForm1
     end
     object Button1: TButton
       Left = 16
-      Top = 312
-      Width = 75
+      Top = 392
+      Width = 89
       Height = 25
       Caption = 'test'
       TabOrder = 3
-      Visible = False
       OnClick = Button1Click
+    end
+    object ComboBox1: TComboBox
+      Left = 16
+      Top = 365
+      Width = 89
+      Height = 21
+      TabOrder = 4
+      OnCloseUp = ComboBox1CloseUp
     end
   end
   object ApplicationEvents1: TApplicationEvents

@@ -231,6 +231,7 @@ end;
   private
   public
     ObjectName : string;
+    ParentAnimatedObjectName : string;
     PositionKeyCount : Integer;
     OrientationKeyCount : Integer;
     PositionKeys: array of TAnimatedFrame;
@@ -260,7 +261,7 @@ end;
     FRMode:Cardinal;
     FRenderMode: TRenderMode;
     FTransformList: TTransformList;
-
+    FElapsedTime,FoElapsedTime: Single;
     procedure SetRenderMode(const Value: TRenderMode);
     procedure DrawBox;
   public
@@ -320,6 +321,8 @@ end;
 // This class is the core of this unit. It is used to load, draw all and more
   T3DModel = class(TObject)
   private
+    FActiveAnimationName: string;    // if <> '' then process animation by name in model.draw event
+    FActiveAnimationIndex: Integer;
     FMaterials:array of TMaterial;
     FFileHandle:Integer;
     FRootChunk:TChunk;
@@ -329,11 +332,11 @@ end;
     procedure CleanUp;
     procedure CleanUpMdl;
     procedure ComputeNormals;
+    procedure SetActiveAnimation ( const value:string);
   public
     Name : string;
     Objects:array of T3DObject;
     Animations: array of TAnimation;
-    ActiveAnimationName: string;    // if <> '' then process animation by name in model.draw event
     constructor Create;
     destructor Destroy;override;
     function AddMaterial:TMaterial;
@@ -356,6 +359,7 @@ end;
     property ObjectCount:Integer read GetObjectCount;
     property MaterialCount:Integer read GetMaterialCount;
     property AnimationCount:Integer read GetAnimationCount;
+    property ActiveAnimationName: string read FActiveAnimationName write SetActiveAnimation;
 end;
 procedure ZeroMem32(P:Pointer;Size:integer);
 function HasExtensionL(const Name : String; var DotPos : Cardinal) : Boolean;
@@ -1279,76 +1283,61 @@ begin
 
 end;
 procedure T3DObject.Anim( ms: Single);
-var F, ao, pk,ok,aRnd:Integer; TmpVector: TVector3D;ParentObject3d: T3DObject;
+var ao, pk,ok:Integer; TmpVector: TVector3D;ParentObject3d: T3DObject; flog: TextFile;
 begin
-//  FTransformList.Push;
-  //glBegin(FRMode);
-
+//    AssignFile(flog, 'log.txt');
+//    Append(flog);
+    FElapsedTime := FElapsedTime + ms;
     if FModel.AnimationCount <= 0 then Exit;
 
-    FModel.ActiveAnimationName := FModel.Animations[4].FAnimationName; // debug
-    For ao := 0 to FModel.Animations[4].FAnimatedObjectsCount -1 do begin
-      if FModel.Animations[4].AnimatedObjects [ao].ObjectName = FObjectName then begin  // this Object
+    For ao := 0 to FModel.Animations[FModel.FActiveAnimationIndex].FAnimatedObjectsCount -1 do begin
+      if FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].ObjectName = FObjectName then begin  // this Object
+     //   if 'pelvis_g' = FObjectName then asm int 3; end;
+        if FElapsedTime > FModel.Animations[FModel.FActiveAnimationIndex].FLength  then
+          FElapsedTime :=0;
 
-      //  for pk := 0 to FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount -1 do begin //!! 2
-      //    if (ms >= FModel.Animations[0].AnimatedObjects [ao].PositionKeys [pk].KeyTime) and
-      //    (ms <= FModel.Animations[0].AnimatedObjects [ao].PositionKeys [pk+1].KeyTime)
-           // begin
+        for pk := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeyCount -1 downto 1 do begin // 1 non 0
+          if (FElapsedTime <= FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys [pk].KeyTime) and
+          (FElapsedTime >= FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys [pk-1].KeyTime) then begin
 
-
-
-           // TransformList.AddTransformEx (  ttTranslate , 0,
-           // FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk+1].KeyValue.X,
-           // FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk+1].KeyValue.Y,
-           // FModel.Animations[0].AnimatedObjects [ao].PositionKeys[pk+1].KeyValue.Z);
-       //    end;
-            if FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount > 0 then begin
-              if ParentObjectName <> 'NULL' then begin
-                TmpVector := FModel.Animations[0].AnimatedObjects [ao].PositionKeys[aRnd].KeyValue;
+             if FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].ParentAnimatedObjectName <> 'NULL' then begin
+       //     writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' positionkeyIndex: '+IntToStr(pk-1)  );
+                TmpVector := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys[pk].KeyValue;
                 ParentObject3d := fmodel.FindObject( ParentObjectName );
                 TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
-
-                aRnd := RandomRange(0,FModel.Animations[0].AnimatedObjects [ao].PositionKeyCount-1);
-                TT0.X := TmpVector.X;// VectorAdd(  ) FModel.Animations[0].AnimatedObjects [ao].PositionKeys[aRnd].KeyValue.X;
+                TT0.X := TmpVector.X;//
                 TT0.Y := TmpVector.Y;
                 TT0.Z := TmpVector.Z;
-              end;
 
-            end;
+             end;
 
-     //   end;
-        //for ok := 0 to FModel.Animations[0].AnimatedObjects [ao].OrientationKeyCount -1 do begin
-       //   if (ms >= FModel.Animations[0].AnimatedObjects [ao].OrientationKeys [ok].KeyTime) and
-       //   (ms <= FModel.Animations[0].AnimatedObjects [ao].OrientationKeys [ok+1].KeyTime)
-      //     then begin
-            //TransformList.AddTransformEx (  ttRotate , 0,
-           // FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[pk+1].KeyValue.X,
-            //FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[pk+1].KeyValue.Y,
-           // FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[pk+1].KeyValue.Z);
-       //    end;
-            if FModel.Animations[0].AnimatedObjects [ao].OrientationKeyCount > 0 then begin
-                TmpVector := FModel.Animations[0].AnimatedObjects [ao].orientationKeys[aRnd].KeyValue;
+          end;
+        end;
+
+        for ok := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeyCount -1 downto 1 do begin // 1 non 0
+          if (FElapsedTime <= FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok].KeyTime) and
+          (FElapsedTime >= FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok-1].KeyTime) then begin
+              if FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].ParentAnimatedObjectName <> 'NULL' then begin
+        //    writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' orientationkeyIndex: '+IntToStr(ok-1)  );
+                TmpVector := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys[ok].KeyValue;
                 ParentObject3d := fmodel.FindObject( ParentObjectName );
                 TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
-
-                aRnd := RandomRange(0,FModel.Animations[0].AnimatedObjects [ao].orientationKeyCount-1);
-                TO0.X := TmpVector.X;// VectorAdd(  ) FModel.Animations[0].AnimatedObjects [ao].orientationKeys[aRnd].KeyValue.X;
+               // TmpVector := VectorAdd ( TmpVector , FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok-1].KeyValue );
+              //  TO0.FTransformType := ttTranslate;
+                TO0.X := TmpVector.X;// VectorAdd(  ) FModel.Animations[0].AnimatedObjects [ao].orientationKeys[ok].KeyValue.X;
                 TO0.Y := TmpVector.Y;
                 TO0.Z := TmpVector.Z;
-                TO0.Angle:= FModel.Animations[0].AnimatedObjects [ao].OrientationKeys[aRnd].KeyValue.Z;
-//if fModel.name  = 'skeleton' then
+                TO0.Angle := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys[ok].Angle;
+              end;
 
-//TO0.angle:=TO0.angle-1;//   Sin(Rot/60)*180/pi;  // Move Geosphere Object in Z axis
+          end;
 
-            end;
-       // end;
+        end;
       end;
 
     end;
 
-  //glEnd;
-
-    //  FTransformList.Pop;
+ // CloseFile (flog);
 end;
 
 procedure T3DObject.DrawBox;
@@ -1537,6 +1526,20 @@ var I:Integer;
 begin
   for I:=0 to ObjectCount-1 do
    Objects[I].AdjustNormals;
+end;
+procedure T3DModel.SetActiveAnimation ( const value:string);
+var
+  i: Integer;
+begin
+  FActiveAnimationName := value;
+  for I := 0 to AnimationCount -1 do begin
+    if Animations[i].FAnimationName = FActiveAnimationName then begin
+      FActiveAnimationIndex := I;
+      Break;
+    end;
+
+  end;
+
 end;
 
 procedure T3DModel.Draw;
@@ -1916,10 +1919,12 @@ begin
     else if  leftstr ( aString, 10) = 'node dummy' then begin
       AnimatedObject:=Anim.AddAnimatedObject;
       AnimatedObject.ObjectName :=  ExtractWordL( 3,aString,' ' ) ;
-      { TODO : parent? }
       while Leftstr(  aString , 7) <> 'endnode' do begin
         Readln ( fModel, aString); aString := TrimLeft(aString);
-        if Leftstr(  aString , 11) ='positionkey' then begin
+        if Leftstr(  aString , 6) ='parent' then begin
+          AnimatedObject.ParentAnimatedObjectName := ExtractWordL( 2, aString,' ' ) ;
+        end
+        else if Leftstr(  aString , 11) ='positionkey' then begin
           AnimatedObject.PositionKeyCount := StrToInt( ExtractWordL( 2,aString,' ' ));
           SetLength(AnimatedObject.PositionKeys ,AnimatedObject.PositionKeyCount);
           for I:= 0 to AnimatedObject.PositionKeyCount -1 do begin
@@ -1941,27 +1946,6 @@ begin
       end
     end;
   end;
-    {newanim ca1slashl c_GolemIron
-  length 1
-  transtime 0.25  Time in seconds where the animation overlaps with other animation to ensure a smooth transitions.
-  event 0.5 hit
-  node dummy c_GolemIron
-    parent NULL
-  endnode
-  node dummy IroGolem_rootdummy
-    parent c_GolemIron
-    positionkey 2
-         0.0000000    0.0000000   -0.0440400    1.7228600
-         0.1000000   -0.0114712   -0.1929970    1.6681300
-    orientationkey 2
-         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
-         1.0000000    0.0000000    0.0000000    0.0000000    0.0000000
-  endnode
-  node dummy IroGolem_Hips
-    parent IroGolem_rootdummy
-    positionkey 4
-         0.0000000    0.0000000    0.0000000   -0.0000002
-}
 
 end;
 
