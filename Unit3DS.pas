@@ -337,6 +337,7 @@ end;
     Name : string;
     Objects:array of T3DObject;
     Animations: array of TAnimation;
+    TTRootDummy , TORootDummy: TTransformation;
     constructor Create;
     destructor Destroy;override;
     function AddMaterial:TMaterial;
@@ -1296,22 +1297,25 @@ begin
         if FElapsedTime > FModel.Animations[FModel.FActiveAnimationIndex].FLength  then
           FElapsedTime :=0;
 
-        for pk := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeyCount -1 downto 1 do begin // 1 non 0
-          if (FElapsedTime <= FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys [pk].KeyTime) and
-          (FElapsedTime >= FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys [pk-1].KeyTime) then begin
+       // if FObjectName = 'rootdummy' then begin
 
-             if FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].ParentAnimatedObjectName <> 'NULL' then begin
-       //     writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' positionkeyIndex: '+IntToStr(pk-1)  );
-                TmpVector := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys[pk].KeyValue;
-                ParentObject3d := fmodel.FindObject( ParentObjectName );
-                TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
-                TT0.X := TmpVector.X;//
-                TT0.Y := TmpVector.Y;
-                TT0.Z := TmpVector.Z;
+          for pk := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeyCount -1 downto 1 do begin // 1 non 0
+            if (FElapsedTime <= FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys [pk].KeyTime) and
+            (FElapsedTime >= FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys [pk-1].KeyTime) then begin
 
-             end;
+  //             if FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].ParentAnimatedObjectName <> 'NULL' then begin
+         //     writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' positionkeyIndex: '+IntToStr(pk-1)  );
+                  TmpVector := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys[pk].KeyValue;
+                  //ParentObject3d := fmodel.FindObject( ParentObjectName );
+                 // TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
+                  TT0.X := TmpVector.X;//
+                  TT0.Y := TmpVector.Y;
+                  TT0.Z := TmpVector.Z;
 
-          end;
+  //             end;
+
+            end;
+         // end;
         end;
 
         for ok := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeyCount -1 downto 1 do begin // 1 non 0
@@ -1319,12 +1323,28 @@ begin
           (FElapsedTime >= FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok-1].KeyTime) then begin
               if FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].ParentAnimatedObjectName <> 'NULL' then begin
         //    writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' orientationkeyIndex: '+IntToStr(ok-1)  );
+                //TmpVector := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys[ok].KeyValue;
+                //ParentObject3d := fmodel.FindObject( ParentObjectName );
+                //TmpVector := VectorAdd ( TmpVector , ParentObject3d.position);
+                if objectname = 'rootdummy' then begin
+                  TT0.X := fmodel.TTRootDummy.X;
+                  TT0.Y := fmodel.TTRootDummy.Y;
+                  TT0.Z := fmodel.TTRootDummy.Z;
+                end
+                else begin
+                  TT0.X := fmodel.TTRootDummy.X+position.X;
+                  TT0.Y := fmodel.TTRootDummy.Y+position.Y;
+                  TT0.Z := fmodel.TTRootDummy.Z+position.Z;
+                end;
+
+
                 TmpVector := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys[ok].KeyValue;
-                ParentObject3d := fmodel.FindObject( ParentObjectName );
-                TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
+              //  ParentObject3d := fmodel.FindObject( ParentObjectName );
+              //  TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
               //  TmpVector := VectorAdd ( TmpVector , FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok-1].KeyValue );
               //  TO0.FTransformType := ttTranslate;
-                TO0.X := TmpVector.X;// VectorAdd(  ) FModel.Animations[0].AnimatedObjects [ao].orientationKeys[ok].KeyValue.X;
+
+                TO0.X := TmpVector.X;
                 TO0.Y := TmpVector.Y;
                 TO0.Z := TmpVector.Z;
                 TO0.Angle := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys[ok].Angle;
@@ -1903,6 +1923,7 @@ var
   Anim:TAnimation;
   aString ,tmp: string;
   AnimatedObject : TAnimatedObject;
+  object3d: T3DObject;
   TmpVector :TVector3D;
   I: Integer;
 begin
@@ -1927,6 +1948,12 @@ begin
           AnimatedObject.ParentAnimatedObjectName := ExtractWordL( 2, aString,' ' ) ;
         end
         else if Leftstr(  aString , 11) ='positionkey' then begin
+          if AnimatedObject.ObjectName = 'rootdummy' then begin
+            object3d := FindObject('rootdummy');
+            TTrootdummy := object3d.TT0;
+            TORootDummy := object3d.TO0;
+          end;
+
           AnimatedObject.PositionKeyCount := StrToInt( ExtractWordL( 2,aString,' ' ));
           SetLength(AnimatedObject.PositionKeys ,AnimatedObject.PositionKeyCount);
           for I:= 0 to AnimatedObject.PositionKeyCount -1 do begin

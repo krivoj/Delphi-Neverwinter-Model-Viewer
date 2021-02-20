@@ -10,7 +10,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,Winapi.ShellAPI,
-  Dialogs, AppEvnts, Unit3DS, OpenGL,DSE_SearchFiles, Vcl.StdCtrls, Vcl.ExtCtrls;
+  Dialogs, AppEvnts, Unit3DS, OpenGL,DSE_SearchFiles, Vcl.StdCtrls, Vcl.ExtCtrls, CnSpin;
 type
   TRef = array[0..0] of T3DModel;
   PRef = ^TRef;
@@ -25,6 +25,12 @@ type
     Button7: TButton;
     Button1: TButton;
     ComboBox1: TComboBox;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    Edit3: TEdit;
+    Button2: TButton;
+    ComboBox2: TComboBox;
+    Edit4: TEdit;
     procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -35,8 +41,10 @@ type
     procedure ListBox1Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
     procedure ComboBox1CloseUp(Sender: TObject);
+    procedure ComboBox2CloseUp(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -58,7 +66,7 @@ var
   nFrames : Integer;
   lastTickCount : Integer;
   ElapsedTime: Single;
-
+  GlobalTo0:TTransformation;
   MdlPath,TexturePath,SuperModelPath: string;
 implementation
 
@@ -92,6 +100,12 @@ begin
   for i :=0 to Model.AnimationCount -1 do begin
     ComboBox1.AddItem( Model.Animations[i].AnimationName,nil );
   end;
+  ComboBox2.Clear;
+  for i :=0 to Model.ObjectCount -1 do begin
+    ComboBox2.AddItem( Model.Objects[i].ObjectName,nil );
+  end;
+
+
   tcn.LoadFromFileMDL ( MdlPath +'tcn01_a20_02.mdl',TexturePath,SuperModelPath );  // Load the MDL file
 
 
@@ -99,8 +113,16 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-Model.Anim (0.1);
+  Model.Anim(0.1);
+end;
 
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+  GlobalTo0.TransformType := ttTranslate;
+  GlobalTo0.X := StrToFloat(Edit1.text);
+  GlobalTo0.Y := StrToFloat(Edit2.text);
+  GlobalTo0.Z := StrToFloat(Edit3.text);
+  GlobalTo0.Angle := StrToFloat(Edit4.text);
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);
@@ -126,6 +148,14 @@ end;
 procedure TForm1.ComboBox1CloseUp(Sender: TObject);
 begin
   Model.ActiveAnimationName := ComboBox1.Items[ComboBox1.ItemIndex];
+end;
+
+procedure TForm1.ComboBox2CloseUp(Sender: TObject);
+var
+  node : T3DObject;
+begin
+  node := Model.FindObject( ComboBox2.Items[ComboBox2.ItemIndex]  );
+  GlobalTo0:= node.TO0;
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
