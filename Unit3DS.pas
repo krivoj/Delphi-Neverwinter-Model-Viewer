@@ -349,7 +349,7 @@ end;
     procedure Clear;
     procedure VisibleAll;
     function LoadFromFile(const FileName:string):Boolean;
-    function LoadFromFileMDL(const FileName, TexturePath, SuperModelPath:string ): Boolean;
+    function LoadFromFileMDL(const FileName, MdlPath, TexturePath, SuperModelPath:string ): Boolean;
       procedure ProcessNewAnim  ( const fmodel: TextFile; FirstString: string );
     function MakeVector3D (aString: string): TVector3D;
     function MakeVector3Dp (aString: string): TVector3D;
@@ -1350,8 +1350,8 @@ begin
 
 
                 TmpVector := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys[ok].KeyValue;
-              //  ParentObject3d := fmodel.FindObject( ParentObjectName );
-              //  TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
+                ParentObject3d := fmodel.FindObject( ParentObjectName );
+                TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
               //  TmpVector := VectorAdd ( TmpVector , FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok-1].KeyValue );
               //  TO0.FTransformType := ttTranslate;
 
@@ -1455,10 +1455,16 @@ end;
 procedure T3DModel.Clear;
 var I:Integer;
 begin
-  for I:=0 to ObjectCount-1 do
+  for I:=0 to ObjectCount-1 do begin
    Objects[I].Free;
+  end;
+  for I:=0 to AnimationCount-1 do begin
+   Animations[I].Free;
+  end;
+
   Finalize(Objects);
   Finalize(FMaterials);
+  Finalize(Animations);
 end;
 
 function T3DModel.AddMaterial: TMaterial;
@@ -1787,7 +1793,7 @@ begin
   CurAlpha:=FVector.Alpha;
   FVector:=ColorToVector4f(Value, CurAlpha);
 end;
-function T3DModel.LoadFromFileMDL(const FileName, TexturePath, SuperModelPath:string ): Boolean;
+function T3DModel.LoadFromFileMDL(const FileName, MdlPath, TexturePath, SuperModelPath:string ): Boolean;
 var
   fModel :  TextFile;
   aString, supermodel : string;
@@ -1802,8 +1808,8 @@ begin
   Reset(fModel);
 
   while not Eof(fModel) do begin
-    //loadgeometry
-    //loadanimations
+    //function loadgeometry
+    //function loadanimations  -->ProcessNewAnim
     Readln ( fModel, aString);
     aString := TrimLeft(aString);
     if Leftstr(  aString , 13) = 'setsupermodel' then supermodel:= ExtractWordL (3,aString,' ') + '.mdl'
@@ -1913,8 +1919,11 @@ used to group objects or indicate special locations to the engine like target co
 
 
   if supermodel <> 'NULL.mdl' then begin
+    if FileExists(  MdlPath + supermodel ) then
+      AssignFile(fModel,MdlPath + supermodel)
+    else AssignFile(fModel,SuperModelPath + supermodel);
 
-    AssignFile(fModel,SuperModelPath + supermodel);
+
     Reset(fModel);
 
     while not Eof(fModel) do begin
@@ -1944,6 +1953,7 @@ begin
   Anim :=  AddAnimation;
   Anim.FAnimationName := ExtractWordL (2,FirstString,' ');
   Anim.FAnimationModelName := ExtractWordL (3,FirstString,' ');
+
   while Leftstr(  aString , 8) <> 'doneanim' do begin
  //         if Anim.FAnimationName = 'ca1slashl' then asm int 3 ; end;
     Readln ( fModel, aString);  aString := TrimLeft(aString);
@@ -1955,11 +1965,15 @@ begin
     else if  leftstr ( aString, 10) = 'node dummy' then begin
       AnimatedObject:=Anim.AddAnimatedObject;
       AnimatedObject.ObjectName :=  ExtractWordL( 3,aString,' ' ) ;
+     // if AnimatedObject.ObjectName ='a_ba' then
+     //   AnimatedObject.ObjectName := objects[0].ObjectName;
     //      if AnimatedObject.ObjectName = 'Deer_Rfrontlowleg' then asm int 3 ; end;
       while Leftstr(  aString , 7) <> 'endnode' do begin
         Readln ( fModel, aString); aString := TrimLeft(aString);
         if Leftstr(  aString , 6) ='parent' then begin
           AnimatedObject.ParentAnimatedObjectName := ExtractWordL( 2, aString,' ' ) ;
+  //    if AnimatedObject.ParentAnimatedObjectName ='a_ba' then
+   //     AnimatedObject.ParentAnimatedObjectName := objects[0].ObjectName;
         end
         else if Leftstr(  aString , 11) ='positionkey' then begin
           if AnimatedObject.ObjectName = 'rootdummy' then begin

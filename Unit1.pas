@@ -94,7 +94,7 @@ var
   i:Integer;
 begin
 //  Model.LoadFromFile ('sulaco.3ds');  // Load the 3DS file
-  Model.LoadFromFileMDL ( MdlPath + ListBox1.Items[ListBox1.ItemIndex], TexturePath,SuperModelPath );  // Load the MDL file
+  Model.LoadFromFileMDL ( MdlPath + ListBox1.Items[ListBox1.ItemIndex], MdlPath, TexturePath,SuperModelPath );  // Load the MDL file
   Model.Name:='skeleton';
   ComboBox1.Clear;
   for i :=0 to Model.AnimationCount -1 do begin
@@ -106,7 +106,7 @@ begin
   end;
 
 
-  tcn.LoadFromFileMDL ( MdlPath +'tcn01_a20_02.mdl',TexturePath,SuperModelPath );  // Load the MDL file
+  tcn.LoadFromFileMDL ( MdlPath +'tcn01_a20_02.mdl',MdlPath,TexturePath,SuperModelPath );  // Load the MDL file
 
 
 end;
