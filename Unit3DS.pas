@@ -1292,7 +1292,7 @@ begin
 
     For ao := 0 to FModel.Animations[FModel.FActiveAnimationIndex].FAnimatedObjectsCount -1 do begin
       if FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].ObjectName = FObjectName then begin  // this Object
-     //   if 'pelvis_g' = FObjectName then asm int 3; end;
+      //  if 'Deer_Rfrontlowleg' = FObjectName then asm int 3; end;
         if FElapsedTime > FModel.Animations[FModel.FActiveAnimationIndex].FLength  then
           FElapsedTime :=0;
 
@@ -1322,7 +1322,7 @@ begin
                 TmpVector := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys[ok].KeyValue;
                 ParentObject3d := fmodel.FindObject( ParentObjectName );
                 TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
-               // TmpVector := VectorAdd ( TmpVector , FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok-1].KeyValue );
+              //  TmpVector := VectorAdd ( TmpVector , FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok-1].KeyValue );
               //  TO0.FTransformType := ttTranslate;
                 TO0.X := TmpVector.X;// VectorAdd(  ) FModel.Animations[0].AnimatedObjects [ao].orientationKeys[ok].KeyValue.X;
                 TO0.Y := TmpVector.Y;
@@ -1901,7 +1901,7 @@ end;
 procedure T3DModel.ProcessNewAnim  ( const fmodel: TextFile; FirstString: string );
 var
   Anim:TAnimation;
-  aString : string;
+  aString ,tmp: string;
   AnimatedObject : TAnimatedObject;
   TmpVector :TVector3D;
   I: Integer;
@@ -1910,6 +1910,7 @@ begin
   Anim.FAnimationName := ExtractWordL (2,FirstString,' ');
   Anim.FAnimationModelName := ExtractWordL (3,FirstString,' ');
   while Leftstr(  aString , 8) <> 'doneanim' do begin
+ //         if Anim.FAnimationName = 'ca1slashl' then asm int 3 ; end;
     Readln ( fModel, aString);  aString := TrimLeft(aString);
     if Leftstr(  aString , 6) ='length' then Anim.FLength := StrToFloat(ExtractWordL( 2,aString,' ' )) // Milliseconds
     else if Leftstr(  aString , 9) ='transtime' then Anim.FTranstime:= StrToFloat(ExtractWordL( 2,aString,' ' ))
@@ -1919,6 +1920,7 @@ begin
     else if  leftstr ( aString, 10) = 'node dummy' then begin
       AnimatedObject:=Anim.AddAnimatedObject;
       AnimatedObject.ObjectName :=  ExtractWordL( 3,aString,' ' ) ;
+    //      if AnimatedObject.ObjectName = 'Deer_Rfrontlowleg' then asm int 3 ; end;
       while Leftstr(  aString , 7) <> 'endnode' do begin
         Readln ( fModel, aString); aString := TrimLeft(aString);
         if Leftstr(  aString , 6) ='parent' then begin
@@ -1930,17 +1932,20 @@ begin
           for I:= 0 to AnimatedObject.PositionKeyCount -1 do begin
             Readln ( fModel, aString); aString := TrimLeft(aString);
             AnimatedObject.PositionKeys[I].KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
-            AnimatedObject.PositionKeys[I].KeyValue := MakeVector3D ( ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ') );
+            tmp := ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ');
+            AnimatedObject.PositionKeys[I].KeyValue := MakeVector3D ( tmp );
           end;
         end
         else if Leftstr(  aString , 14) ='orientationkey' then begin
+
           AnimatedObject.orientationkeyCount := StrToInt( ExtractWordL( 2,aString,' ' ));
           SetLength(AnimatedObject.OrientationKeys ,AnimatedObject.orientationkeyCount);
           for I:= 0 to AnimatedObject.OrientationKeyCount -1 do begin
             Readln ( fModel, aString); aString := TrimLeft(aString);
             AnimatedObject.OrientationKeys[I].KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
-            AnimatedObject.OrientationKeys[I].Angle := StrToFloat( ExtractWordL( 4,aString,' '));
-            AnimatedObject.orientationKeys[I].KeyValue  := MakeVector3D ( ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ') );
+            AnimatedObject.OrientationKeys[I].Angle := StrToFloat( ExtractWordL( 5,aString,' '));
+            tmp :=  ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ');
+            AnimatedObject.orientationKeys[I].KeyValue  := MakeVector3D ( tmp );
           end;
         end;
       end
