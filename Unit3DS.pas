@@ -8,6 +8,7 @@
 // + MDL Neverwinter Night Gabriele Canazza
      { TODO : a_ba.mdl animations supermodel + a_ba non combat , spells ecc...}
      { TODO : Array Texture
+     { TODO : o uso currentAnimation oppure t3dobject.animations[indexanimations].positionkeys
 
    }
    { TODO : ZeroMem32 }
@@ -228,15 +229,20 @@ end;
 
   TAnimatedObject = class(TObject)
   private
+    FChildrenCount : Integer;
+    function GetChildrenCount: Integer;
   public
     ObjectName : string;
     ParentAnimatedObjectName : string;
+    ParentAnimatedObject : TAnimatedObject;
     PositionKeys: array of TAnimatedFrame;
     OrientationKeys: array of TAnimatedFrame;
+    Children : TObjectlist <TAnimatedObject>;
     function AddPositionKey: TAnimatedFrame;
     function AddOrientationKey: TAnimatedFrame;
     function GetPositionCount: Integer;
     function GetOrientationCount: Integer;
+    procedure AddChildren ( Animatedobject3d :TAnimatedObject);
     procedure Clear;
     constructor Create;
     destructor Destroy;override;
@@ -267,6 +273,7 @@ end;
     FRenderMode: TRenderMode;
     FTransformList: TTransformList;
     FElapsedTime,FoElapsedTime: Single;
+    FCursorAnim : Integer;
     function GetChildrenCount: Integer;
     procedure AddChildren ( object3d :T3DObject);
     procedure SetRenderMode(const Value: TRenderMode);
@@ -313,19 +320,21 @@ end;
   private
     FAnimationName:string;
     FAnimationModelName: string;
-    FAnimatedObjectsCount : Integer;
     FAnimationIndex:Integer;
     FCurrentKeyTime: Single;
     FLoop : Boolean;
     FLength: Single;
     FTranstime: Single;  // 0.25  Time in seconds where the animation overlaps with other animation to ensure a smooth transitions.
     AnimationRoot: string;// <node_name> //The animations entry point. This is useful for only animating part of the model and having the rest play a different animation. This used in the torch an shield holding animations to only influence the movement of a single arm.
+    function GetAnimatedObjectCount: integer;
   public
     AnimatedObjects : array of TAnimatedObject;
+    function FindAnimatedObject(const aName:string):TAnimatedObject;
     function AddAnimatedObject: TAnimatedObject;
     constructor Create;
     destructor Destroy;override;
     Property AnimationName : string read FAnimationName Write FAnimationName;
+    Property AnimatedObjectCount : Integer read GetAnimatedObjectCount;
   end;
 
 // This class is the core of this unit. It is used to load, draw all and more
@@ -1027,7 +1036,6 @@ begin
   inherited;
   FLoop := False;
   AnimatedObjects:=nil;
-  FAnimatedObjectsCount:=0;
 end;
 
 destructor TAnimation.Destroy;
@@ -1039,11 +1047,15 @@ function TAnimation.AddAnimatedObject: TAnimatedObject;
 var C, I:Integer;
 begin
   Result:=TAnimatedObject.Create;
-  C:=FAnimatedObjectsCount;
+  C:=AnimatedObjectCount;
   SetLength(AnimatedObjects, C+1);
-  inc(FAnimatedObjectsCount);
   AnimatedObjects[C]:=Result;
 end;
+function TAnimation.GetAnimatedObjectCount: integer;
+begin
+  result := length ( AnimatedObjects);
+end;
+
 // ************************** END TANIMATION **************************************
 // ************************** TANIMATEDOBJECT**************************************
 
@@ -1052,11 +1064,13 @@ begin
   inherited;
   PositionKeys:=nil;
   OrientationKeys:=nil;
+  Children := TObjectlist<TAnimatedObject>.Create ( False );
 end;
 destructor TAnimatedObject.Destroy;
 begin
   Finalize(PositionKeys);
   Finalize(OrientationKeys);
+  Children.Free;
   inherited;
 end;
 function TAnimatedObject.AddPositionKey: TAnimatedFrame;
@@ -1285,6 +1299,15 @@ function T3DObject.GetChildrenCount: Integer;
 begin
   Result := Children.count;
 end;
+procedure TAnimatedObject.AddChildren ( Animatedobject3d :TAnimatedObject);
+var C:Integer;
+begin
+  Children.add ( Animatedobject3d );
+end;
+function TAnimatedObject.GetChildrenCount: Integer;
+begin
+  Result := Children.count;
+end;
 
 procedure T3DObject.Draw;
 var F, iVertex, PointIndex:Integer;
@@ -1328,20 +1351,10 @@ begin
 //    Append(flog);
     FElapsedTime := FElapsedTime + ms;
     if FModel.AnimationCount <= 0 then Exit;
-
+   // FCursorAnim := FCursorAnim +1;
       //  if 'Deer_Rfrontlowleg' = FObjectName then asm int 3; end;
         if FElapsedTime > FModel.Animations[FModel.FActiveAnimationIndex].FLength then
           FElapsedTime :=0;
-
-       // if FObjectName = 'rootdummy' then begin
-
-        if ParentObject <> nil then begin
-          TTransformation(TransformList.Items[0]).X := Position.X + TTransformation(ParentObject.TransformList.Items[0]).X;
-          TTransformation(TransformList.Items[0]).Y := Position.Y + TTransformation(ParentObject.TransformList.Items[0]).Y;
-          TTransformation(TransformList.Items[0]).Z := Position.Z + TTransformation(ParentObject.TransformList.Items[0]).Z;
-        end;
-
-
 
                  { TODO : positionkey li ha solo il rootdummy finora }
         for pk := CurrentAnimation.PositionKeyCount -1 downto 1 do begin // 1 non 0
@@ -1350,54 +1363,36 @@ begin
 
          //     writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' positionkeyIndex: '+IntToStr(pk-1)  );
 
-                  fPosition.X := CurrentAnimation.PositionKeys[pk].KeyValue.X;
-                  fPosition.y := CurrentAnimation.PositionKeys[pk].KeyValue.y;
-                  fPosition.z := CurrentAnimation.PositionKeys[pk].KeyValue.z;
-{                  TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X
-                                                           +position.X;
+                //  TmpVector := VectorAdd (CurrentAnimation.PositionKeys[pk].KeyValue, )
+                  TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X;
                                                           // + ParentObject3d.position.X;
                                                           // +   TTransformation(ParentObject3d.TransformList.Items[0]).X;
-                  TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.Y
-                                                           +position.Y;
+                  TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.Y;
                                                        //    +  TTransformation(ParentObject3d.TransformList.Items[0]).Y;
                                                  //         +ParentObject3d.position.Y;
-                  TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk].KeyValue.Z
-                                                           +position.Z;
+                  TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk].KeyValue.Z;
                                                         //    +ParentObject3d.position.Z;
                                                        //      +   TTransformation(ParentObject3d.TransformList.Items[0]).Z;  }
 
                   Break;
 
             end;
-         // end;
         end;
 
         for ok := CurrentAnimation.orientationKeyCount -1 downto 1 do begin // 1 non 0
           if (FElapsedTime <= CurrentAnimation.orientationKeys [ok].KeyTime) and
           (FElapsedTime >= CurrentAnimation.orientationKeys [ok-1].KeyTime) then begin
-            //  if Animation.AnimatedObjects [ao].ParentAnimatedObjectName <> 'NULL' then begin
-        //    writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' orientationkeyIndex: '+IntToStr(ok-1)  );
-                  TTransformation(TransformList.Items[0]).X := //TTransformation(TransformList.Items[0]).X
-                                                               Position.X+ TTransformation(ParentObject.TransformList.Items[0]).X;
-                  TTransformation(TransformList.Items[0]).Y := //TTransformation(ParentObject3d.TransformList.Items[0]).Y
-                                                               Position.Y + TTransformation(ParentObject.TransformList.Items[0]).Y;
-                  TTransformation(TransformList.Items[0]).Z := //TTransformation(ParentObject3d.TransformList.Items[0]).Z
-                                                               Position.Z + TTransformation(ParentObject.TransformList.Items[0]).Z;
-
+          //  writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' orientationkeyIndex: '+IntToStr(ok-1)  );
 
                 TmpVector := CurrentAnimation.orientationKeys[ok].KeyValue;
                 TmpVector := VectorAdd ( TmpVector , ParentObject.orientation);
               //  TmpVector := VectorAdd ( TmpVector , FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok-1].KeyValue );
               //  TO0.FTransformType := ttTranslate;
-                  fOrientation.X := CurrentAnimation.orientationKeys[ok].KeyValue.x;
-                  fOrientation.y := CurrentAnimation.orientationKeys[ok].KeyValue.y;
-                  fOrientation.z := CurrentAnimation.orientationKeys[ok].KeyValue.z;
-{
-                TTransformation(TransformList.Items[1]).X := TmpVector.X;
-                TTransformation(TransformList.Items[1]).Y := TmpVector.Y;
-                TTransformation(TransformList.Items[1]).Z := TmpVector.Z;
-                TTransformation(TransformList.Items[1]).Angle := CurrentAnimation.orientationKeys[ok].Angle;     }
-             //   Break;
+             //   TTransformation(TransformList.Items[1]).X := TmpVector.X;
+             //   TTransformation(TransformList.Items[1]).Y := TmpVector.Y;
+             //   TTransformation(TransformList.Items[1]).Z := TmpVector.Z;
+             //   TTransformation(TransformList.Items[1]).Angle := CurrentAnimation.orientationKeys[ok].Angle;
+                Break;
               //end;
 
           end;
@@ -1614,7 +1609,7 @@ begin
   for i := 0 to ObjectCount -1 do begin
     Objects[i].CurrentAnimation.Clear;
 
-    For ao := 0 to Animation.FAnimatedObjectsCount -1 do begin
+    For ao := 0 to Animation.AnimatedObjectCount -1 do begin
       if Animation.AnimatedObjects [ao].ObjectName = Objects[i].ObjectName then begin  // this Object
          for pk := 0 to Animation.AnimatedObjects [ao].PositionKeyCount -1 do begin
            Newpk := Objects[i].CurrentAnimation.AddPositionKey;
@@ -1661,6 +1656,17 @@ begin
    if SameText(aName, Objects[I].ObjectName) then
     begin
       Result:=Objects[I];
+      Break;
+    end;
+end;
+function TAnimation.FindAnimatedObject(const aName: string): TAnimatedObject;
+var I:Integer;
+begin
+  Result:=nil;
+  for I:=0 to AnimatedObjectCount-1 do
+   if SameText(aName, AnimatedObjects[I].ObjectName) then
+    begin
+      Result:=AnimatedObjects[I];
       Break;
     end;
 end;
@@ -1873,7 +1879,7 @@ end;
 function T3DModel.LoadGeometry(const fmodel: TextFile;  MdlPath, TexturePath:string): string;
 var  aString, newmodel : string; Object3d,ParentObject3d,Child : T3DObject; TmpVector : TVector3D;i: Integer;
 begin
-  while not Eof(fmodel) do begin
+  while LeftStr( aString ,12 ) <> 'endmodelgeom' do begin
     Readln ( fModel, aString);
     aString := TrimLeft(aString);
 
@@ -2028,7 +2034,9 @@ var
   object3d: T3DObject;
   TmpVector :TVector3D;
   PositionKey, OrientationKey : TAnimatedFrame;
-  I: Integer;
+  I,C,P: Integer;
+  IndexAllpos: Integer;
+  newPK: TAnimatedFrame;
 begin
   Anim :=  AddAnimation;
   Anim.FAnimationName := ExtractWordL (2,FirstString,' ');
@@ -2051,12 +2059,11 @@ begin
       while Leftstr(  aString , 7) <> 'endnode' do begin
         Readln ( fModel, aString); aString := TrimLeft(aString);
         if Leftstr(  aString , 6) ='parent' then begin
-          AnimatedObject.ParentAnimatedObjectName := ExtractWordL( 2, aString,' ' ) ;
-         // if AnimatedObject.ParentAnimatedObjectName = newmodel  then begin
-         //   object3d := FindObject(AnimatedObject.ObjectName);
-           // TTrootdummy := TTransformation(object3d.TransformList.Items[0]);
-          //  TORootDummy := TTransformation(object3d.TransformList.Items[1]);
-         // end;
+          AnimatedObject.ParentAnimatedObjectName := ExtractWordL (2,aString,' ');
+          if AnimatedObject.ParentAnimatedObjectName <> 'NULL' then begin
+            AnimatedObject.ParentAnimatedObject := Anim.FindAnimatedObject(AnimatedObject.ParentAnimatedObjectName);
+            AnimatedObject.ParentAnimatedObject.AddChildren ( AnimatedObject ) ;
+          end;
 
   //    if AnimatedObject.ParentAnimatedObjectName ='a_ba' then
    //     AnimatedObject.ParentAnimatedObjectName := objects[0].ObjectName;
@@ -2083,6 +2090,29 @@ begin
           end;
         end;
       end
+    end;
+  end;
+
+  for I := 0 to Anim.AnimatedObjectCount -1 do begin
+    if Anim.AnimatedObjects[i].PositionKeyCount > 0 then begin
+      IndexAllpos :=I;
+      Break;
+    end;
+  end;
+{  for C := 0 to Anim.AnimatedObjects[IndexAllpos].Children.Count -1 do begin
+    for P := 0 to Anim.AnimatedObjects[IndexAllpos].PositionKeyCount -1 do begin
+      newPK := Anim.AnimatedObjects[C].AddPositionKey;
+      newPK.KeyTime := Anim.AnimatedObjects[IndexAllpos].PositionKeys[P].KeyTime;
+      newPK.KeyValue := Anim.AnimatedObjects[IndexAllpos].PositionKeys[P].KeyValue;
+    end;
+  end;    }
+  for I := 0 to Anim.AnimatedObjectCount -1 do begin
+    if I <> IndexAllpos then begin
+      for P := 0 to Anim.AnimatedObjects[IndexAllpos].PositionKeyCount -1 do begin
+        newPK := Anim.AnimatedObjects[I].AddPositionKey;
+        newPK.KeyTime := Anim.AnimatedObjects[IndexAllpos].PositionKeys[P].KeyTime;
+        newPK.KeyValue := Anim.AnimatedObjects[IndexAllpos].PositionKeys[P].KeyValue;
+      end;
     end;
   end;
 

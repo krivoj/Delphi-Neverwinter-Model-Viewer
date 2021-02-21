@@ -294,7 +294,10 @@ var
 begin
 
   Inc(nFrames);
- // Model.Anim (ElapsedTime);  // anim the complete MDL file
+  ms := GetTickCount;
+  ElapsedTime := (ms - lastTickCount) / 1000;
+  Model.Anim (ElapsedTime);  // anim the complete MDL file
+  LastTickCount := ms;
 
   ClearGL;     // Clear frame buffer
  // ResetModelView;
@@ -321,11 +324,6 @@ begin
 //  T3DModel(Ref[i+1]).Anim;
 //    Inc(i,2);
 //  end;
- ms := GetTickCount;
- ElapsedTime := (ms - lastTickCount) / 1000;
-// Caption := FloatToStr(ElapsedTime) ;
- //ElapsedTime := 0;
- LastTickCount := ms;
 
   Model.Draw;  // Draws the complete MDL file
   Tcn.Draw;
