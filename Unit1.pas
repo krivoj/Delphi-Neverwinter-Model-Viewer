@@ -50,6 +50,8 @@ type
     Button2: TButton;
     ComboBox2: TComboBox;
     Edit4: TEdit;
+    Memo1: TMemo;
+    Button3: TButton;
     procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -64,6 +66,7 @@ type
     procedure ComboBox2CloseUp(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
     procedure Selection(const X, Y: GLdouble);
@@ -146,6 +149,19 @@ begin
   TTransformation(SelectedObject.TransformList.Items[0]).X := StrToFloat(Edit1.text);
   TTransformation(SelectedObject.TransformList.Items[0]).Y := StrToFloat(Edit2.text);
   TTransformation(SelectedObject.TransformList.Items[0]).Z := StrToFloat(Edit3.text);
+end;
+
+procedure TForm1.Button3Click(Sender: TObject);
+var o : T3DObject;i:Integer;
+begin
+  o := model.FindObject( ComboBox2.Items[ComboBox2.ItemIndex]);
+  if o <> nil  then begin
+  memo1.Clear;
+  for I := 0 to o.Children.Count -1 do begin
+    Memo1.Lines.Add( o.Children[i].ObjectName );
+  end;
+  end;
+
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);

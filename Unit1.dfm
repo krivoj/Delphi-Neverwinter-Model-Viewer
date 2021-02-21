@@ -60,7 +60,6 @@ object Form1: TForm1
       Height = 25
       Caption = 'test'
       TabOrder = 3
-      Visible = False
       OnClick = Button1Click
     end
     object ComboBox1: TComboBox
@@ -121,6 +120,24 @@ object Form1: TForm1
       TabOrder = 10
       Text = '0'
     end
+    object Button3: TButton
+      Left = 32
+      Top = 359
+      Width = 57
+      Height = 18
+      Caption = 'Children'
+      TabOrder = 11
+      OnClick = Button3Click
+    end
+  end
+  object Memo1: TMemo
+    Left = 605
+    Top = 429
+    Width = 241
+    Height = 89
+    Lines.Strings = (
+      'Memo1')
+    TabOrder = 1
   end
   object ApplicationEvents1: TApplicationEvents
     OnIdle = ApplicationEvents1Idle

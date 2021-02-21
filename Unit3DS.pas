@@ -7,7 +7,7 @@
 // ***************************************************************************
 // + MDL Neverwinter Night Gabriele Canazza
      { TODO : a_ba.mdl animations supermodel + a_ba non combat , spells ecc...}
-     { TODO : cow non ha rootdummy. se si carica prima un altro file funziona}
+     { TODO : copy animroot }
      { TODO : Rifare load : prima la geometria e qui settare rootdummy, poi maxanim per le animazioni, }
      { TODO : Array Texture
 
@@ -19,7 +19,7 @@ unit Unit3DS;
 interface
 
 
-uses Windows, Classes, Graphics, Vectors,StrUtils;
+uses Windows, Classes, Graphics, Vectors,StrUtils, System.Generics.Collections;
 
 
 const
@@ -246,6 +246,7 @@ end;
     property PositionKeyCount : Integer read GetPositionCount;
     property OrientationKeyCount : Integer read GetOrientationCount;
   end;
+  p3DObject = ^T3DObject;
 
 // This class stores the complete definition for each 3ds object. Is used to
 // draw it in the scene also.
@@ -256,10 +257,12 @@ end;
     FObjectName:string;
     FObjectType:string;
     FParentObjectName:string;
+    FParentObject:T3DObject;
     FPosition,FOrientation : TVector3D;
     FMaterial:TMaterial;
     FVertexCount, FTexVertexCount,
     FFaceCount, FNormalCount:Integer;
+    FChildrenCount:Integer;
     FObjectIndex:Integer;
     FMaxVector, FMinVector, FMidVector:TVector3D;
     FSelected:Boolean;
@@ -267,6 +270,8 @@ end;
     FRenderMode: TRenderMode;
     FTransformList: TTransformList;
     FElapsedTime,FoElapsedTime: Single;
+    function GetChildrenCount: Integer;
+    procedure AddChildren ( object3d :T3DObject);
     procedure SetRenderMode(const Value: TRenderMode);
     procedure DrawBox;
   public
@@ -275,6 +280,7 @@ end;
     Normals:array of TVector3D;
     TexVerts:array of TVector2D;
     Faces:array of TFace;
+    Children : TObjectlist <T3DObject>;
     CurrentAnimation : TAnimatedObject;
     constructor Create;
     destructor Destroy;override;
@@ -291,6 +297,7 @@ end;
     property ObjectName:string read FObjectName write FObjectName;
     property ObjectType:string read FObjectType write FObjectType;
     property ParentObjectName:string read FParentObjectName write FParentObjectName;
+    property ParentObject:T3DObject read FParentObject write FParentObject;
     property Position : TVector3D read fPosition write fPosition;
     property Orientation : TVector3D read FOrientation write FOrientation;
     property Material:TMaterial read FMaterial;
@@ -298,6 +305,7 @@ end;
     property TexVertexCount:Integer read FTexVertexCount write FTexVertexCount;
     property FaceCount:Integer read FFaceCount write FFaceCount;
     property NormalCount:Integer read FNormalCount write FNormalCount;
+    property ChildrenCount:Integer read GetChildrenCount;
     property ObjectIndex:Integer read FObjectIndex;
     property RenderMode:TRenderMode read FRenderMode write SetRenderMode;
     property TransformList:TTransformList read FTransformList;
@@ -1092,11 +1100,13 @@ begin
   Normals:=nil;
   TexVerts:=nil;
   Faces:=nil;
+  Children:=nil;
   CurrentAnimation := TAnimatedObject.Create;
   RenderMode:=rmTriangles;
   FMaterial:=TMaterial.Create;
   FTransformList:=TTransformList.Create;
   FVisible:=True;
+  Children := TObjectlist<T3dObject>.Create ( False );
 end;
 
 destructor T3DObject.Destroy;
@@ -1105,10 +1115,12 @@ begin
   Finalize(Normals);
   Finalize(TexVerts);
   Finalize(Faces);
+  Finalize(Children);
   glDeleteTextures(1, FMaterial.FGenTexture);
   FMaterial.Free;
   FTransformList.Free;
   CurrentAnimation.Free;
+  Children.Free;
   inherited;
 end;
 
@@ -1257,6 +1269,15 @@ begin
   Finalize(TempNormals);
 end;
 
+procedure T3DObject.AddChildren ( object3d :T3DObject);
+var C:Integer;
+begin
+  Children.add ( object3d );
+end;
+function T3DObject.GetChildrenCount: Integer;
+begin
+  Result := Children.count;
+end;
 
 procedure T3DObject.Draw;
 var F, iVertex, PointIndex:Integer;
@@ -1294,7 +1315,7 @@ begin
 
 end;
 procedure T3DObject.Anim( ms: Single);
-var ao, pk,i,ok:Integer; TmpVector: TVector3D;ParentObject3d: T3DObject; flog: TextFile;
+var ao, pk,i,ok:Integer; TmpVector: TVector3D; flog: TextFile;
 begin
 //    AssignFile(flog, 'log.txt');
 //    Append(flog);
@@ -1306,11 +1327,11 @@ begin
           FElapsedTime :=0;
 
        // if FObjectName = 'rootdummy' then begin
-        ParentObject3d := fmodel.FindObject( ParentObjectName );
-        if ParentObject3d <> nil then begin
-          TTransformation(TransformList.Items[0]).X := Position.X + TTransformation(ParentObject3d.TransformList.Items[0]).X;
-          TTransformation(TransformList.Items[0]).Y := Position.Y + TTransformation(ParentObject3d.TransformList.Items[0]).Y;
-          TTransformation(TransformList.Items[0]).Z := Position.Z + TTransformation(ParentObject3d.TransformList.Items[0]).Z;
+
+        if ParentObject <> nil then begin
+          TTransformation(TransformList.Items[0]).X := Position.X + TTransformation(ParentObject.TransformList.Items[0]).X;
+          TTransformation(TransformList.Items[0]).Y := Position.Y + TTransformation(ParentObject.TransformList.Items[0]).Y;
+          TTransformation(TransformList.Items[0]).Z := Position.Z + TTransformation(ParentObject.TransformList.Items[0]).Z;
         end;
 
 
@@ -1321,11 +1342,11 @@ begin
             (FElapsedTime >= CurrentAnimation.PositionKeys [pk-1].KeyTime) then begin
 
          //     writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' positionkeyIndex: '+IntToStr(pk-1)  );
-//                  TmpVector := Animation.AnimatedObjects [ao].PositionKeys[pk].KeyValue;
-              //    ParentObject3d := fmodel.FindObject( ParentObjectName );
-              //    TmpVector := VectorAdd ( TmpVector ,   );
-                 // I:=TransformList.count;
-                  TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X
+
+                  fPosition.X := CurrentAnimation.PositionKeys[pk].KeyValue.X;
+                  fPosition.y := CurrentAnimation.PositionKeys[pk].KeyValue.y;
+                  fPosition.z := CurrentAnimation.PositionKeys[pk].KeyValue.z;
+{                  TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X
                                                            +position.X;
                                                           // + ParentObject3d.position.X;
                                                           // +   TTransformation(ParentObject3d.TransformList.Items[0]).X;
@@ -1336,10 +1357,9 @@ begin
                   TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk].KeyValue.Z
                                                            +position.Z;
                                                         //    +ParentObject3d.position.Z;
-                                                       //      +   TTransformation(ParentObject3d.TransformList.Items[0]).Z;
+                                                       //      +   TTransformation(ParentObject3d.TransformList.Items[0]).Z;  }
 
-             //     Break;
-  //             end;
+                  Break;
 
             end;
          // end;
@@ -1350,31 +1370,26 @@ begin
           (FElapsedTime >= CurrentAnimation.orientationKeys [ok-1].KeyTime) then begin
             //  if Animation.AnimatedObjects [ao].ParentAnimatedObjectName <> 'NULL' then begin
         //    writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' orientationkeyIndex: '+IntToStr(ok-1)  );
-                //TmpVector := FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].PositionKeys[ok].KeyValue;
-                ParentObject3d := fmodel.FindObject( ParentObjectName );
-               // TmpVector := makevectot3d ( ParentObject3d.position);
-                //TmpVector := VectorAdd ( TmpVector , ParentObject3d.position);
-               // if objectname = 'rootdummy' then begin
-                 // GetRootObject (  )
-
                   TTransformation(TransformList.Items[0]).X := //TTransformation(TransformList.Items[0]).X
-                                                               Position.X+ TTransformation(ParentObject3d.TransformList.Items[0]).X;
+                                                               Position.X+ TTransformation(ParentObject.TransformList.Items[0]).X;
                   TTransformation(TransformList.Items[0]).Y := //TTransformation(ParentObject3d.TransformList.Items[0]).Y
-                                                               Position.Y + TTransformation(ParentObject3d.TransformList.Items[0]).Y;
+                                                               Position.Y + TTransformation(ParentObject.TransformList.Items[0]).Y;
                   TTransformation(TransformList.Items[0]).Z := //TTransformation(ParentObject3d.TransformList.Items[0]).Z
-                                                               Position.Z + TTransformation(ParentObject3d.TransformList.Items[0]).Z;
+                                                               Position.Z + TTransformation(ParentObject.TransformList.Items[0]).Z;
 
 
                 TmpVector := CurrentAnimation.orientationKeys[ok].KeyValue;
-                ParentObject3d := fmodel.FindObject( ParentObjectName );
-                TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
+                TmpVector := VectorAdd ( TmpVector , ParentObject.orientation);
               //  TmpVector := VectorAdd ( TmpVector , FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok-1].KeyValue );
               //  TO0.FTransformType := ttTranslate;
-
+                  fOrientation.X := CurrentAnimation.orientationKeys[ok].KeyValue.x;
+                  fOrientation.y := CurrentAnimation.orientationKeys[ok].KeyValue.y;
+                  fOrientation.z := CurrentAnimation.orientationKeys[ok].KeyValue.z;
+{
                 TTransformation(TransformList.Items[1]).X := TmpVector.X;
                 TTransformation(TransformList.Items[1]).Y := TmpVector.Y;
                 TTransformation(TransformList.Items[1]).Z := TmpVector.Z;
-                TTransformation(TransformList.Items[1]).Angle := CurrentAnimation.orientationKeys[ok].Angle;
+                TTransformation(TransformList.Items[1]).Angle := CurrentAnimation.orientationKeys[ok].Angle;     }
              //   Break;
               //end;
 
@@ -1831,7 +1846,7 @@ var
   fModel :  TextFile;
   aString, supermodel,newmodel : string;
   i: Integer;
-  Object3d,ParentObject3d : T3DObject;
+  Object3d,ParentObject3d,Child : T3DObject;
   TmpVector : TVector3D;
   label Done;
 begin
@@ -1865,6 +1880,10 @@ used to group objects or indicate special locations to the engine like target co
             aString := TrimLeft(aString);
             if  leftstr ( aString, 6) = 'parent' then begin
               Object3d.ParentObjectName := ExtractWordL (2,aString,' ');
+              if Object3d.ParentObjectName <> 'NULL' then begin
+                Object3d.ParentObject := FindObject(Object3d.ParentObjectName);
+                Object3d.ParentObject.AddChildren ( Object3d ) ;
+              end;
             end
             else if  (leftstr ( aString, 8) = 'position') and (leftstr ( aString, 11) <> 'positionkey') then begin { TODO : eliminare <> key }
               TmpVector := MakeVector3Dp ( aString );
