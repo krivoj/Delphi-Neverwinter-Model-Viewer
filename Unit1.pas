@@ -199,6 +199,7 @@ begin
   Edit3.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).z  );
   Edit4.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).angle  );
 
+  Memo1.Lines.Add( IntToStr( SelectedObject.CurrentAnimation.PositionKeyCount));
  { Edit1.Text := FloatToStr( SelectedObject.Position.x  );
   Edit2.Text := FloatToStr( SelectedObject.Position.y  );
   Edit3.Text := FloatToStr( SelectedObject.Position.z  );   }
@@ -297,6 +298,7 @@ begin
   ms := GetTickCount;
   ElapsedTime := (ms - lastTickCount) / 1000;
   Model.Anim (ElapsedTime);  // anim the complete MDL file
+  Caption := floattostr(elapsedtime);
   LastTickCount := ms;
 
   ClearGL;     // Clear frame buffer
