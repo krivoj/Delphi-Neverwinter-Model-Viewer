@@ -7,8 +7,6 @@
 // ***************************************************************************
 // + MDL Neverwinter Night Gabriele Canazza
      { TODO : a_ba.mdl animations supermodel + a_ba non combat , spells ecc...}
-     { TODO : copy animroot }
-     { TODO : Rifare load : prima la geometria e qui settare rootdummy, poi maxanim per le animazioni, }
      { TODO : Array Texture
 
    }
@@ -56,7 +54,6 @@ const
 
 
 // -----------------------------------------------------------------------------
-
 
 type
   TMaterialType = (mtAmbient, mtDiffuse, mtSpecular);
@@ -359,7 +356,9 @@ end;
     procedure VisibleAll;
     function LoadFromFile(const FileName:string):Boolean;
     function LoadFromFileMDL(const FileName, MdlPath, TexturePath, SuperModelPath:string ): Boolean;
-      procedure ProcessNewAnim  ( const fmodel: TextFile; FirstString, newmodel: string );
+      function LoadGeometry(const fmodel: TextFile;  MdlPath, TexturePath:string): string;
+      function LoadAnimations(const fmodel: TextFile;  MdlPath,  SuperModelPath, supermodel :string): Boolean;
+        procedure ProcessNewAnim  ( const fmodel: TextFile; FirstString: string );
     function MakeVector3D (aString: string): TVector3D;
     function MakeVector3Dp (aString: string): TVector3D;
     function MakeFace (aString: string): TFace;
@@ -374,6 +373,7 @@ end;
     property AnimationCount:Integer read GetAnimationCount;
     property ActiveAnimationName: string read FActiveAnimationName write SetActiveAnimation;
 end;
+function IsOpen(const txt:TextFile):Boolean;
 procedure ZeroMem32(P:Pointer;Size:integer);
 function HasExtensionL(const Name : String; var DotPos : Cardinal) : Boolean;
 function JustFilenameL(const PathName : String) : String;
@@ -400,6 +400,13 @@ Const DosDelimSet  : set of AnsiChar = ['\', ':', #0];
 Const stMaxFileLen  = 260;
 
 // utils
+function IsOpen(const txt:TextFile):Boolean;
+const
+  fmTextOpenRead = 55217;
+  fmTextOpenWrite = 55218;
+begin
+  Result := (TTextRec(txt).Mode = fmTextOpenRead) or (TTextRec(txt).Mode = fmTextOpenWrite)
+end;
 procedure ZeroMem32(P:Pointer;Size:integer);
 // Size=number of dword elements to fill
 // assumes that Size>4
@@ -1841,54 +1848,65 @@ begin
   CurAlpha:=FVector.Alpha;
   FVector:=ColorToVector4f(Value, CurAlpha);
 end;
-function T3DModel.LoadFromFileMDL(const FileName, MdlPath, TexturePath, SuperModelPath:string ): Boolean;
-var
-  fModel :  TextFile;
-  aString, supermodel,newmodel : string;
-  i: Integer;
-  Object3d,ParentObject3d,Child : T3DObject;
-  TmpVector : TVector3D;
-  label Done;
+function T3DModel.LoadFromFileMDL( const FileName, MdlPath, TexturePath, SuperModelPath:string ): Boolean;
+var fModel :  TextFile; SuperModel: string;
 begin
   Clear;
 
   AssignFile(fModel,filename);
   Reset(fModel);
+  SuperModel:= LoadGeometry ( fModel, MdlPath, TexturePath ) ;
+  LoadAnimations ( fModel, MdlPath, SuperModelPath, SuperModel);
 
-  while not Eof(fModel) do begin
-    //function loadgeometry
-    //function loadanimations  -->ProcessNewAnim
+
+
+//  if isOpen(fmodel) then
+     CloseFile(fModel);
+  ComputeNormals;
+  CleanUpMdl;
+
+
+
+  Result:=True;
+
+end;
+function T3DModel.LoadGeometry(const fmodel: TextFile;  MdlPath, TexturePath:string): string;
+var  aString, newmodel : string; Object3d,ParentObject3d,Child : T3DObject; TmpVector : TVector3D;i: Integer;
+begin
+  while not Eof(fmodel) do begin
     Readln ( fModel, aString);
     aString := TrimLeft(aString);
+
     if Leftstr(  aString , 8) = 'newmodel' then newmodel:= ExtractWordL (2,aString,' ')
-    else if Leftstr(  aString , 13) = 'setsupermodel' then supermodel:= ExtractWordL (3,aString,' ') + '.mdl'
+    else if Leftstr(  aString , 13) = 'setsupermodel' then result:= ExtractWordL (3,aString,' ') + '.mdl'
+
+    { A Dummy is a single point in space without any data - no geometry, no surface, no volume, nothing. Therefore it is never rendered. Dummies are
+    used to group objects or indicate special locations to the engine like target coordinates for spells and projectiles.}
     else if (Leftstr(  aString , 14) = 'beginmodelgeom') then begin
-      while Leftstr(  aString , 12) <> 'endmodelgeom' do begin
+      while  Leftstr(  aString , 12) <> 'endmodelgeom' do begin
         Readln ( fModel, aString);
-{ A Dummy is a single point in space without any data - no geometry, no surface, no volume, nothing. Therefore it is never rendered. Dummies are
-used to group objects or indicate special locations to the engine like target coordinates for spells and projectiles.}
+        aString := TrimLeft(aString);
         if (Leftstr(  aString , 12) = 'node trimesh') or ( Leftstr(  aString , 10) = 'node dummy')   or ( Leftstr(  aString , 15) = 'node danglymesh') then begin
-            Object3d :=  AddObject;
-            Object3d.FModel:= Self;
+              Object3d :=  AddObject;
+              Object3d.FModel:= Self;
 
-            Object3d.ObjectName := ExtractWordL (3,aString,' ');
-            Object3d.ObjectType :=  ExtractWordL (2,aString,' ');
-            Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
-            Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
-          while Leftstr(  aString , 7) <> 'endnode' do begin
-            Readln ( fModel, aString);
-            aString := TrimLeft(aString);
-            if  leftstr ( aString, 6) = 'parent' then begin
-              Object3d.ParentObjectName := ExtractWordL (2,aString,' ');
-              if Object3d.ParentObjectName <> 'NULL' then begin
-                Object3d.ParentObject := FindObject(Object3d.ParentObjectName);
-                Object3d.ParentObject.AddChildren ( Object3d ) ;
-              end;
-            end
-            else if  (leftstr ( aString, 8) = 'position') and (leftstr ( aString, 11) <> 'positionkey') then begin { TODO : eliminare <> key }
-              TmpVector := MakeVector3Dp ( aString );
+              Object3d.ObjectName := ExtractWordL (3,aString,' ');
+              Object3d.ObjectType :=  ExtractWordL (2,aString,' ');
+              Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
+              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
+            while Leftstr(  aString , 7) <> 'endnode' do begin
+              Readln ( fModel, aString);
+              aString := TrimLeft(aString);
+              if  leftstr ( aString, 6) = 'parent' then begin
+                Object3d.ParentObjectName := ExtractWordL (2,aString,' ');
+                if Object3d.ParentObjectName <> 'NULL' then begin
+                  Object3d.ParentObject := FindObject(Object3d.ParentObjectName);
+                  Object3d.ParentObject.AddChildren ( Object3d ) ;
+                end;
+              end
+              else if leftstr ( aString, 8) = 'position'  then begin
+                TmpVector := MakeVector3Dp ( aString );
 
-//              if Object3d.ParentObjectName <> 'NULL' then begin
                 ParentObject3d := FindObject( Object3d.ParentObjectName );
                 TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
                 Object3d.position := TmpVector;
@@ -1896,12 +1914,9 @@ used to group objects or indicate special locations to the engine like target co
                 TTransformation(Object3d.TransformList.items[0]).X := Object3d.position.X;
                 TTransformation(Object3d.TransformList.items[0]).Y := Object3d.position.Y;
                 TTransformation(Object3d.TransformList.items[0]).Z := Object3d.position.Z;
-                //Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
-
-//              end
-            end
-            else if  (leftstr ( aString, 11) = 'orientation') and   (leftstr ( aString, 14) <> 'orientationkey') then begin
- //             if Object3d.ParentObjectName <> 'NULL' then begin
+                  //Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
+              end
+              else if  leftstr ( aString, 11) = 'orientation' then begin
                 ParentObject3d := FindObject( Object3d.ParentObjectName );
                 TmpVector := MakeVector3Dp ( aString );
                 TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
@@ -1912,99 +1927,100 @@ used to group objects or indicate special locations to the engine like target co
                 TTransformation(Object3d.TransformList.items[1]).Z := Object3d.orientation.Z;
 
                 //                Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
- //             end
-            end
+              end
 
 
-            else if  leftstr ( aString, 6) = 'bitmap' then begin
-               if ExtractWordL (2,aString,' ') <> 'NULL' then begin
-                Object3d.Material.FMaterialFile :=  TexturePath + ExtractWordL (2,aString,' ') + '.tga';
-                Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
-               end;
+              else if  leftstr ( aString, 6) = 'bitmap' then begin
+                 if ExtractWordL (2,aString,' ') <> 'NULL' then begin
+                  Object3d.Material.FMaterialFile :=  TexturePath + ExtractWordL (2,aString,' ') + '.tga';
+                  Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
+                 end;
 
-            end
-            else if  leftstr (  aString , 5) = 'verts' then begin
-              Object3d.VertexCount := StrToInt( ExtractWordL (2,aString,' '));
-              SetLength(Object3d.Verts,Object3d.VertexCount);
+              end
+              else if  leftstr (  aString , 5) = 'verts' then begin
+                Object3d.VertexCount := StrToInt( ExtractWordL (2,aString,' '));
+                SetLength(Object3d.Verts,Object3d.VertexCount);
 
-              for I := 0 to Object3d.VertexCount -1 do begin
-                Readln ( fModel, aString);
-                Object3d.Verts[i] := MakeVector3D (aString );
-              end;
-            end
-            else if  leftstr (  aString , 5) = 'faces' then begin
-              Object3d.FaceCount := StrToInt( ExtractWordL (2,aString,' '));
-              SetLength(Object3d.Faces,Object3d.FaceCount);
-              for I := 0 to Object3d.FaceCount -1 do begin
-                Readln ( fModel, aString);
-                Object3d.Faces[i] := MakeFace (aString );
-              end;
-            end
-            else if  leftstr (  aString , 6) = 'tverts' then begin
-              Object3d.TexVertexCount := StrToInt( ExtractWordL (2,aString,' '));
-              SetLength(Object3d.TexVerts,Object3d.TexVertexCount);
-              for I := 0 to Object3d.TexVertexCount -1 do begin
-                Readln ( fModel, aString);
-                Object3d.TexVerts[i] := MakeVector2D (aString );
+                for I := 0 to Object3d.VertexCount -1 do begin
+                  Readln ( fModel, aString);
+                  Object3d.Verts[i] := MakeVector3D (aString );
+                end;
+              end
+              else if  leftstr (  aString , 5) = 'faces' then begin
+                Object3d.FaceCount := StrToInt( ExtractWordL (2,aString,' '));
+                SetLength(Object3d.Faces,Object3d.FaceCount);
+                for I := 0 to Object3d.FaceCount -1 do begin
+                  Readln ( fModel, aString);
+                  Object3d.Faces[i] := MakeFace (aString );
+                end;
+              end
+              else if  leftstr (  aString , 6) = 'tverts' then begin
+                Object3d.TexVertexCount := StrToInt( ExtractWordL (2,aString,' '));
+                SetLength(Object3d.TexVerts,Object3d.TexVertexCount);
+                for I := 0 to Object3d.TexVertexCount -1 do begin
+                  Readln ( fModel, aString);
+                  Object3d.TexVerts[i] := MakeVector2D (aString );
+                end;
               end;
             end;
+
           end;
 
-        end;
-//        else   { TODO : node lights  }
-{    if (Leftstr(  aString , 10) = 'node light') then begin
-  parent TCN01_A20_02
-  ambientonly 0
-  shadow 0
-  isdynamic 0
-  affectdynamic 1
-  lightpriority 5
-  fadingLight 1
-  flareradius 0
-  position 0 0 5
-  orientation 0 0 0 0
-  radius 14
-  multiplier 1
-  color 0 0 0
-    // sul draw creo le luci
-    end
-}
-
+    //        else   { TODO : node lights  }
+    {    if (Leftstr(  aString , 10) = 'node light') then begin
+      parent TCN01_A20_02
+      ambientonly 0
+      shadow 0
+      isdynamic 0
+      affectdynamic 1
+      lightpriority 5
+      fadingLight 1
+      flareradius 0
+      position 0 0 5
+      orientation 0 0 0 0
+      radius 14
+      multiplier 1
+      color 0 0 0
+        // sul draw creo le luci
+        end
+    }
       end;
-    end
-    else if (Leftstr(  aString , 7) = 'newanim') then begin
-      ProcessNewAnim  ( fmodel , aString, newmodel );  // some model have  NULL supermodels, animation are inside here
     end;
   end;
+end;
+function T3DModel.LoadAnimations(const fmodel: TextFile; MdlPath, SuperModelPath, SuperModel:string): Boolean;
+var AnimFile: TextFile; aString: string;
+begin
 
-  CloseFile(fModel);
-  ComputeNormals;
-  CleanUpMdl;
-
+  while not Eof(fmodel) do begin
+    Readln ( fmodel, aString);
+    aString := TrimLeft(aString);
+    if (Leftstr(  aString , 7) = 'newanim') then begin
+      ProcessNewAnim  ( fmodel , aString );  // some model have  NULL supermodels, animation are inside here
+    end;
+  end;
 
   if supermodel <> 'NULL.mdl' then begin
     if FileExists(  MdlPath + supermodel ) then
-      AssignFile(fModel,MdlPath + supermodel)
-    else AssignFile(fModel,SuperModelPath + supermodel);
-
-
-    Reset(fModel);
-
-    while not Eof(fModel) do begin
-      Readln ( fModel, aString);
+      AssignFile(AnimFile,MdlPath + supermodel)
+    else AssignFile(AnimFile,SuperModelPath + supermodel);
+    Reset(AnimFile);
+    while not Eof(AnimFile) do begin
+      Readln ( AnimFile, aString);
       aString := TrimLeft(aString);
+
       if (Leftstr(  aString , 7) = 'newanim') then begin
-        ProcessNewAnim  ( fmodel , aString, newmodel );
+        ProcessNewAnim  ( AnimFile , aString );  // some model have  NULL supermodels, animation are inside here
       end;
     end;
-
-    CloseFile(fModel);
+    CloseFile(AnimFile);
   end;
 
-  Result:=True;
+
 
 end;
-procedure T3DModel.ProcessNewAnim  ( const fmodel: TextFile; FirstString,newmodel: string );
+
+procedure T3DModel.ProcessNewAnim  ( const fmodel: TextFile; FirstString: string );
 var
   Anim:TAnimation;
   aString ,tmp: string;
@@ -2071,7 +2087,6 @@ begin
   end;
 
 end;
-
 function T3DModel.MakeVector3D (aString: string ): TVector3D;
 begin
 
