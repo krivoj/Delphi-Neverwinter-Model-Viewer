@@ -1377,6 +1377,10 @@ float DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim-
           FLastCursorAnim := pk-1;
           TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X+position.x;
           TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.Y+position.y;
+          if parentobject <> nil then begin
+          TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X+ parentobject.position.x;
+          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.y+ parentobject.position.y;
+          end;
         //  TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk-1].KeyValue.Z;
      //     writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' positionkeyIndex: '+IntToStr(pk-1)  );
 
@@ -1405,9 +1409,9 @@ float DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim-
            // Orientation :=  CurrentAnimation.orientationKeys[ok-1].KeyValue;
 
             TTransformation(TransformList.Items[1]).Angle := CurrentAnimation.orientationKeys[ok].Angle* (180/3.14) ;
-            TTransformation(TransformList.Items[1]).X := CurrentAnimation.orientationKeys[ok].KeyValue.X;//+ Orientation.x;
-            TTransformation(TransformList.Items[1]).Y := CurrentAnimation.orientationKeys[ok].KeyValue.Y;//+ Orientation.y;
-            TTransformation(TransformList.Items[1]).Z := CurrentAnimation.orientationKeys[ok].KeyValue.Z;//+ Orientation.z ;
+            TTransformation(TransformList.Items[1]).X := FElapsedTime*CurrentAnimation.orientationKeys[ok].KeyValue.X;//+ Orientation.x;
+            TTransformation(TransformList.Items[1]).Y := FElapsedTime*CurrentAnimation.orientationKeys[ok].KeyValue.Y;//+ Orientation.y;
+            TTransformation(TransformList.Items[1]).Z := FElapsedTime*CurrentAnimation.orientationKeys[ok].KeyValue.Z;//+ Orientation.z ;
 
           //end;
 
