@@ -95,8 +95,8 @@ object Form1: TForm1
       Text = '0'
     end
     object Button2: TButton
-      Left = 32
-      Top = 378
+      Left = 16
+      Top = 397
       Width = 57
       Height = 18
       Caption = 'to0'
@@ -106,7 +106,7 @@ object Form1: TForm1
     end
     object ComboBox2: TComboBox
       Left = 16
-      Top = 402
+      Top = 354
       Width = 89
       Height = 21
       TabOrder = 9
@@ -121,13 +121,22 @@ object Form1: TForm1
       Text = '0'
     end
     object Button3: TButton
-      Left = 32
-      Top = 359
+      Left = 16
+      Top = 381
       Width = 57
       Height = 18
       Caption = 'Children'
       TabOrder = 11
       OnClick = Button3Click
+    end
+    object Button4: TButton
+      Left = 75
+      Top = 382
+      Width = 34
+      Height = 18
+      Caption = 'pr'
+      TabOrder = 12
+      OnClick = Button4Click
     end
   end
   object Memo1: TMemo

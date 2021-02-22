@@ -52,6 +52,7 @@ type
     Edit4: TEdit;
     Memo1: TMemo;
     Button3: TButton;
+    Button4: TButton;
     procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -67,6 +68,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
   private
     { Private declarations }
     procedure Selection(const X, Y: GLdouble);
@@ -145,7 +147,7 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  TTransformation(SelectedObject.TransformList.Items[0]).Angle := StrToFloat(Edit4.text);
+  TTransformation(SelectedObject.TransformList.Items[0]).Angle := StrToFloat(Edit4.text) *180/3.14;
   TTransformation(SelectedObject.TransformList.Items[0]).X := StrToFloat(Edit1.text);
   TTransformation(SelectedObject.TransformList.Items[0]).Y := StrToFloat(Edit2.text);
   TTransformation(SelectedObject.TransformList.Items[0]).Z := StrToFloat(Edit3.text);
@@ -160,6 +162,22 @@ begin
   for I := 0 to o.Children.Count -1 do begin
     Memo1.Lines.Add( o.Children[i].ObjectName );
   end;
+  end;
+
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+var o : T3DObject;i:Integer;
+begin
+  o := model.FindObject( ComboBox2.Items[ComboBox2.ItemIndex]);
+  memo1.Clear;
+  if o <> nil  then begin
+      Memo1.Lines.Add( 'p:.X ' + FloatToStr (o.Position.X) );
+      Memo1.Lines.Add( 'p:.Y ' + FloatToStr (o.Position.Y) );
+      Memo1.Lines.Add( 'p:.Z ' + FloatToStr (o.Position.Z) );
+      Memo1.Lines.Add( 'o:.X ' + FloatToStr (o.Orientation.X ) );
+      Memo1.Lines.Add( 'o:.Y ' + FloatToStr (o.Orientation.Y) );
+      Memo1.Lines.Add( 'o:.Z ' + FloatToStr (o.Orientation.Z) );
   end;
 
 end;
@@ -186,6 +204,7 @@ end;
 
 procedure TForm1.ComboBox1CloseUp(Sender: TObject);
 begin
+  if ComboBox1.ItemIndex > -1 then
   Model.ActiveAnimationName := ComboBox1.Items[ComboBox1.ItemIndex];
 
 end;
@@ -193,6 +212,7 @@ end;
 procedure TForm1.ComboBox2CloseUp(Sender: TObject);
 begin
   SelectedObject := Model.FindObject( ComboBox2.Items[ComboBox2.ItemIndex]  );
+  if SelectedObject = nil then exit;
 
   Edit1.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).x  );
   Edit2.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).y  );
@@ -297,7 +317,7 @@ begin
   Inc(nFrames);
   ms := GetTickCount;
   ElapsedTime := (ms - lastTickCount) / 1000;
-  Model.Anim (ElapsedTime);  // anim the complete MDL file
+ // Model.Anim (ElapsedTime);  // anim the complete MDL file
   Caption := floattostr(elapsedtime);
   LastTickCount := ms;
 

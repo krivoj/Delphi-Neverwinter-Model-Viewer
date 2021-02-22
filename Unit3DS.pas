@@ -1322,7 +1322,7 @@ begin
   glPushName(FObjectIndex);
   glBegin(FRMode);
   glEnable( GL_TEXTURE_2D );
-  glEnable( GL_TEXTURE_GEN_T );
+  //glEnable( GL_TEXTURE_GEN_T );
 
     for F:=0 to FaceCount-1 do
      for iVertex:=0 to 2 do
@@ -1354,10 +1354,17 @@ begin
       if FElapsedTime > FModel.Animations[FModel.FActiveAnimationIndex].FLength then
         FElapsedTime :=0;
 
-    for pk := CurrentAnimation.PositionKeyCount -1 downto 1 do begin // 1 non 0
-        if (FElapsedTime <= CurrentAnimation.PositionKeys [pk].KeyTime) and
-        (FElapsedTime >= CurrentAnimation.PositionKeys [pk-1].KeyTime) then begin
+    for pk := 0 to CurrentAnimation.PositionKeyCount -2 do begin // 1 non 0
+        if (FElapsedTime >= CurrentAnimation.PositionKeys [pk].KeyTime) and
+        (FElapsedTime <= CurrentAnimation.PositionKeys [pk+1].KeyTime) then begin
           {if (pk-1) = FLastCursorAnim then begin  // troppo veloce, sono ancora nel pk di prima
+float DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim->mRotationKeys[RotationIndex].mTime;
+    float Factor = (AnimationTime - (float)pNodeAnim->mRotationKeys[RotationIndex].mTime) / DeltaTime;
+    assert(Factor >= 0.0f && Factor <= 1.0f);
+    const aiQuaternion& StartRotationQ = pNodeAnim->mRotationKeys[RotationIndex].mValue;
+    const aiQuaternion& EndRotationQ = pNodeAnim->mRotationKeys[NextRotationIndex].mValue;
+    aiQuaternion::Interpolate(Out, StartRotationQ, EndRotationQ, Factor);
+
             Delta := CurrentAnimation.PositionKeys [pk].KeyValue.X - CurrentAnimation.PositionKeys [pk-1].KeyValue.X;
             TTransformation(TransformList.Items[0]).X := Delta+position.x;
             Delta := CurrentAnimation.PositionKeys [pk].KeyValue.Y- CurrentAnimation.PositionKeys [pk-1].KeyValue.Y;
@@ -1368,29 +1375,48 @@ begin
             Break;
           end;    }
           FLastCursorAnim := pk-1;
-          TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk-1].KeyValue.X+position.x;
-          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk-1].KeyValue.Y+position.y;
-       //   TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk-1].KeyValue.Z+position.z;
+          TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X+position.x;
+          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.Y+position.y;
+        //  TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk-1].KeyValue.Z;
      //     writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' positionkeyIndex: '+IntToStr(pk-1)  );
+
+          Break;
+        end
+        else if (FElapsedTime >= CurrentAnimation.PositionKeys [CurrentAnimation.PositionKeyCount-2].KeyTime)  and
+        (FElapsedTime <= CurrentAnimation.PositionKeys [CurrentAnimation.PositionKeyCount-1].KeyTime) then begin
+          TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.X;//+position.x;
+          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.Y;//+position.y;
+          if ParentObject <> nil then begin
+            TTransformation(TransformList.Items[0]).X := TTransformation(TransformList.Items[0]).X+ ParentObject.Position.x;
+            TTransformation(TransformList.Items[0]).y := TTransformation(TransformList.Items[0]).Y + ParentObject.Position.y;
+          end;
           Break;
         end;
     end;
 
-    for ok := CurrentAnimation.orientationKeyCount -1 downto 1 do begin // 1 non 0
-      if (FElapsedTime <= CurrentAnimation.orientationKeys [ok].KeyTime) and
-      (FElapsedTime >= CurrentAnimation.orientationKeys [ok-1].KeyTime) then begin
+    for ok := 0 to CurrentAnimation.orientationKeyCount -2  do begin // 1 non 0
+      if (FElapsedTime >= CurrentAnimation.orientationKeys [ok].KeyTime) and
+      (FElapsedTime <= CurrentAnimation.orientationKeys [ok+1].KeyTime) then begin
       //  writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' orientationkeyIndex: '+IntToStr(ok-1)  );
 
           //  TmpVector := CurrentAnimation.orientationKeys[ok].KeyValue;
          //   TmpVector := VectorAdd ( TmpVector , ParentObject.orientation);
           //  TmpVector := VectorAdd ( TmpVector , FModel.Animations[FModel.FActiveAnimationIndex].AnimatedObjects [ao].orientationKeys [ok-1].KeyValue );
-            TTransformation(TransformList.Items[1]).Angle := CurrentAnimation.orientationKeys[ok-1].Angle* (180/3.14) ;
-            TTransformation(TransformList.Items[1]).X := CurrentAnimation.orientationKeys[ok-1].KeyValue.X+ Orientation.x;
-            TTransformation(TransformList.Items[1]).Y := CurrentAnimation.orientationKeys[ok-1].KeyValue.Y+ Orientation.y;
-            TTransformation(TransformList.Items[1]).Z := CurrentAnimation.orientationKeys[ok-1].KeyValue.Z+ Orientation.z ;
-            Break;
+           // Orientation :=  CurrentAnimation.orientationKeys[ok-1].KeyValue;
+
+            TTransformation(TransformList.Items[1]).Angle := CurrentAnimation.orientationKeys[ok].Angle* (180/3.14) ;
+            TTransformation(TransformList.Items[1]).X := CurrentAnimation.orientationKeys[ok].KeyValue.X;//+ Orientation.x;
+            TTransformation(TransformList.Items[1]).Y := CurrentAnimation.orientationKeys[ok].KeyValue.Y;//+ Orientation.y;
+            TTransformation(TransformList.Items[1]).Z := CurrentAnimation.orientationKeys[ok].KeyValue.Z;//+ Orientation.z ;
+
           //end;
 
+      end
+      else if (FElapsedTime >= CurrentAnimation.orientationKeys [CurrentAnimation.orientationKeyCount-2].KeyTime)  and
+      (FElapsedTime <= CurrentAnimation.orientationKeys [CurrentAnimation.orientationKeyCount-1].KeyTime) then begin
+        TTransformation(TransformList.Items[0]).X := CurrentAnimation.orientationKeys[CurrentAnimation.orientationKeyCount-1].KeyValue.X+orientation.x;
+        TTransformation(TransformList.Items[0]).Y := CurrentAnimation.orientationKeys[CurrentAnimation.orientationKeyCount-1].KeyValue.Y+orientation.y;
+        Break;
       end;
 
     end;
@@ -1638,8 +1664,11 @@ var I:Integer;
 begin
 // Animroot mi dice da quale index iniziare
   for I:=0 to ObjectCount-1 do begin
-   if Objects[I].Visible then
+   if Objects[I].Visible then begin
+   // if objects[i].FObjectName = 'Deer_tail' then
+
     Objects[I].Anim (ms) ;
+   end;
 
   end;
 end;
