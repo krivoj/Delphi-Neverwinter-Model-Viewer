@@ -167,7 +167,7 @@ begin
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
-var o : T3DObject;i:Integer;
+var o : T3DObject;i:Integer;oa:TAnimatedObject; Anim : TAnimation;
 begin
   o := model.FindObject( ComboBox2.Items[ComboBox2.ItemIndex]);
   memo1.Clear;
@@ -178,6 +178,16 @@ begin
       Memo1.Lines.Add( 'o:.X ' + FloatToStr (o.Orientation.X ) );
       Memo1.Lines.Add( 'o:.Y ' + FloatToStr (o.Orientation.Y) );
       Memo1.Lines.Add( 'o:.Z ' + FloatToStr (o.Orientation.Z) );
+      Anim := Model.FindAnimation(ComboBox1.Items[ComboBox1.ItemIndex]);
+      oa :=Anim.FindAnimatedObject(o.ObjectName) ;
+      Memo1.Lines.Add( 'oa positionkeys' );
+      for I := 0 to oa.PositionKeyCount -1 do begin
+        Memo1.Lines.Add( 'o:FRAMEpk ' + IntToStr (I ) );
+        Memo1.Lines.Add( 'o:pk.x ' + FloatToStr (oa.PositionKeys[i].KeyValue.x ) );
+        Memo1.Lines.Add( 'o:pk.y ' + FloatToStr (oa.PositionKeys[i].KeyValue.y ) );
+        Memo1.Lines.Add( 'o:pk.z ' + FloatToStr (oa.PositionKeys[i].KeyValue.z ) );
+
+      end;
   end;
 
 end;

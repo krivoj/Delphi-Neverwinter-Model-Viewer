@@ -1,0 +1,1305 @@
+ object: c_a_deer
+time: 0
+positionkeyX: 0
+positionkeyY: 0
+positionkeyZ: 0
+ object: c_a_deer
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: c_a_deer
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: c_a_deer
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: c_a_deer
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: c_a_deer
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: c_a_deer
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: c_a_deer
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: c_a_deer
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_body
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_body
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_body
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_body
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_body
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_body
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_body
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_body
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_body
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_tail
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_tail
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_tail
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_tail
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_tail
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_tail
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_tail
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_tail
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_tail
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Rhaunch
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rhaunch
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rhaunch
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Rhaunch
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Rhaunch
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Rhaunch
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Rhaunch
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Rhaunch
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Rhaunch
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Rbackmidleg
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rbackmidleg
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rbackmidleg
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Rbackmidleg
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Rbackmidleg
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Rbackmidleg
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Rbackmidleg
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Rbackmidleg
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Rbackmidleg
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Rbacklowleg
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rbacklowleg
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rbacklowleg
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Rbacklowleg
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Rbacklowleg
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Rbacklowleg
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Rbacklowleg
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Rbacklowleg
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Rbacklowleg
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Rbackhoof
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rbackhoof
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rbackhoof
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Rbackhoof
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Rbackhoof
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Rbackhoof
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Rbackhoof
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Rbackhoof
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Rbackhoof
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Rfrontupperleg
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rfrontupperleg
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rfrontupperleg
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Rfrontupperleg
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Rfrontupperleg
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Rfrontupperleg
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Rfrontupperleg
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Rfrontupperleg
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Rfrontupperleg
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Rfrontmidleg
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rfrontmidleg
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rfrontmidleg
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Rfrontmidleg
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Rfrontmidleg
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Rfrontmidleg
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Rfrontmidleg
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Rfrontmidleg
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Rfrontmidleg
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Rfrontlowleg
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rfrontlowleg
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rfrontlowleg
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Rfrontlowleg
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Rfrontlowleg
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Rfrontlowleg
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Rfrontlowleg
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Rfrontlowleg
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Rfrontlowleg
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Rfronthoof
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rfronthoof
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rfronthoof
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Rfronthoof
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Rfronthoof
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Rfronthoof
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Rfronthoof
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Rfronthoof
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Rfronthoof
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Lhaunch
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lhaunch
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lhaunch
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Lhaunch
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Lhaunch
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Lhaunch
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Lhaunch
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Lhaunch
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Lhaunch
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Lbackmidleg
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lbackmidleg
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lbackmidleg
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Lbackmidleg
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Lbackmidleg
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Lbackmidleg
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Lbackmidleg
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Lbackmidleg
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Lbackmidleg
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Lbacklowleg
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lbacklowleg
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lbacklowleg
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Lbacklowleg
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Lbacklowleg
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Lbacklowleg
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Lbacklowleg
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Lbacklowleg
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Lbacklowleg
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Lbackhoof
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lbackhoof
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lbackhoof
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Lbackhoof
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Lbackhoof
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Lbackhoof
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Lbackhoof
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Lbackhoof
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Lbackhoof
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Lfrontupperleg
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lfrontupperleg
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lfrontupperleg
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Lfrontupperleg
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Lfrontupperleg
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Lfrontupperleg
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Lfrontupperleg
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Lfrontupperleg
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Lfrontupperleg
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Lfrontmidleg
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lfrontmidleg
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lfrontmidleg
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Lfrontmidleg
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Lfrontmidleg
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Lfrontmidleg
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Lfrontmidleg
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Lfrontmidleg
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Lfrontmidleg
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Lfrontlowleg
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lfrontlowleg
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lfrontlowleg
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Lfrontlowleg
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Lfrontlowleg
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Lfrontlowleg
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Lfrontlowleg
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Lfrontlowleg
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Lfrontlowleg
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Lfronthoof
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lfronthoof
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lfronthoof
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Lfronthoof
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Lfronthoof
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Lfronthoof
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Lfronthoof
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Lfronthoof
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Lfronthoof
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_neckbase
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_neckbase
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_neckbase
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_neckbase
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_neckbase
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_neckbase
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_neckbase
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_neckbase
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_neckbase
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_neckend
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_neckend
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_neckend
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_neckend
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_neckend
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_neckend
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_neckend
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_neckend
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_neckend
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_head
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_head
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_head
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_head
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_head
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_head
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_head
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_head
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_head
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Lhorn
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lhorn
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Lhorn
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Lhorn
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Lhorn
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Lhorn
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Lhorn
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Lhorn
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Lhorn
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: Deer_Rhorn
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rhorn
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: Deer_Rhorn
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: Deer_Rhorn
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: Deer_Rhorn
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: Deer_Rhorn
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: Deer_Rhorn
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: Deer_Rhorn
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: Deer_Rhorn
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: head
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: head
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: head
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: head
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: head
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: head
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: head
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: head
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: head
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: head01
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: head01
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: head01
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: head01
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: head01
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: head01
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: head01
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: head01
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: head01
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: impact
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: impact
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: impact
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: impact
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: impact
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: impact
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: impact
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: impact
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: impact
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: handconjure
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: handconjure
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: handconjure
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: handconjure
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: handconjure
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: handconjure
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: handconjure
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: handconjure
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: handconjure
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735
+ object: headconjure
+time: 0.5
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: headconjure
+time: 0
+positionkeyX: 0.0115799000486732
+positionkeyY: -0.542630970478058
+positionkeyZ: 1.08764004707336
+ object: headconjure
+time: 0.0666666999459267
+positionkeyX: 0.00721669988706708
+positionkeyY: -0.539435029029846
+positionkeyZ: 1.09232997894287
+ object: headconjure
+time: 0.133332997560501
+positionkeyX: 0.0052581001073122
+positionkeyY: -0.537779986858368
+positionkeyZ: 1.09461998939514
+ object: headconjure
+time: 0.233333006501198
+positionkeyX: 0.00404320005327463
+positionkeyY: -0.535973012447357
+positionkeyZ: 1.0956699848175
+ object: headconjure
+time: 0.300000011920929
+positionkeyX: 0.00490629998967052
+positionkeyY: -0.535205006599426
+positionkeyZ: 1.09519994258881
+ object: headconjure
+time: 0.366667002439499
+positionkeyX: 0.00594299985095859
+positionkeyY: -0.535462021827698
+positionkeyZ: 1.09035003185272
+ object: headconjure
+time: 0.400000005960464
+positionkeyX: 0.00660530012100935
+positionkeyY: -0.536060988903046
+positionkeyZ: 1.08884000778198
+ object: headconjure
+time: 0.43333300948143
+positionkeyX: 0.0072681000456214
+positionkeyY: -0.536966025829315
+positionkeyZ: 1.08823001384735

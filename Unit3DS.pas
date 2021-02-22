@@ -8,7 +8,7 @@
 // + MDL Neverwinter Night Gabriele Canazza
      { TODO : a_ba.mdl animations supermodel + a_ba non combat , spells ecc...}
      { TODO : Array Texture
-     { TODO : o uso currentAnimation oppure t3dobject.animations[indexanimations].positionkeys
+     { TODO : 'è un errore nel caricamneto della animazione
 
    }
    { TODO : ZeroMem32 }
@@ -351,7 +351,7 @@ end;
     procedure CleanUp;
     procedure CleanUpMdl;
     procedure ComputeNormals;
-    procedure SetActiveAnimation ( const value:string);
+    procedure SwitchToAnimation ( const value:string);
   public
     Name : string;
     Objects:array of T3DObject;
@@ -380,7 +380,7 @@ end;
     property ObjectCount:Integer read GetObjectCount;
     property MaterialCount:Integer read GetMaterialCount;
     property AnimationCount:Integer read GetAnimationCount;
-    property ActiveAnimationName: string read FActiveAnimationName write SetActiveAnimation;
+    property ActiveAnimationName: string read FActiveAnimationName write SwitchToAnimation;
 end;
 function IsOpen(const txt:TextFile):Boolean;
 procedure ZeroMem32(P:Pointer;Size:integer);
@@ -1377,9 +1377,11 @@ float DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim-
           FLastCursorAnim := pk-1;
           TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X+position.x;
           TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.Y+position.y;
+          TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk].KeyValue.Y+position.z;
           if parentobject <> nil then begin
           TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X+ parentobject.position.x;
           TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.y+ parentobject.position.y;
+          TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk].KeyValue.y+ parentobject.position.Z;
           end;
         //  TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk-1].KeyValue.Z;
      //     writeln ( flog, 'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' positionkeyIndex: '+IntToStr(pk-1)  );
@@ -1388,11 +1390,12 @@ float DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim-
         end
         else if (FElapsedTime >= CurrentAnimation.PositionKeys [CurrentAnimation.PositionKeyCount-2].KeyTime)  and
         (FElapsedTime <= CurrentAnimation.PositionKeys [CurrentAnimation.PositionKeyCount-1].KeyTime) then begin
-          TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.X;//+position.x;
-          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.Y;//+position.y;
+        //  TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.X;//+position.x;
+        //  TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.Y;//+position.y;
           if ParentObject <> nil then begin
             TTransformation(TransformList.Items[0]).X := TTransformation(TransformList.Items[0]).X+ ParentObject.Position.x;
             TTransformation(TransformList.Items[0]).y := TTransformation(TransformList.Items[0]).Y + ParentObject.Position.y;
+            TTransformation(TransformList.Items[0]).Z := TTransformation(TransformList.Items[0]).Z + ParentObject.Position.Z;
           end;
           Break;
         end;
@@ -1620,7 +1623,7 @@ begin
   for I:=0 to ObjectCount-1 do
    Objects[I].AdjustNormals;
 end;
-procedure T3DModel.SetActiveAnimation ( const value:string);
+procedure T3DModel.SwitchToAnimation ( const value:string);
 var
   i,ao,pk,ok: Integer;Animation:TAnimation;NewPk,NewOk:TAnimatedFrame;
 begin
@@ -2066,7 +2069,10 @@ var
   I,C,P: Integer;
   IndexAllpos: Integer;
   newPK: TAnimatedFrame;
+  flog : TextFile;
 begin
+  AssignFile(flog, 'log.txt'); rewrite(flog);
+
   Anim :=  AddAnimation;
   Anim.FAnimationName := ExtractWordL (2,FirstString,' ');
   Anim.FAnimationModelName := ExtractWordL (3,FirstString,' ');
@@ -2100,31 +2106,40 @@ begin
    //     AnimatedObject.ParentAnimatedObjectName := objects[0].ObjectName;
         end
         else if Leftstr(  aString , 11) ='positionkey' then begin
+          SetLength( AnimatedObject.PositionKeys, StrToInt( ExtractWordL( 2,aString,' ' )) );
 
-          for I:= 0 to StrToInt( ExtractWordL( 2,aString,' ' )) -1 do begin
+          for I:= 0 to AnimatedObject.PositionKeyCount -1 do begin
             Readln ( fModel, aString); aString := TrimLeft(aString);
-            PositionKey := AnimatedObject.AddPositionKey;
-            PositionKey.KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
+            //PositionKey := AnimatedObject.AddPositionKey;
+            //PositionKey.KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
+            //tmp := ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ');
+            //PositionKey.KeyValue := MakeVector3D ( tmp );
+            AnimatedObject.PositionKeys[i].KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
             tmp := ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ');
-            PositionKey.KeyValue := MakeVector3D ( tmp );
+            AnimatedObject.PositionKeys[i].KeyValue := MakeVector3D ( tmp );
           end;
         end               { TODO : while endlist nell'altra versione if wordcount = 1   }
         else if Leftstr(  aString , 14) ='orientationkey' then begin
-
-          for I:= 0 to StrToInt( ExtractWordL( 2,aString,' ' )) -1 do begin
+          SetLength( AnimatedObject.OrientationKeys, StrToInt( ExtractWordL( 2,aString,' ' )) );
+          for I:= 0 to AnimatedObject.OrientationKeyCount -1 do begin
             Readln ( fModel, aString); aString := TrimLeft(aString);
-            OrientationKey := AnimatedObject.AddOrientationKey;
-            OrientationKey.KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
-            OrientationKey.Angle := StrToFloat( ExtractWordL( 5,aString,' '));
-            tmp :=  ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ');
-            OrientationKey.KeyValue  := MakeVector3D ( tmp );
+            //OrientationKey := AnimatedObject.AddOrientationKey;
+            //OrientationKey.KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
+            //OrientationKey.Angle := StrToFloat( ExtractWordL( 5,aString,' '));
+            //tmp :=  ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ');
+            //OrientationKey.KeyValue  := MakeVector3D ( tmp );
+
+            AnimatedObject.orientationKeys[i].KeyTime := StrToFloat( ExtractWordL( 1,aString,' '));
+            tmp := ExtractWordL( 2,aString,' ') + ' ' +ExtractWordL( 3,aString,' ') +' ' + ExtractWordL( 4,aString,' ');
+            AnimatedObject.orientationKeys[i].KeyValue := MakeVector3D ( tmp );
+
           end;
         end;
       end
     end;
   end;
 
-  for I := 0 to Anim.AnimatedObjectCount -1 do begin
+  for I := 0 to Anim.AnimatedObjectCount -1 do begin   // individuo chi ha i positionKeys
     if Anim.AnimatedObjects[i].PositionKeyCount > 0 then begin
       IndexAllpos :=I;
       Break;
@@ -2137,15 +2152,21 @@ begin
       newPK.KeyValue := Anim.AnimatedObjects[IndexAllpos].PositionKeys[P].KeyValue;
     end;
   end;    }
-  for I := 0 to Anim.AnimatedObjectCount -1 do begin
+  for I := 0 to Anim.AnimatedObjectCount -1 do begin             { TODO : log qui, }
     if I <> IndexAllpos then begin
       for P := 0 to Anim.AnimatedObjects[IndexAllpos].PositionKeyCount -1 do begin
         newPK := Anim.AnimatedObjects[I].AddPositionKey;
         newPK.KeyTime := Anim.AnimatedObjects[IndexAllpos].PositionKeys[P].KeyTime;
         newPK.KeyValue := Anim.AnimatedObjects[IndexAllpos].PositionKeys[P].KeyValue;
+        writeln ( flog,  ' object: ' + Anim.AnimatedObjects[I].ObjectName );
+        writeln ( flog,  'time: ' +  FloatToStr(Anim.AnimatedObjects[I].PositionKeys[P].KeyTime));
+        writeln ( flog,  'positionkeyX: ' +  FloatToStr(Anim.AnimatedObjects[I].PositionKeys[P].KeyValue.X));
+        writeln ( flog,  'positionkeyY: ' +  FloatToStr(Anim.AnimatedObjects[I].PositionKeys[P].KeyValue.Y));
+        writeln ( flog,  'positionkeyZ: ' +  FloatToStr(Anim.AnimatedObjects[I].PositionKeys[P].KeyValue.Z));
       end;
     end;
   end;
+  CloseFile (flog);
 
 end;
 function T3DModel.MakeVector3D (aString: string ): TVector3D;
