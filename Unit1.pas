@@ -90,7 +90,7 @@ var
   Form1: TForm1;
   Ax, Mx:Single;
   Ay, My:Single;
-  CX,CY,CZ: Single;
+  Zoom,Ratio: Single;
   nFrames : Integer;
   lastTickCount : Integer;
   ElapsedTime: Single;
@@ -194,22 +194,22 @@ end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
-  CZ := CZ +1;
   ResetModelView;
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity;
-  gluLookAt( 2 , -5, CZ, 0, 0, 0, 0, 1, 0); // Set position and orientation
-
+  Zoom := Zoom +0.1;
+  ratio := Form1.Width / Form1.Height;
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glFrustum(-ratio, ratio, -1, 1, zoom, 25*zoom);
 end;
 
 procedure TForm1.Button7Click(Sender: TObject);
 begin
-  CZ := CZ -1;
   ResetModelView;
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity;
-  gluLookAt( 2 , -5, CZ, 0, 0, 0, 0, 1, 0); // Set position and orientation
-
+ Zoom := Zoom - 0.1;
+  ratio := Form1.Width / Form1.Height;
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glFrustum(-ratio, ratio, -1, 1, zoom, 25*zoom);
 end;
 
 procedure TForm1.ComboBox1CloseUp(Sender: TObject);
@@ -255,7 +255,6 @@ begin
   {This command references other model files. A model may have a (super)model from which it inherits animations. If there is no supermodel the
   second parameter has to be NULL. The model may overwrite any animation from its supermodel. The structure of the two models must to match, i.e.
   the order of the objects in both files must be the same.}
-  CZ := 4;
   sf.FromPath := MdlPath;
   sf.MaskInclude.Add('*.mdl');
   sf.SubDirectories := False;
@@ -332,8 +331,7 @@ begin
   LastTickCount := ms;
 
   ClearGL;     // Clear frame buffer
- // ResetModelView;
-  SetModelView ( 2, -5, CZ );
+  ResetModelView;
 
   glRotatef(Ax, 1, 0, 0);
   glRotatef(-Ay, 0, 1, 0);

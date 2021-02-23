@@ -1,6 +1,16 @@
 program DNMV;
 
 uses
+  EMemLeaks,
+  EResLeaks,
+  EDialogWinAPIMSClassic,
+  EDialogWinAPIEurekaLogDetailed,
+  EDialogWinAPIStepsToReproduce,
+  EDebugExports,
+  EFixSafeCallException,
+  EMapWin32,
+  EAppVCL,
+  ExceptionLog7,
   Forms,
   Unit1 in 'Unit1.pas' {Form1},
   UglContext in 'UglContext.pas',
