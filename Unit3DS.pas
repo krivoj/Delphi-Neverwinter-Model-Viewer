@@ -1035,7 +1035,11 @@ begin
 end;
 
 destructor TAnimation.Destroy;
+var i: integer;
 begin
+  for i := low(AnimatedObjects) to high(AnimatedObjects) do begin
+    AnimatedObjects[i].free;
+  end;
   Finalize(AnimatedObjects);
   inherited;
 end;
@@ -1381,20 +1385,26 @@ float DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim-
 
           //  TmpVector := CurrentAnimation.orientationKeys[ok].KeyValue;
            // TmpVector := VectorAdd ( TmpVector , ParentObject.orientation);
-            TTransformation(TransformList.Items[1]).Angle := CurrentAnimation.orientationKeys[ok].Angle* (180/3.14) ;
-            TTransformation(TransformList.Items[1]).X := TTransformation(TransformList.Items[1]).Angle*CurrentAnimation.orientationKeys[ok].KeyValue.X;//+ Orientation.x;
-            TTransformation(TransformList.Items[1]).Y := TTransformation(TransformList.Items[1]).Angle*CurrentAnimation.orientationKeys[ok].KeyValue.Y;//+ Orientation.y;
-            TTransformation(TransformList.Items[1]).Z := TTransformation(TransformList.Items[1]).Angle*CurrentAnimation.orientationKeys[ok].KeyValue.Z;//+ Orientation.z ;
+            TTransformation(TransformList.Items[1]).Angle := RadToDeg(CurrentAnimation.orientationKeys[ok].Angle);
+//            TTransformation(TransformList.Items[1]).X := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X)+ position.x;
+//            TTransformation(TransformList.Items[1]).Y := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y)+ position.y;
+//            TTransformation(TransformList.Items[1]).Z := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z)+ position.z;
+            TTransformation(TransformList.Items[1]).X := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X);///+ position.x);
+            TTransformation(TransformList.Items[1]).Y := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y);///+ position.y);
+            TTransformation(TransformList.Items[1]).Z := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z);/// position.z);;
         // end;
         Break;
           //end;
 
       end
       else if (FElapsedTime > CurrentAnimation.orientationKeys [CurrentAnimation.orientationKeyCount-1].KeyTime) then begin
-            TTransformation(TransformList.Items[1]).Angle := CurrentAnimation.orientationKeys[ok-1].Angle* (180/3.14) ;
-            TTransformation(TransformList.Items[1]).X := CurrentAnimation.orientationKeys[ok-1].KeyValue.X;//+ Orientation.x;
-            TTransformation(TransformList.Items[1]).Y := CurrentAnimation.orientationKeys[ok-1].KeyValue.Y;//+ Orientation.y;
-            TTransformation(TransformList.Items[1]).Z := CurrentAnimation.orientationKeys[ok-1].KeyValue.Z;//+ Orientation.z ;
+            TTransformation(TransformList.Items[1]).Angle := RadToDeg( CurrentAnimation.orientationKeys[ok-1].Angle );
+           // TTransformation(TransformList.Items[1]).X :=  TTransformation(TransformList.Items[1]).Angle*CurrentAnimation.orientationKeys[ok-1].KeyValue.X+ position.x;
+           // TTransformation(TransformList.Items[1]).Y :=  TTransformation(TransformList.Items[1]).Angle*CurrentAnimation.orientationKeys[ok-1].KeyValue.Y+ position.y;
+           // TTransformation(TransformList.Items[1]).Z :=  TTransformation(TransformList.Items[1]).Angle*CurrentAnimation.orientationKeys[ok-1].KeyValue.Z+ position.z;
+            TTransformation(TransformList.Items[1]).X := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
+            TTransformation(TransformList.Items[1]).Y := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
+            TTransformation(TransformList.Items[1]).Z := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
         FElapsedTime :=0;
         Break;
       end;
@@ -1932,10 +1942,10 @@ begin
                 TmpVector := MakeVector3Dp ( aString );
                 TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
                 Object3d.orientation := TmpVector;
-                TTransformation(Object3d.TransformList.items[1]).Angle := 0;
-                TTransformation(Object3d.TransformList.items[1]).X := Object3d.orientation.X;
-                TTransformation(Object3d.TransformList.items[1]).Y := Object3d.orientation.Y;
-                TTransformation(Object3d.TransformList.items[1]).Z := Object3d.orientation.Z;
+                TTransformation(Object3d.TransformList.items[1]).Angle := RadToDeg(StrToFloat(ExtractWordL(4,aString,' ')));
+                TTransformation(Object3d.TransformList.items[1]).X := TTransformation(Object3d.TransformList.items[1]).Angle * Object3d.orientation.X;
+                TTransformation(Object3d.TransformList.items[1]).Y := TTransformation(Object3d.TransformList.items[1]).Angle * Object3d.orientation.Y;
+                TTransformation(Object3d.TransformList.items[1]).Z := TTransformation(Object3d.TransformList.items[1]).Angle * Object3d.orientation.Z;
 
                 //                Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
               end
