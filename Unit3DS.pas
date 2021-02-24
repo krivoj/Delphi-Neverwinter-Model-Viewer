@@ -1345,22 +1345,32 @@ begin
     for pk := CurrentAnimation.PositionKeyCount downto 1 do begin // 1 non 0
         if (FElapsedTime >= CurrentAnimation.PositionKeys [pk-1].KeyTime) and
         (FElapsedTime < CurrentAnimation.PositionKeys [pk].KeyTime) then begin
-          {if (pk-1) = FLastCursorAnim then begin  // troppo veloce, sono ancora nel pk di prima
-float DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim->mRotationKeys[RotationIndex].mTime;
-    float Factor = (AnimationTime - (float)pNodeAnim->mRotationKeys[RotationIndex].mTime) / DeltaTime;
-    assert(Factor >= 0.0f && Factor <= 1.0f);
-    const aiQuaternion& StartRotationQ = pNodeAnim->mRotationKeys[RotationIndex].mValue;
-    const aiQuaternion& EndRotationQ = pNodeAnim->mRotationKeys[NextRotationIndex].mValue;
-    aiQuaternion::Interpolate(Out, StartRotationQ, EndRotationQ, Factor);
+          {
+if( i > 0 ) then
+	begin
+		// Interpolate between 2 key frames
 
-            Delta := CurrentAnimation.PositionKeys [pk].KeyValue.X - CurrentAnimation.PositionKeys [pk-1].KeyValue.X;
-            TTransformation(TransformList.Items[0]).X := Delta+position.x;
-            Delta := CurrentAnimation.PositionKeys [pk].KeyValue.Y- CurrentAnimation.PositionKeys [pk-1].KeyValue.Y;
-            TTransformation(TransformList.Items[0]).Y := Delta+position.Y;
-            Delta := CurrentAnimation.PositionKeys [pk].KeyValue.z - CurrentAnimation.PositionKeys [pk-1].KeyValue.z;
-            TTransformation(TransformList.Items[0]).z := Delta+position.z;
-            FLastCursorAnim := pk-1;
-            Break;
+		// time between the 2 key frames
+		deltaTime := PositionKeyFrames[i].Time - PositionKeyFrames[i-1].Time;
+
+		assert( deltaTime > 0 );
+
+		// relative position of interpolation point to the keyframes [0..1]
+		fraction := (CurrentTime - PositionKeyFrames[i-1].Time) / deltaTime;
+
+		assert( fraction > 0 );
+		assert( fraction < 1.0 );
+
+		Position[0] := PositionKeyFrames[i-1].Value[0] + fraction * (PositionKeyFrames[i].Value[0] - PositionKeyFrames[i-1].Value[0]);
+		Position[1] := PositionKeyFrames[i-1].Value[1] + fraction * (PositionKeyFrames[i].Value[1] - PositionKeyFrames[i-1].Value[1]);
+		Position[2] := PositionKeyFrames[i-1].Value[2] + fraction * (PositionKeyFrames[i].Value[2] - PositionKeyFrames[i-1].Value[2]);
+	end
+	else
+  begin
+		Position[0] := PositionKeyFrames[i].Value[0];
+    Position[1] := PositionKeyFrames[i].Value[1];
+    Position[2] := PositionKeyFrames[i].Value[2];
+  end;
           end;    }
           FLastCursorAnim := pk-1;
           TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X+ position.x;
@@ -1386,12 +1396,12 @@ float DeltaTime = pNodeAnim->mRotationKeys[NextRotationIndex].mTime - pNodeAnim-
           //  TmpVector := CurrentAnimation.orientationKeys[ok].KeyValue;
            // TmpVector := VectorAdd ( TmpVector , ParentObject.orientation);
             TTransformation(TransformList.Items[1]).Angle := RadToDeg(CurrentAnimation.orientationKeys[ok].Angle);
-//            TTransformation(TransformList.Items[1]).X := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X)+ position.x;
-//            TTransformation(TransformList.Items[1]).Y := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y)+ position.y;
-//            TTransformation(TransformList.Items[1]).Z := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z)+ position.z;
-            TTransformation(TransformList.Items[1]).X := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X);///+ position.x);
-            TTransformation(TransformList.Items[1]).Y := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y);///+ position.y);
-            TTransformation(TransformList.Items[1]).Z := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z);/// position.z);;
+            TTransformation(TransformList.Items[1]).X := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X)+ position.x;
+            TTransformation(TransformList.Items[1]).Y := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y)+ position.y;
+            TTransformation(TransformList.Items[1]).Z := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z)+ position.z;
+           // TTransformation(TransformList.Items[1]).X := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X);///+ position.x);
+           // TTransformation(TransformList.Items[1]).Y := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y);///+ position.y);
+           // TTransformation(TransformList.Items[1]).Z := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z);/// position.z);;
         // end;
         Break;
           //end;
@@ -2191,4 +2201,77 @@ initialization
 
 
 end.
+	//
+	// Position
+  //
+ {
+	// Find appropriate position key frame
+	i := 0;
+	while ( (i < NumPositionKeys-1) and (PositionKeyFrames[i].Time < CurrentTime) ) do
+		i := i + 1;
 
+	assert(i < NumPositionKeys);
+
+
+	if( i > 0 ) then
+	begin
+		// Interpolate between 2 key frames
+
+		// time between the 2 key frames
+		deltaTime := PositionKeyFrames[i].Time - PositionKeyFrames[i-1].Time;
+
+		assert( deltaTime > 0 );
+
+		// relative position of interpolation point to the keyframes [0..1]
+		fraction := (CurrentTime - PositionKeyFrames[i-1].Time) / deltaTime;
+
+		assert( fraction > 0 );
+		assert( fraction < 1.0 );
+
+		Position[0] := PositionKeyFrames[i-1].Value[0] + fraction * (PositionKeyFrames[i].Value[0] - PositionKeyFrames[i-1].Value[0]);
+		Position[1] := PositionKeyFrames[i-1].Value[1] + fraction * (PositionKeyFrames[i].Value[1] - PositionKeyFrames[i-1].Value[1]);
+		Position[2] := PositionKeyFrames[i-1].Value[2] + fraction * (PositionKeyFrames[i].Value[2] - PositionKeyFrames[i-1].Value[2]);
+	end
+	else
+  begin
+		Position[0] := PositionKeyFrames[i].Value[0];
+    Position[1] := PositionKeyFrames[i].Value[1];
+    Position[2] := PositionKeyFrames[i].Value[2];
+  end;
+
+
+	//
+	// Rotation
+	//
+
+	// Find appropriate rotation key frame
+	i := 0;
+	while( (i < NumRotationKeys-1) and (RotationKeyFrames[i].Time < CurrentTime) ) do
+		i := i + 1;
+
+	assert(i < NumRotationKeys);
+
+	if( i > 0 ) then
+	begin
+		// Interpolate between 2 key frames
+
+		// time between the 2 key frames
+		deltaTime := RotationKeyFrames[i].Time - RotationKeyFrames[i-1].Time;
+		assert( deltaTime > 0 );
+
+		// relative position of interpolation point to the keyframes [0..1]
+		fraction := (CurrentTime - RotationKeyFrames[i-1].Time) / deltaTime;
+		assert( fraction > 0 );
+		assert( fraction < 1.0 );
+
+		Rotation[0] := RotationKeyFrames[i-1].Value[0] + fraction * (RotationKeyFrames[i].Value[0] - RotationKeyFrames[i-1].Value[0]);
+		Rotation[1] := RotationKeyFrames[i-1].Value[1] + fraction * (RotationKeyFrames[i].Value[1] - RotationKeyFrames[i-1].Value[1]);
+		Rotation[2] := RotationKeyFrames[i-1].Value[2] + fraction * (RotationKeyFrames[i].Value[2] - RotationKeyFrames[i-1].Value[2]);
+	end
+	else
+	begin
+    Rotation[0] := RotationKeyFrames[i].Value[0];
+    Rotation[1] := RotationKeyFrames[i].Value[1];
+    Rotation[2] := RotationKeyFrames[i].Value[2];
+	end;
+}

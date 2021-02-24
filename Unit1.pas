@@ -172,21 +172,28 @@ begin
   o := model.FindObject( ComboBox2.Items[ComboBox2.ItemIndex]);
   memo1.Clear;
   if o <> nil  then begin
-      Memo1.Lines.Add( 'p:.X ' + FloatToStr (o.Position.X) );
+{      Memo1.Lines.Add( 'p:.X ' + FloatToStr (o.Position.X) );
       Memo1.Lines.Add( 'p:.Y ' + FloatToStr (o.Position.Y) );
       Memo1.Lines.Add( 'p:.Z ' + FloatToStr (o.Position.Z) );
       Memo1.Lines.Add( 'o:.X ' + FloatToStr (o.Orientation.X ) );
       Memo1.Lines.Add( 'o:.Y ' + FloatToStr (o.Orientation.Y) );
-      Memo1.Lines.Add( 'o:.Z ' + FloatToStr (o.Orientation.Z) );
+      Memo1.Lines.Add( 'o:.Z ' + FloatToStr (o.Orientation.Z) );    }
       Anim := Model.FindAnimation(ComboBox1.Items[ComboBox1.ItemIndex]);
       oa :=Anim.FindAnimatedObject(o.ObjectName) ;
-      Memo1.Lines.Add( 'oa positionkeys' );
+{      Memo1.Lines.Add( 'oa positionkeys' );
       for I := 0 to oa.PositionKeyCount -1 do begin
         Memo1.Lines.Add( 'o:FRAMEpk ' + IntToStr (I ) );
         Memo1.Lines.Add( 'o:pk.x ' + FloatToStr (oa.PositionKeys[i].KeyValue.x ) );
         Memo1.Lines.Add( 'o:pk.y ' + FloatToStr (oa.PositionKeys[i].KeyValue.y ) );
         Memo1.Lines.Add( 'o:pk.z ' + FloatToStr (oa.PositionKeys[i].KeyValue.z ) );
 
+      end;        }
+      Memo1.Lines.Add( 'oa orientationkeys' );
+      for I := 0 to oa.orientationKeyCount -1 do begin
+        Memo1.Lines.Add( 'o:FRAMEok ' + IntToStr (I ) );
+        Memo1.Lines.Add( 'o:ok.x ' + FloatToStr (oa.orientationKeys[i].KeyValue.x ) );
+        Memo1.Lines.Add( 'o:ok.y ' + FloatToStr (oa.orientationKeys[i].KeyValue.y ) );
+        Memo1.Lines.Add( 'o:ok.z ' + FloatToStr (oa.orientationKeys[i].KeyValue.z ) );
       end;
   end;
 
@@ -326,7 +333,7 @@ begin
   Inc(nFrames);
   ms := GetTickCount;
   ElapsedTime := (ms - lastTickCount) / 1000;
- // Model.Anim (ElapsedTime);  // anim the complete MDL file
+//  Model.Anim (ElapsedTime);  // anim the complete MDL file
   Caption := floattostr(elapsedtime);
   LastTickCount := ms;
 
