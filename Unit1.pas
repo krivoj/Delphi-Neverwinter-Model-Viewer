@@ -9,8 +9,8 @@ unit Unit1;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,Winapi.ShellAPI,
-  Dialogs, AppEvnts, Unit3DS, OpenGL,DSE_SearchFiles, Vcl.StdCtrls, Vcl.ExtCtrls, CnSpin;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,Winapi.ShellAPI, system.Math,
+  Dialogs, AppEvnts, Unit3DS, OpenGL,DSE_SearchFiles, Vcl.StdCtrls, Vcl.ExtCtrls;
 const
   HITBUFFERCOUNT = 64;
 
@@ -191,6 +191,7 @@ begin
       Memo1.Lines.Add( 'oa orientationkeys' );
       for I := 0 to oa.orientationKeyCount -1 do begin
         Memo1.Lines.Add( 'o:FRAMEok ' + IntToStr (I ) );
+        Memo1.Lines.Add( 'o:ok.angle rad' + FloatToStr ( oa.orientationKeys[i].Angle )  + ' deg ' +FloatToStr (RadToDeg( oa.orientationKeys[i].Angle ) ));
         Memo1.Lines.Add( 'o:ok.x ' + FloatToStr (oa.orientationKeys[i].KeyValue.x ) );
         Memo1.Lines.Add( 'o:ok.y ' + FloatToStr (oa.orientationKeys[i].KeyValue.y ) );
         Memo1.Lines.Add( 'o:ok.z ' + FloatToStr (oa.orientationKeys[i].KeyValue.z ) );

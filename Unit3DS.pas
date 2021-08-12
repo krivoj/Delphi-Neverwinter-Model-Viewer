@@ -6,6 +6,7 @@
 // *********************** Release 19/11/2003 ********************************
 // ***************************************************************************
 // + MDL Neverwinter Night Gabriele Canazza
+     { TODO : fare childern. quando c'è la rotazione ad esempio di 30 gradi tutti ichildern devono ruotare di 30 ecc...}
      { TODO : a_ba.mdl animations supermodel + a_ba non combat , spells ecc...}
      { TODO : a_ba.mdl viene caricato prima, dopo il model fa un override, ma i shoulder ci saranno}
      { TODO : Array Texture e fix texture head/left
@@ -1331,7 +1332,7 @@ begin
 
 end;
 procedure T3DObject.Anim( ms: Single);
-var ao, pk,i,ok:Integer; TmpVector: TVector3D; flog: TextFile; Delta: Single;
+var ao, pk,i,c,ok:Integer; TmpVector: TVector3D; flog: TextFile; Delta: Single;
 begin
 //    AssignFile(flog, 'log.txt'); Append(flog);
  // if objectname ='Deer_neckend' then asm Int 3; end;
@@ -1339,8 +1340,6 @@ begin
   FElapsedTime := FElapsedTime + ms;
   if FModel.AnimationCount <= 0 then Exit;
     //  if 'Deer_Rfrontlowleg' = FObjectName then asm int 3; end;
-//      if FElapsedTime > FModel.Animations[FModel.FActiveAnimationIndex].FLength then
-//        FElapsedTime :=0;
 
     for pk := CurrentAnimation.PositionKeyCount downto 1 do begin // 1 non 0
         if (FElapsedTime >= CurrentAnimation.PositionKeys [pk-1].KeyTime) and
@@ -1373,6 +1372,8 @@ if( i > 0 ) then
   end;
           end;    }
           FLastCursorAnim := pk-1;
+
+
           TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X+ position.x;
           TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.Y+ position.y;
           //TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk].KeyValue.z;
@@ -1395,14 +1396,19 @@ if( i > 0 ) then
 
           //  TmpVector := CurrentAnimation.orientationKeys[ok].KeyValue;
            // TmpVector := VectorAdd ( TmpVector , ParentObject.orientation);
+            { TODO : fare children e ruotarli tutti }
+
             TTransformation(TransformList.Items[1]).Angle := RadToDeg(CurrentAnimation.orientationKeys[ok].Angle);
-            TTransformation(TransformList.Items[1]).X := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X)+ position.x;
-            TTransformation(TransformList.Items[1]).Y := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y)+ position.y;
-            TTransformation(TransformList.Items[1]).Z := TTransformation(TransformList.Items[1]).Angle*RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z)+ position.z;
+            TTransformation(TransformList.Items[1]).X := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
+            TTransformation(TransformList.Items[1]).Y := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
+            TTransformation(TransformList.Items[1]).Z := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
+
+
            // TTransformation(TransformList.Items[1]).X := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X);///+ position.x);
            // TTransformation(TransformList.Items[1]).Y := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y);///+ position.y);
            // TTransformation(TransformList.Items[1]).Z := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z);/// position.z);;
         // end;
+
         Break;
           //end;
 
@@ -1415,11 +1421,20 @@ if( i > 0 ) then
             TTransformation(TransformList.Items[1]).X := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
             TTransformation(TransformList.Items[1]).Y := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
             TTransformation(TransformList.Items[1]).Z := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
-        FElapsedTime :=0;
+            for C := 0 to ChildrenCount -1 do begin
+              TTransformation(Children[c].TransformList[1]).angle := RadToDeg(CurrentAnimation.orientationKeys[ok].Angle);
+              TTransformation(Children[c].TransformList[1]).X := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
+              TTransformation(Children[c].TransformList[1]).Y := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
+              TTransformation(Children[c].TransformList[1]).Z := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
+            end;
+
         Break;
       end;
 
     end;
+
+    if FElapsedTime > FModel.Animations[FModel.FActiveAnimationIndex].FLength then
+      FElapsedTime :=0;
 
  // CloseFile (flog);
 end;
@@ -1925,6 +1940,8 @@ begin
               Object3d.ObjectType :=  ExtractWordL (2,aString,' ');
               Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
               Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
+//              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
+//              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
             while Leftstr(  aString , 7) <> 'endnode' do begin
               Readln ( fModel, aString);
               aString := TrimLeft(aString);
