@@ -528,12 +528,15 @@ end;
 function LoadTexture(Filename: String; var Texture : GLuint; LoadFromRes : Boolean) : Boolean;
 begin
   Result:=False;
-  if copy(Uppercase(filename), length(filename)-3, 4) = '.BMP' then
-    Result:=LoadBMPTexture(Filename, Texture, LoadFromRes);
-  if copy(Uppercase(filename), length(filename)-3, 4) = '.JPG' then
-    Result:=LoadJPGTexture(Filename, Texture, LoadFromRes);
-  if copy(Uppercase(filename), length(filename)-3, 4) = '.TGA' then
-    Result:=LoadTGATexture(Filename, Texture, LoadFromRes);
+  if fileexists (filename+'.bmp' ) then
+//  if copy(Uppercase(filename), length(filename)-3, 4) = '.BMP' then
+    Result:=LoadBMPTexture(Filename + '.bmp' , Texture, LoadFromRes)
+  else if fileexists (filename+'.jpg' ) then
+//  if copy(Uppercase(filename), length(filename)-3, 4) = '.JPG' then
+    Result:=LoadJPGTexture(Filename + '.jpg', Texture, LoadFromRes)
+  else if fileexists (filename+'.tga' ) then
+//  if copy(Uppercase(filename), length(filename)-3, 4) = '.TGA' then
+    Result:=LoadTGATexture(Filename  +  '.tga', Texture, LoadFromRes);
 end;
 
 

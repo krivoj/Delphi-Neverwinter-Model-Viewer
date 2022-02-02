@@ -1947,7 +1947,7 @@ begin
               aString := TrimLeft(aString);
               if  leftstr ( aString, 6) = 'parent' then begin
                 Object3d.ParentObjectName := ExtractWordL (2,aString,' ');
-                if Object3d.ParentObjectName <> 'NULL' then begin
+                if uppercase(Object3d.ParentObjectName) <> uppercase('NULL') then begin
                   Object3d.ParentObject := FindObject(Object3d.ParentObjectName);
                   Object3d.ParentObject.AddChildren ( Object3d ) ;
                 end;
@@ -1980,7 +1980,7 @@ begin
 
               else if  leftstr ( aString, 6) = 'bitmap' then begin
                  if ExtractWordL (2,aString,' ') <> 'NULL' then begin
-                  Object3d.Material.FMaterialFile :=  TexturePath + ExtractWordL (2,aString,' ') + '.tga';
+                  Object3d.Material.FMaterialFile :=  TexturePath + ExtractWordL (2,aString,' ') ;
                   Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
                  end;
 
@@ -2048,7 +2048,7 @@ begin
     end;
   end;
 
-  if supermodel <> 'NULL.mdl' then begin
+  if UpperCase(supermodel) <> uppercase('NULL.mdl') then begin
     if FileExists(  MdlPath + supermodel ) then
       AssignFile(AnimFile,MdlPath + supermodel)
     else AssignFile(AnimFile,SuperModelPath + supermodel);
