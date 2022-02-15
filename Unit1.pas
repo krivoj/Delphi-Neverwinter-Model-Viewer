@@ -97,6 +97,7 @@ var
   MdlPath,TexturePath,SuperModelPath: string;
   ModelLoaded: Boolean;
   SelectedObject: T3DObject;
+
 implementation
 
 uses UglContext;
@@ -137,7 +138,6 @@ begin
 
   tcn.LoadFromFileMDL ( MdlPath +'tcn01_a20_02.mdl',MdlPath,TexturePath,SuperModelPath );  // Load the MDL file
   ModelLoaded:= True;
-
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);

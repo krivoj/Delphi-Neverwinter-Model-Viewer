@@ -1,0 +1,3328 @@
+#MAXMODEL ASCII
+# model: c_archtarget
+filedependancy c_archtarget.max
+newmodel c_archtarget
+setsupermodel c_archtarget NULL
+classification CHARACTER
+setanimationscale 1
+#MAXGEOM  ASCII
+beginmodelgeom c_archtarget
+node dummy c_archtarget
+  parent NULL
+endnode
+node dummy handconjure
+  parent c_archtarget
+  position 0 0.45 1.2
+  orientation 0 0 0 0
+endnode
+node dummy headconjure
+  parent c_archtarget
+  position 0 0.07583 1.38218
+  orientation 0 0 0 0
+endnode
+node dummy impact
+  parent c_archtarget
+  position 0 0.0850035 1.19899
+  orientation 0 0 0 0
+endnode
+node trimesh Box64
+  parent c_archtarget
+  ambient 1 1 1
+  diffuse 1 1 1
+  specular 0 0 0
+  shininess 1
+  bitmap PLC_wood256
+  verts 12
+       0.6306430    0.4352050   -0.0068301
+       0.3920250   -0.6046230   -0.0068301
+      -0.3903280   -0.6046230   -0.0068301
+      -0.6289460    0.4352050   -0.0068301
+       0.6306430    0.4352050    0.1530070
+      -0.6289460    0.4352050    0.1530070
+      -0.2111980    0.1549560    0.9314180
+       0.2128950    0.1549560    0.9314180
+      -0.3903280   -0.6046230    0.1530070
+      -0.1308570   -0.1951460    0.9314180
+       0.3920250   -0.6046230    0.1530070
+       0.1325550   -0.1951460    0.9314180
+  tverts 23
+       0.0004997    0.0004999  0
+       0.1897520    0.9995000  0
+       0.8102490    0.9995000  0
+       0.9995000    0.0004996  0
+       0.6681780    0.2697450  0
+       0.3318220    0.2697450  0
+       0.9999070    0.9920120  0
+       0.6683150    0.6035790  0
+       0.6044580    0.6061000  0
+       0.3955420    0.6061010  0
+       0.0000930    0.9995000  0
+       0.3316850    0.6061010  0
+       0.5000000    0.4064130  0
+       0.0004997   -0.1652970  0
+       0.1897520    0.9764570  0
+       0.0097634    0.9995000  0
+      -0.1794880   -0.1676160  0
+       0.1897520    1.1445700  0
+       0.8102490    1.1445700  0
+       0.8102490    1.0112400  0
+       0.9995000   -0.1652980  0
+       1.1558100   -0.1328340  0
+       0.9665540    0.9995000  0
+  faces 20
+     0  1  2  1   0  1  2   2
+     2  3  0  1   2  3  0   2
+     4  5  6  1   0  3  4   5
+     6  7  4  1   4  5  0   5
+     6  8  9  2   4  6  7   4
+     8  6  5  2   6  4  3   4
+     9 10 11  1   8  1  9   6
+    10  9  8  1   1  8  2   6
+    10  4  7  2  10  0  5   3
+     7 11 10  2   5 11 10   3
+     7  6 11  4   5  4 12   5
+     6  9 11  4   4  7 12   4
+     4 10  1  4  13 14 15   2
+     1  0  4  4  15 16 13   2
+    10  8  2  8  17 18  2   2
+     2  1 10  8   2  1 17   2
+     8  5  3  4  19 20 21   2
+     3  2  8  4  21 22 19   2
+     5  4  0  8  20 13  0   2
+     0  3  5  8   0  3 20   2
+  position 0 0 0
+  orientation 0 0 0 0
+endnode
+node trimesh Mesh80
+  parent Box64
+  ambient 0.752941 0.360784 0.360784
+  diffuse 0.752941 0.360784 0.360784
+  specular 0 0 0
+  shininess 1
+  bitmap PLC_RugDMtlBrk
+  verts 12
+       0.0915572   -0.1640260    0.0595350
+       0.1828320   -0.0059334    0.0595350
+       0.1583750    0.0853411    0.0595350
+       0.0915572    0.1521590    0.0595350
+       0.0002827    0.1766160    0.0595350
+      -0.0909918    0.1521590    0.0595350
+      -0.1578090    0.0853411    0.0595350
+      -0.1822660   -0.0059334    0.0595350
+      -0.1578090   -0.0972079    0.0595350
+      -0.0909918   -0.1640260    0.0595350
+       0.0002827   -0.1884820    0.0595350
+       0.1583750   -0.0972079    0.0595350
+  tverts 12
+       0.1063930    0.7433160  0
+       0.1853160    0.9453110  0
+       0.2663020    0.9763730  0
+       0.3480430    0.9453610  0
+       0.4086370    0.8605850  0
+       0.4318470    0.7432140  0
+       0.4114550    0.8590530  0
+       0.3529240    0.9438670  0
+       0.2719380    0.9749290  0
+       0.1901970    0.9439170  0
+       0.1296030    0.8591410  0
+       0.1267850    0.8604970  0
+  faces 10
+     0  1  2  1   0  1  2   1
+     0  2  3  1   0  2  3   1
+     0  3  4  1   0  3  4   1
+     0  4  5  1   0  4  5   1
+     0  5  6  1   0  5  6   1
+     0  6  7  1   0  6  7   1
+     0  7  8  1   0  7  8   1
+     0  8  9  1   0  8  9   1
+     0  9 10  1   0  9 10   1
+     0 11  1  1   0 11  1   1
+  position 0.00519772 0.236486 0.744461
+  orientation 0 -0.5735768 -0.8191518 -3.14159
+endnode
+node trimesh Cylinder02
+  parent Box64
+  ambient 0.25098 0.360784 0.631373
+  diffuse 0.25098 0.360784 0.631373
+  specular 0 0 0
+  shininess 1
+  bitmap PLC_RugDMtlBrk
+  verts 36
+       0.5479300   -0.0059334   -0.0100791
+       0.4745590    0.2678900    0.0595350
+       0.5479300   -0.0059334    0.0595350
+       0.4745590    0.2678900   -0.0100791
+       0.2741060    0.4683430    0.0595350
+       0.2741060    0.4683430   -0.0100791
+       0.0002827    0.5417140    0.0595350
+       0.0002827    0.5417140   -0.0100791
+      -0.2735410    0.4683430    0.0595350
+      -0.2735410    0.4683430   -0.0100791
+      -0.4739940    0.2678900    0.0595350
+      -0.4739940    0.2678900   -0.0100791
+      -0.5473640   -0.0059334    0.0595350
+      -0.5473640   -0.0059334   -0.0100791
+      -0.4739940   -0.2797570    0.0595350
+      -0.4739940   -0.2797570   -0.0100791
+      -0.2735410   -0.4802100    0.0595350
+      -0.2735410   -0.4802100   -0.0100791
+       0.0002828   -0.5535800    0.0595350
+       0.0002828   -0.5535810   -0.0100791
+       0.2741060   -0.4802100    0.0595350
+       0.2741060   -0.4802100   -0.0100791
+       0.4745590   -0.2797570    0.0595350
+       0.4745590   -0.2797570   -0.0100791
+       0.3164670    0.1766160    0.0595350
+       0.3653810   -0.0059334    0.0595350
+       0.1828320    0.3102510    0.0595350
+       0.0002827    0.3591650    0.0595350
+      -0.1822660    0.3102510    0.0595350
+      -0.3159020    0.1766160    0.0595350
+      -0.3648150   -0.0059334    0.0595350
+      -0.3159010   -0.1884820    0.0595350
+      -0.1822660   -0.3221180    0.0595350
+       0.0002827   -0.3710310    0.0595350
+       0.1828320   -0.3221180    0.0595350
+       0.3164670   -0.1884820    0.0595350
+  tverts 50
+       0.3089900    0.6906930  0
+       0.1631840    0.7621090  0
+       0.3089900    0.7621090  0
+       0.1631840    0.6906930  0
+       0.3083200    0.7621090  0
+       0.3083200    0.6906930  0
+       0.1625140    0.7621090  0
+       0.1625140    0.6906930  0
+       0.1629430    0.6906930  0
+       0.3080790    0.7621090  0
+       0.1629430    0.7621090  0
+       0.3080790    0.6906930  0
+       0.1622730    0.7621090  0
+       0.1622730    0.6906930  0
+       0.3074080    0.7621090  0
+       0.3074080    0.6906930  0
+       0.1651950    0.7621090  0
+       0.1651950    0.6906930  0
+       0.3103300    0.7621090  0
+       0.3103300    0.6906930  0
+       0.1645240    0.7621090  0
+       0.1645240    0.6906930  0
+       0.3096600    0.7621090  0
+       0.3096600    0.6906930  0
+       0.1638540    0.7621090  0
+       0.1638540    0.6906930  0
+       0.3242040    0.9645950  0
+       0.1829860    0.7580590  0
+       0.3227510    0.7981020  0
+       0.1001800    0.9015840  0
+       0.3417480    0.8076390  0
+       0.3417120    0.9717270  0
+       0.1760820    0.7608300  0
+       0.0932130    0.9015140  0
+       0.3181230    0.8033400  0
+       0.3152950    0.9674040  0
+       0.1531800    0.7593290  0
+       0.0678813    0.9013880  0
+       0.3188800    0.8036940  0
+       0.3203330    0.9701870  0
+       0.1762080    0.7575020  0
+       0.0934014    0.9010280  0
+       0.3418940    0.7986280  0
+       0.3419300    0.9627170  0
+       0.1828610    0.7602730  0
+       0.0999913    0.9009580  0
+       0.3210300    0.7971920  0
+       0.3182030    0.9612560  0
+       0.1590910    0.7549150  0
+       0.0787141    0.8998150  0
+  faces 48
+     0  1  2  1   0  1  2   1
+     0  3  1  1   0  3  1   1
+     3  4  1  1   3  4  1   1
+     3  5  4  1   3  5  4   1
+     5  6  4  1   5  6  4   1
+     5  7  6  1   5  7  6   1
+     7  8  6  1   8  9 10   1
+     7  9  8  1   8 11  9   1
+     9 10  8  1  11 12  9   1
+     9 11 10  1  11 13 12   1
+    11 12 10  1  13 14 12   1
+    11 13 12  1  13 15 14   1
+    13 14 12  1  15 16 14   1
+    13 15 14  1  15 17 16   1
+    15 16 14  1  17 18 16   1
+    15 17 16  1  17 19 18   1
+    17 18 16  1  19 20 18   2
+    17 19 18  1  19 21 20   2
+    19 20 18  1  21 22 20   1
+    19 21 20  1  21 23 22   1
+    21 22 20  1  23 24 22   1
+    21 23 22  1  23 25 24   1
+    23  2 22  1  25  2 24   1
+    23  0  2  1  25  0  2   1
+     2 24 25  2  26 27 28   1
+     2  1 24  2  26 29 27   1
+     1 26 24  2  29 30 27   1
+     1  4 26  2  29 31 30   1
+     4 27 26  2  31 32 30   1
+     4  6 27  2  31 33 32   1
+     6 28 27  2  33 34 32   1
+     6  8 28  2  33 35 34   1
+     8 29 28  2  35 36 34   1
+     8 10 29  2  35 37 36   1
+    10 30 29  2  37 38 36   1
+    10 12 30  2  37 39 38   1
+    12 31 30  2  39 40 38   1
+    12 14 31  2  39 41 40   1
+    14 32 31  2  41 42 40   2
+    14 16 32  2  41 43 42   2
+    16 33 32  2  43 44 42   2
+    16 18 33  2  43 45 44   2
+    18 34 33  2  45 46 44   2
+    18 20 34  2  45 47 46   2
+    20 35 34  2  47 48 46   2
+    20 22 35  2  47 49 48   2
+    22 25 35  2  49 28 48   2
+    22  2 25  2  49 26 28   2
+  position 0.00519772 0.236486 0.744461
+  orientation 0 -0.5735768 -0.8191518 -3.14159
+endnode
+node trimesh Mesh86
+  parent Box64
+  ambient 1 1 1
+  diffuse 1 1 1
+  specular 0 0 0
+  shininess 1
+  bitmap PLC_RugDMtlBrk
+  verts 12
+      -0.2735390   -0.6239890   -0.0624105
+       0.4745570    0.1241110   -0.0624105
+       0.5479310   -0.1497130   -0.0624105
+       0.2741060    0.3245630   -0.0624106
+       0.0002832    0.3979340   -0.0624105
+      -0.2735390    0.3245630   -0.0624105
+      -0.4739930    0.1241110   -0.0624105
+      -0.5473640   -0.1497130   -0.0624105
+      -0.4739930   -0.4235360   -0.0624104
+       0.2741060   -0.6239890   -0.0624105
+       0.0002833   -0.6973600   -0.0624105
+       0.4745570   -0.4235360   -0.0624104
+  tverts 12
+       0.5223510    0.7419460  0
+       0.1255590    0.9921550  0
+       0.1281670    0.7377610  0
+       0.0277966    0.7419460  0
+       0.1255590    0.9916190  0
+       0.1281670    0.7372260  0
+       0.1794160    0.9222390  0
+       0.3987130    0.9555590  0
+       0.4892230    0.8650490  0
+       0.3987130    0.9560950  0
+       0.4892230    0.8655850  0
+       0.1794160    0.9227740  0
+  faces 10
+     0  1  2  1   0  1  2   1
+     0  3  1  1   0  3  1   1
+     0  4  3  1   0  4  3   1
+     0  5  4  1   0  5  4   1
+     0  6  5  1   0  6  5   1
+     0  7  6  1   0  7  6   1
+     0  8  7  1   0  8  7   1
+     0  9 10  1   0  9 10   1
+     0 11  9  1   0 11  9   1
+     0  2 11  1   0  2 11   1
+  position 0.00519772 0.236486 0.897468
+  orientation 0 -0.5735768 -0.8191518 -3.14159
+endnode
+node trimesh Mesh81
+  parent Box64
+  ambient 1 1 1
+  diffuse 1 1 1
+  specular 0 0 0
+  shininess 1
+  bitmap PLC_RugDMtlBrk
+  verts 24
+       0.3653810   -0.0059334    0.0595350
+       0.1583750    0.0853411    0.0595350
+       0.1828320   -0.0059334    0.0595350
+       0.3164670    0.1766160    0.0595350
+       0.0915572    0.1521590    0.0595350
+       0.1828320    0.3102510    0.0595350
+       0.0002827    0.1766160    0.0595350
+       0.0002827    0.3591650    0.0595350
+      -0.0909918    0.1521590    0.0595350
+      -0.1822660    0.3102510    0.0595350
+      -0.1578090    0.0853411    0.0595350
+      -0.3159020    0.1766160    0.0595350
+      -0.1822660   -0.0059334    0.0595350
+      -0.3648150   -0.0059334    0.0595350
+      -0.1578090   -0.0972079    0.0595350
+      -0.3159010   -0.1884820    0.0595350
+      -0.0909918   -0.1640260    0.0595350
+      -0.1822660   -0.3221180    0.0595350
+       0.0002827   -0.1884820    0.0595350
+       0.0002827   -0.3710310    0.0595350
+       0.0915572   -0.1640260    0.0595350
+       0.1828320   -0.3221180    0.0595350
+       0.1583750   -0.0972079    0.0595350
+       0.3164670   -0.1884820    0.0595350
+  tverts 24
+       0.1290860    0.9200910  0
+       0.3453660    0.7735660  0
+       0.2427010    0.7417510  0
+       0.3344160    0.9837200  0
+       0.2396240    0.7463230  0
+       0.1338970    0.9259030  0
+       0.3442890    0.7741040  0
+       0.3442890    0.9814660  0
+       0.2385620    0.7463230  0
+       0.1328340    0.9259030  0
+       0.3447950    0.7744620  0
+       0.3338450    0.9846170  0
+       0.2421300    0.7426480  0
+       0.1285150    0.9209870  0
+       0.3449120    0.7745370  0
+       0.3339630    0.9846920  0
+       0.2385610    0.7464620  0
+       0.1328340    0.9260430  0
+       0.3442890    0.7742430  0
+       0.3442890    0.9816050  0
+       0.2396250    0.7464620  0
+       0.1338970    0.9260430  0
+       0.3454830    0.7736410  0
+       0.3345340    0.9837950  0
+  faces 24
+     0  1  2  1   0  1  2   2
+     0  3  1  1   0  3  1   2
+     3  4  1  1   3  4  1   2
+     3  5  4  1   3  5  4   2
+     5  6  4  1   5  6  4   2
+     5  7  6  1   5  7  6   2
+     7  8  6  1   7  8  6   2
+     7  9  8  1   7  9  8   2
+     9 10  8  1   9 10  8   2
+     9 11 10  1   9 11 10   2
+    11 12 10  1  11 12 10   2
+    11 13 12  1  11 13 12   2
+    13 14 12  1  13 14 12   2
+    13 15 14  1  13 15 14   2
+    15 16 14  1  15 16 14   2
+    15 17 16  1  15 17 16   2
+    17 18 16  1  17 18 16   2
+    17 19 18  1  17 19 18   2
+    19 20 18  1  19 20 18   2
+    19 21 20  1  19 21 20   2
+    21 22 20  1  21 22 20   2
+    21 23 22  1  21 23 22   2
+    23  2 22  1  23  2 22   2
+    23  0  2  1  23  0  2   2
+  position 0.00519772 0.236486 0.744461
+  orientation 0 -0.5735768 -0.8191518 -3.14159
+endnode
+node emitter ChunkyWood45
+  parent c_archtarget
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 0
+  inherit 1
+  inheritvel 0
+  inherit_local 1
+  inherit_part 0
+  splat 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Normal
+  texture fxpa_cloud02
+  chunkName PLC_Chunk_W02
+  xgrid 5
+  ygrid 5
+  loop 0
+  deadspace 0
+  twosidedtex 1
+  blastRadius 0
+  blastLength 0
+  position -0.0517438 0.049478 0.835972
+  orientation 0 0 0 0
+  colorStart 0.482353 0.435294 0.317647
+  colorEnd 0.584314 0.533333 0.407843
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.1
+  sizeEnd 0.1
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 24
+  birthrate 3
+  lifeExp 0.75
+  mass 3
+  spread 1.22173
+  particleRot 2.9
+  velocity 8
+  randvel 0.3
+  fps 0
+  xsize 89
+  ysize 40
+  bounce_co 0.5
+  blurlength 10
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter fire!29
+  parent c_archtarget
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 0
+  random 0
+  inherit 1
+  inheritvel 0
+  inherit_local 1
+  inherit_part 0
+  splat 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Normal
+  texture fxpa_smoke01
+  xgrid 4
+  ygrid 4
+  loop 0
+  deadspace 0
+  twosidedtex 1
+  blastRadius 0.2
+  blastLength 1
+  position -0.0517438 0.04532 0.655706
+  orientation 0 0 0 0
+  colorStart 0.47451 0.439216 0.364706
+  colorEnd 0.819608 0.796079 0.709804
+  alphaStart 1
+  alphaEnd 0
+  sizeStart 4
+  sizeEnd 1
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 24
+  birthrate 10
+  lifeExp 2.5
+  mass 0.09
+  spread 2.96706
+  particleRot 0.5
+  velocity 2
+  randvel 0.5
+  fps 10
+  xsize 100
+  ysize 99
+  bounce_co 0
+  blurlength 10
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+node emitter ChunkyWood44
+  parent c_archtarget
+  p2p 0
+  p2p_sel 1
+  affectedByWind 0
+  m_isTinted 0
+  bounce 1
+  random 0
+  inherit 1
+  inheritvel 0
+  inherit_local 1
+  inherit_part 0
+  splat 0
+  renderorder 0
+  spawntype 0
+  update Explosion
+  render Normal
+  blend Normal
+  texture fxpa_cloud02
+  chunkName PLC_Chunk_W01
+  xgrid 5
+  ygrid 5
+  loop 0
+  deadspace 0
+  twosidedtex 0
+  blastRadius 0
+  blastLength 0
+  position -0.0517438 0.047399 0.72975
+  orientation 0 0 0 0
+  colorStart 1 1 1
+  colorEnd 1 1 1
+  alphaStart 1
+  alphaEnd 1
+  sizeStart 0.1
+  sizeEnd 0.1
+  sizeStart_y 0
+  sizeEnd_y 0
+  frameStart 0
+  frameEnd 24
+  birthrate 3
+  lifeExp 0.75
+  mass 3
+  spread 1.22173
+  particleRot 5
+  velocity 8
+  randvel 0.3
+  fps 0
+  xsize 89
+  ysize 40
+  bounce_co 0.5
+  blurlength 10
+  lightningDelay 0
+  lightningRadius 0
+  lightningScale 0
+  p2p_bezier2 0
+  p2p_bezier3 0
+  combinetime 0
+  drag 0
+  grav 0
+  threshold 0
+endnode
+endmodelgeom c_archtarget
+
+#MAXANIM ASCII
+newanim ca1slashl c_archtarget
+  length 0.0333333
+  transtime 0.3
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ca1slashl c_archtarget
+
+#MAXANIM ASCII
+newanim ca1slashr c_archtarget
+  length 0.0333333
+  transtime 0.3
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ca1slashr c_archtarget
+
+#MAXANIM ASCII
+newanim ca1stab c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ca1stab c_archtarget
+
+#MAXANIM ASCII
+newanim creach c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim creach c_archtarget
+
+#MAXANIM ASCII
+newanim cconjure1 c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000   -6.2284098
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    positionkey 2
+         0.0000000    0.0051977    0.2364860    0.7444610
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    positionkey 2
+         0.0000000    0.0051977    0.2364860    0.7444610
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    positionkey 2
+         0.0000000    0.0051977    0.2364860    0.8974680
+         0.0333333    0.0051977    0.2364860    0.8974680
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    positionkey 2
+         0.0000000    0.0051977    0.2364860    0.7444610
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cconjure1 c_archtarget
+
+#MAXANIM ASCII
+newanim ccastout c_archtarget
+  length 0.0333333
+  transtime 0.3
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ccastout c_archtarget
+
+#MAXANIM ASCII
+newanim cparryl c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cparryl c_archtarget
+
+#MAXANIM ASCII
+newanim cparryr c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cparryr c_archtarget
+
+#MAXANIM ASCII
+newanim cdodgelr c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cdodgelr c_archtarget
+
+#MAXANIM ASCII
+newanim cdodges c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cdodges c_archtarget
+
+#MAXANIM ASCII
+newanim creadyr c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim creadyr c_archtarget
+
+#MAXANIM ASCII
+newanim creadyl c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim creadyl c_archtarget
+
+#MAXANIM ASCII
+newanim cdamagel c_archtarget
+  length 0.1
+  transtime 0.15
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 3
+         0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0280023
+         0.1000000    0.0000000    0.0000000    0.0000000
+    orientationkey 4
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0666667   -0.0000000   -1.0000000   -0.0000000   -0.0261799
+         0.1000000    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cdamagel c_archtarget
+
+#MAXANIM ASCII
+newanim cdamager c_archtarget
+  length 0.1
+  transtime 0.15
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 3
+         0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0280023
+         0.1000000    0.0000000    0.0000000    0.0000000
+    orientationkey 4
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0666667   -0.0000000   -1.0000000   -0.0000000   -0.0261799
+         0.1000000    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cdamager c_archtarget
+
+#MAXANIM ASCII
+newanim cdamages c_archtarget
+  length 0.1
+  transtime 0.15
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 3
+         0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0280023
+         0.1000000    0.0000000    0.0000000    0.0000000
+    orientationkey 4
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0666667   -0.0000000   -1.0000000   -0.0000000   -0.0261799
+         0.1000000    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cdamages c_archtarget
+
+#MAXANIM ASCII
+newanim ckdbck c_archtarget
+  length 0.233333
+  transtime 0.15
+  animroot c_archtarget
+  event 0.133333 detonate
+  event 0.133333 detonate
+  event 0.133333 detonate
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 4
+         0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0280023
+         0.1000000    0.0000000    0.0000000    0.0000000
+         0.2333330    0.0000000    0.0000000   -6.2284098
+    orientationkey 5
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0666667   -0.0000000   -1.0000000   -0.0000000   -0.0261799
+         0.1000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.2333330    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    orientationkey 3
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.2333330   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    orientationkey 3
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.2333330   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    orientationkey 3
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.2333330   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    orientationkey 3
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.2333330   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ckdbck c_archtarget
+
+#MAXANIM ASCII
+newanim ckdbckps c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000   -6.2284098
+         0.0333333    0.0000000    0.0000000   -6.2284098
+    orientationkey 2
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.8974680
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ckdbckps c_archtarget
+
+#MAXANIM ASCII
+newanim ckdbckdie c_archtarget
+  length 0.0333333
+  transtime 0.3
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000   -6.2284098
+         0.0333333    0.0000000    0.0000000   -6.2284098
+    orientationkey 2
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.8974680
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ckdbckdie c_archtarget
+
+#MAXANIM ASCII
+newanim cguptokdb c_archtarget
+  length 0.0333333
+  transtime 0.3
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000   -6.2284098
+         0.0333333    0.0000000    0.0000000   -6.2284098
+    orientationkey 2
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.8974680
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cguptokdb c_archtarget
+
+#MAXANIM ASCII
+newanim cgustandb c_archtarget
+  length 0.0333333
+  transtime 0.3
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000   -6.2284098
+         0.0333333    0.0000000    0.0000000   -6.2284098
+    orientationkey 2
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.8974680
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cgustandb c_archtarget
+
+#MAXANIM ASCII
+newanim cwalk c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cwalk c_archtarget
+
+#MAXANIM ASCII
+newanim crun c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim crun c_archtarget
+
+#MAXANIM ASCII
+newanim ccwalkf c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ccwalkf c_archtarget
+
+#MAXANIM ASCII
+newanim ccwalkb c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ccwalkb c_archtarget
+
+#MAXANIM ASCII
+newanim ccwalkl c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ccwalkl c_archtarget
+
+#MAXANIM ASCII
+newanim ccwalkr c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ccwalkr c_archtarget
+
+#MAXANIM ASCII
+newanim cpause1 c_archtarget
+  length 0.0333333
+  transtime 0.8
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cpause1 c_archtarget
+
+#MAXANIM ASCII
+newanim chturnl c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim chturnl c_archtarget
+
+#MAXANIM ASCII
+newanim chturnr c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim chturnr c_archtarget
+
+#MAXANIM ASCII
+newanim ctaunt c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ctaunt c_archtarget
+
+#MAXANIM ASCII
+newanim ccloseh c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ccloseh c_archtarget
+
+#MAXANIM ASCII
+newanim cclosel c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cclosel c_archtarget
+
+#MAXANIM ASCII
+newanim ckdbckdmg c_archtarget
+  length 0.0333333
+  transtime 0.15
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000   -6.2284098
+         0.0333333    0.0000000    0.0000000   -6.2284098
+    orientationkey 2
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.8974680
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ckdbckdmg c_archtarget
+
+#MAXANIM ASCII
+newanim cgetmid c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000   -6.2284098
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    positionkey 2
+         0.0000000    0.0051977    0.2364860    0.7444610
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    positionkey 2
+         0.0000000    0.0051977    0.2364860    0.7444610
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    positionkey 2
+         0.0000000    0.0051977    0.2364860    0.8974680
+         0.0333333    0.0051977    0.2364860    0.8974680
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    positionkey 2
+         0.0000000    0.0051977    0.2364860    0.7444610
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cgetmid c_archtarget
+
+#MAXANIM ASCII
+newanim ccastoutlp c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ccastoutlp c_archtarget
+
+#MAXANIM ASCII
+newanim cdead c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000   -6.2284098
+         0.0333333    0.0000000    0.0000000   -6.2284098
+    orientationkey 2
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.8974680
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cdead c_archtarget
+
+#MAXANIM ASCII
+newanim cappear c_archtarget
+  length 0.0333333
+  transtime 0.4
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cappear c_archtarget
+
+#MAXANIM ASCII
+newanim cdisappear c_archtarget
+  length 0.233333
+  transtime 0.4
+  animroot c_archtarget
+  event 0.133333 detonate
+  event 0.133333 detonate
+  event 0.133333 detonate
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 4
+         0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0280023
+         0.1000000    0.0000000    0.0000000    0.0000000
+         0.2333330    0.0000000    0.0000000   -6.2284098
+    orientationkey 5
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0666667   -0.0000000   -1.0000000   -0.0000000   -0.0261799
+         0.1000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.2333330    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    orientationkey 3
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.2333330   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    orientationkey 3
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.2333330   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    orientationkey 3
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.2333330   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    orientationkey 3
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.1000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.2333330   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cdisappear c_archtarget
+
+#MAXANIM ASCII
+newanim cgetmidlp c_archtarget
+  length 0.0333333
+  transtime 0.5
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cgetmidlp c_archtarget
+
+#MAXANIM ASCII
+newanim cdisappearlp c_archtarget
+  length 0.0333333
+  transtime 0.25
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000   -6.2284098
+         0.0333333    0.0000000    0.0000000   -6.2284098
+    orientationkey 2
+         0.0000000    0.0000000    0.0000000    0.0000000    0.0000000
+         0.0333333    0.0000000    0.0000000    0.0000000    0.0000000
+  endnode
+  node dummy Mesh80
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.8974680
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    positionkey 1
+         0.0333333    0.0051977    0.2364860    0.7444610
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim cdisappearlp c_archtarget
+
+#MAXANIM ASCII
+newanim ccturnr c_archtarget
+  length 0.0333333
+  transtime 0.25
+  animroot c_archtarget
+  node dummy c_archtarget
+    parent NULL
+  endnode
+  node dummy handconjure
+    parent c_archtarget
+  endnode
+  node dummy headconjure
+    parent c_archtarget
+  endnode
+  node dummy impact
+    parent c_archtarget
+  endnode
+  node dummy Box64
+    parent c_archtarget
+    positionkey 2
+         0.0000000    0.0000000    0.0000000    0.0280023
+         0.0333333    0.0000000    0.0000000    0.0280023
+    orientationkey 2
+         0.0000000    1.0000000   -0.0000000   -0.0000000   -0.0261799
+         0.0333333    1.0000000   -0.0000000   -0.0000000   -0.0261799
+  endnode
+  node dummy Mesh80
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Cylinder02
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh86
+    parent Box64
+    position 0.00519772 0.236486 0.897468
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node dummy Mesh81
+    parent Box64
+    position 0.00519772 0.236486 0.744461
+    orientationkey 2
+         0.0000000   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+         0.0333333   -0.0000000   -0.5735768   -0.8191518   -3.1415901
+  endnode
+  node emitter ChunkyWood45
+    parent c_archtarget
+  endnode
+  node emitter fire!29
+    parent c_archtarget
+  endnode
+  node emitter ChunkyWood44
+    parent c_archtarget
+  endnode
+doneanim ccturnr c_archtarget
+
+donemodel c_archtarget
