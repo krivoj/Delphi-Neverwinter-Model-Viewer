@@ -1468,9 +1468,9 @@ normalo:
    // TransformList.AddTransformEx( )   { TODO : transformlist dinamiche.clear allinizo }
     aQuaternion := MakeQuaternion  ( RRotation[0],RRotation[1],RRotation[2],RRotation[3]  );
     TTransformation(TransformList.Items[1]).Angle := -RadToDeg(aQuaternion.A)  ; //
-    TTransformation(TransformList.Items[1]).X := aQuaternion.z;
+    TTransformation(TransformList.Items[1]).X := aQuaternion.x;
     TTransformation(TransformList.Items[1]).Y := aQuaternion.y;
-    TTransformation(TransformList.Items[1]).Z := aQuaternion.x;     { TODO : WHY???? }
+    TTransformation(TransformList.Items[1]).Z := aQuaternion.z;     { TODO : WHY???? }
 
  {
     TTransformation(TransformList.Items[2]).Angle := RadToDeg(aQuaternion.A)  ; //
@@ -1765,6 +1765,17 @@ begin
       Animation.AnimatedObjects[ao].PositionKeys[pk].KeyValue.Z := tmpVector.Z;
       Animation.AnimatedObjects[ao].PositionKeys[pk].Angle := root.PositionKeys[pk].Angle;
      end;
+     for pk := 0 to Animation.AnimatedObjects [ao].OrientationKeyCount -1 do begin
+      Animation.AnimatedObjects[ao].OrientationKeys[pk].KeyTime := root.OrientationKeys[pk].KeyTime   ;
+      ob := FindObject( Animation.AnimatedObjects[ao].ObjectName );
+      tmpVector := ob.Orientation;
+//      Animation.AnimatedObjects[ao].OrientationKeys[pk].KeyValue := Vectoradd (root.OrientationKeys[pk].KeyValue, tmpVector )  ;
+      Animation.AnimatedObjects[ao].OrientationKeys[pk].KeyValue.X := root.OrientationKeys[pk].KeyValue.X + tmpVector.X;
+      Animation.AnimatedObjects[ao].OrientationKeys[pk].KeyValue.Y := root.OrientationKeys[pk].KeyValue.Y + tmpVector.Y;
+      Animation.AnimatedObjects[ao].OrientationKeys[pk].KeyValue.Z := root.OrientationKeys[pk].KeyValue.Z + tmpVector.Z;
+      Animation.AnimatedObjects[ao].OrientationKeys[pk].Angle := root.OrientationKeys[pk].Angle;
+     end;
+
      end;
    end;
 
@@ -1825,7 +1836,7 @@ begin
      // ppp := FloatToStr(Objects [I].Position.X) + ' ' + FloatToStr(Objects [I].Position.Y) + ' ' +FloatToStr(Objects [I].Position.Z);
     //  ooo := FloatToStr(Objects [I].Orientation.X) + ' ' + FloatToStr(Objects [I].Orientation.Y) + ' ' +FloatToStr(Objects [I].Orientation.Z);
      // ms := 2;
-    if objects[i].FObjectName = 'Deer_body' then
+   // if objects[i].FObjectName = 'Deer_body' then
       Objects[I].Anim (ms) ;
     //  ppp := FloatToStr(Objects [I].Position.X) + ' ' + FloatToStr(Objects [I].Position.Y) + ' ' +FloatToStr(Objects [I].Position.Z);
     //  ooo := FloatToStr(Objects [I].Orientation.X) + ' ' + FloatToStr(Objects [I].Orientation.Y) + ' ' +FloatToStr(Objects [I].Orientation.Z);
@@ -2256,7 +2267,7 @@ begin
     Readln ( fModel, aString);  aString := TrimLeft(aString);
     if Leftstr(  aString , 6) ='length' then Anim.FLength := StrToFloat(ExtractWordL( 2,aString,' ' )) // Milliseconds
     else if Leftstr(  aString , 9) ='transtime' then Anim.FTranstime:= StrToFloat(ExtractWordL( 2,aString,' ' ))
-    else if Leftstr(  aString , 8) ='animroot' then Anim.AnimationRoot:= ExtractWordL( 2,aString,' ' )
+    else if Leftstr(  aString , 8) ='animroot' then Anim.AnimationRoot:='rootdummy'//;HACK ExtractWordL( 2,aString,' ' )
    // else if Leftstr(  aString , 8) ='event' then Anim.AnimationRoot:= ExtractWordL( 2,aString,' ' ) { TODO : event 0.5 hit }
 
     else if  (leftstr ( aString, 10) = 'node dummy' )or ( Leftstr(  aString , 12) = 'node trimesh')   or ( Leftstr(  aString , 15) = 'node danglymesh') then begin
