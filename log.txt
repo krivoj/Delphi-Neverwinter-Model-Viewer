@@ -1,1993 +1,875 @@
 ANIM: ca1slashl
  
  
-object: rootdummy
+object: p_torso
  
 time: 0
-positionkeyX: 0.0124732004478574
-positionkeyY: -0.570523977279663
-positionkeyZ: 0.883324027061462
+positionkeyX: 0.0130599001422524
+positionkeyY: -0.0315131992101669
+positionkeyZ: 0.205170005559921
  
  
-object: rootdummy
+object: p_torso
  
-time: 0.100000001490116
-positionkeyX: 0.0305661000311375
-positionkeyY: -0.615674018859863
-positionkeyZ: 0.847537994384766
+time: 0.133332997560501
+positionkeyX: 0.0130599001422524
+positionkeyY: -0.0315131992101669
+positionkeyZ: 0.205170005559921
  
  
-object: rootdummy
- 
-time: 0.43333300948143
-positionkeyX: 0.0662800967693329
-positionkeyY: -0.706439971923828
-positionkeyZ: 1.05596005916595
- 
- 
-object: rootdummy
- 
-time: 0.5
-positionkeyX: 0.00886650010943413
-positionkeyY: 0.542070984840393
-positionkeyZ: 1.34844994544983
- 
- 
-object: rootdummy
- 
-time: 0.600000023841858
-positionkeyX: 0.00406609987840056
-positionkeyY: 0.785248994827271
-positionkeyZ: 1.48818004131317
- 
- 
-object: rootdummy
- 
-time: 0.800000011920929
-positionkeyX: 0.00875779986381531
-positionkeyY: -0.142552003264427
-positionkeyZ: 1.09325003623962
- 
- 
-object: rootdummy
- 
-time: 0.899999976158142
-positionkeyX: 0.0107274996116757
-positionkeyY: -0.451373010873795
-positionkeyZ: 0.955487012863159
- 
- 
-object: rootdummy
- 
-time: 1
-positionkeyX: 0.0124732004478574
-positionkeyY: -0.570523977279663
-positionkeyZ: 0.883324027061462
- 
- 
-object: rootdummy
- 
-time: 0
-orientationkeyX: -0.993510603904724
-orientationkeyY: -0.102342002093792
-orientationkeyZ: -0.0496267005801201
-orientationkeyA: -0.38595899939537
- 
- 
-object: rootdummy
- 
-time: 0.100000001490116
-orientationkeyX: -0.986171722412109
-orientationkeyY: -0.144389003515244
-orientationkeyZ: -0.0813459008932114
-orientationkeyA: -0.26401698589325
- 
- 
-object: rootdummy
- 
-time: 0.43333300948143
-orientationkeyX: 0.977037191390991
-orientationkeyY: -0.156843096017838
-orientationkeyZ: -0.144216999411583
-orientationkeyA: -0.205120995640755
- 
- 
-object: rootdummy
- 
-time: 0.5
-orientationkeyX: 0.991823017597198
-orientationkeyY: -0.0876559987664223
-orientationkeyZ: -0.0927558988332748
-orientationkeyA: -0.343551993370056
- 
- 
-object: rootdummy
- 
-time: 0.600000023841858
-orientationkeyX: 0.997873187065125
-orientationkeyY: -0.0361022986471653
-orientationkeyZ: -0.0542748011648655
-orientationkeyA: -0.682478010654449
- 
- 
-object: rootdummy
- 
-time: 0.800000011920929
-orientationkeyX: -0.973883926868439
-orientationkeyY: -0.19361799955368
-orientationkeyZ: -0.118583999574184
-orientationkeyA: -0.192452996969223
- 
- 
-object: rootdummy
- 
-time: 0.899999976158142
-orientationkeyX: -0.99208801984787
-orientationkeyY: -0.111933000385761
-orientationkeyZ: -0.0568545013666153
-orientationkeyA: -0.349281013011932
- 
- 
-object: rootdummy
- 
-time: 1
-orientationkeyX: -0.993510603904724
-orientationkeyY: -0.102342002093792
-orientationkeyZ: -0.0496267005801201
-orientationkeyA: -0.38595899939537
- 
- 
-object: Deer_body
- 
-time: 0
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_body
- 
-time: 0.43333300948143
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_body
- 
-time: 0.5
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: -1
-orientationkeyA: -0.0174532998353243
- 
- 
-object: Deer_body
- 
-time: 0.600000023841858
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_body
- 
-time: 0.800000011920929
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: -1
-orientationkeyA: -0.0174532998353243
- 
- 
-object: Deer_body
- 
-time: 1
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_tail
- 
-time: 0
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.31772005558014
- 
- 
-object: Deer_tail
- 
-time: 0.43333300948143
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_tail
- 
-time: 0.5
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_tail
- 
-time: 0.600000023841858
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_tail
- 
-time: 1
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.31772005558014
- 
- 
-object: Deer_Rhaunch
- 
-time: 0
-orientationkeyX: -0.910139203071594
-orientationkeyY: 0.408440113067627
-orientationkeyZ: 0.0694501996040344
-orientationkeyA: -0.499540001153946
- 
- 
-object: Deer_Rhaunch
- 
-time: 0.100000001490116
-orientationkeyX: -0.98127007484436
-orientationkeyY: 0.186278998851776
-orientationkeyZ: -0.049083199352026
-orientationkeyA: -0.762668073177338
- 
- 
-object: Deer_Rhaunch
- 
-time: 0.200000002980232
-orientationkeyX: -0.990698099136353
-orientationkeyY: 0.119419999420643
-orientationkeyZ: -0.0652393996715546
-orientationkeyA: -0.829231977462769
- 
- 
-object: Deer_Rhaunch
+object: p_torso
  
 time: 0.233333006501198
-orientationkeyX: -0.992694973945618
-orientationkeyY: 0.113238997757435
-orientationkeyZ: -0.0416368991136551
-orientationkeyA: -0.833429872989655
+positionkeyX: 0.0130599001422524
+positionkeyY: 0.241304993629456
+positionkeyZ: 0.994588971138
  
  
-object: Deer_Rhaunch
+object: p_torso
+ 
+time: 0.300000011920929
+positionkeyX: 0.0130599001422524
+positionkeyY: 0.522063970565796
+positionkeyZ: 1.28238999843597
+ 
+ 
+object: p_torso
  
 time: 0.43333300948143
-orientationkeyX: -0.994210481643677
-orientationkeyY: 0.0975262001156807
-orientationkeyZ: 0.0451014004647732
-orientationkeyA: -0.815352022647858
+positionkeyX: 0.0130599001422524
+positionkeyY: 0.920413970947266
+positionkeyZ: 1.35401999950409
  
  
-object: Deer_Rhaunch
+object: p_torso
  
 time: 0.5
-orientationkeyX: -0.620996177196503
-orientationkeyY: 0.689303278923035
-orientationkeyZ: 0.373128086328506
-orientationkeyA: -0.167868003249168
+positionkeyX: 0.0130599001422524
+positionkeyY: 1.1779500246048
+positionkeyZ: 1.0058399438858
  
  
-object: Deer_Rhaunch
+object: p_torso
  
-time: 0.600000023841858
-orientationkeyX: -0.62467098236084
-orientationkeyY: 0.687436103820801
-orientationkeyZ: 0.37042909860611
-orientationkeyA: -0.198693007230759
- 
- 
-object: Deer_Rhaunch
- 
-time: 0.666666984558105
-orientationkeyX: 0.725913524627686
-orientationkeyY: 0.544262707233429
-orientationkeyZ: 0.420508712530136
-orientationkeyA: -0.250737994909286
+time: 0.533333003520966
+positionkeyX: 0.0130597995594144
+positionkeyY: 1.39427995681763
+positionkeyZ: 0.563241004943848
  
  
-object: Deer_Rhaunch
+object: p_torso
+ 
+time: 0.566667020320892
+positionkeyX: 0.0130597995594144
+positionkeyY: 1.52587997913361
+positionkeyZ: 0.27454599738121
+ 
+ 
+object: p_torso
+ 
+time: 0.633333027362823
+positionkeyX: 0.0130597995594144
+positionkeyY: 1.56648004055023
+positionkeyZ: 0.153825998306274
+ 
+ 
+object: p_torso
  
 time: 0.699999988079071
-orientationkeyX: 0.881387829780579
-orientationkeyY: 0.351874887943268
-orientationkeyZ: 0.315181910991669
-orientationkeyA: -0.380555987358093
+positionkeyX: 0.0130597995594144
+positionkeyY: 1.56695997714996
+positionkeyZ: 0.143726006150246
  
  
-object: Deer_Rhaunch
- 
-time: 0.833333015441895
-orientationkeyX: 0.643752992153168
-orientationkeyY: 0.698262870311737
-orientationkeyZ: 0.313066989183426
-orientationkeyA: -0.236475005745888
- 
- 
-object: Deer_Rhaunch
- 
-time: 0.866666972637177
-orientationkeyX: -0.267244011163712
-orientationkeyY: 0.951092123985291
-orientationkeyZ: 0.154934003949165
-orientationkeyA: -0.172162994742393
- 
- 
-object: Deer_Rhaunch
- 
-time: 0.899999976158142
-orientationkeyX: -0.785567998886108
-orientationkeyY: 0.618659019470215
-orientationkeyZ: -0.0119983004406095
-orientationkeyA: -0.264063000679016
- 
- 
-object: Deer_Rhaunch
- 
-time: 0.933332979679108
-orientationkeyX: -0.86003577709198
-orientationkeyY: 0.510019779205322
-orientationkeyZ: 0.0147730996832252
-orientationkeyA: -0.343923002481461
- 
- 
-object: Deer_Rhaunch
- 
-time: 1
-orientationkeyX: -0.910139203071594
-orientationkeyY: 0.408440113067627
-orientationkeyZ: 0.0694501996040344
-orientationkeyA: -0.499540001153946
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -2.00721001625061
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.100000001490116
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -2.09443998336792
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.200000002980232
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.78882002830505
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.233333006501198
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.67803990840912
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.333332985639572
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.2948499917984
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.43333300948143
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.746197998523712
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.5
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.933031022548676
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.600000023841858
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.57112991809845
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.666666984558105
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.99652004241943
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.833333015441895
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.756861984729767
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.866666972637177
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.31834995746613
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.899999976158142
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.65120005607605
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 0.933332979679108
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.80050003528595
- 
- 
-object: Deer_Rbackmidleg
- 
-time: 1
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -2.00721001625061
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.19020998477936
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.100000001490116
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.07003998756409
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.200000002980232
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.988599002361298
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.233333006501198
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.98572701215744
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.333332985639572
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.976463973522186
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.43333300948143
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.710389971733093
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.5
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.470400989055634
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.600000023841858
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.613538980484009
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.666666984558105
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.708965003490448
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.833333015441895
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.695577025413513
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.866666972637177
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.01628005504608
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.899999976158142
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.1460200548172
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 0.933332979679108
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.17374002933502
- 
- 
-object: Deer_Rbacklowleg
- 
-time: 1
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.19020998477936
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0
-orientationkeyX: 0.181918904185295
-orientationkeyY: -0.819856822490692
-orientationkeyZ: -0.542899906635284
-orientationkeyA: -0.166856005787849
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.100000001490116
-orientationkeyX: -0.0527128018438816
-orientationkeyY: -0.998526871204376
-orientationkeyZ: -0.0128598995506763
-orientationkeyA: -0.12372200191021
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.200000002980232
-orientationkeyX: 0.806101024150848
-orientationkeyY: -0.512076020240784
-orientationkeyZ: 0.29661300778389
-orientationkeyA: -0.187961995601654
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.233333006501198
-orientationkeyX: 0.916300177574158
-orientationkeyY: -0.34632208943367
-orientationkeyZ: 0.201134100556374
-orientationkeyA: -0.238563999533653
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.333332985639572
-orientationkeyX: 0.986623108386993
-orientationkeyY: -0.140275001525879
-orientationkeyZ: 0.0830525010824203
-orientationkeyA: -0.451283007860184
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.43333300948143
-orientationkeyX: 0.994794607162476
-orientationkeyY: -0.0968808978796005
-orientationkeyZ: 0.0315879993140697
-orientationkeyA: -0.583818018436432
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.5
-orientationkeyX: 0.997672319412231
-orientationkeyY: -0.0657972991466522
-orientationkeyZ: -0.0179105997085571
-orientationkeyA: -0.882802128791809
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.600000023841858
-orientationkeyX: 0.967195212841034
-orientationkeyY: -0.237028002738953
-orientationkeyZ: 0.0913847982883453
-orientationkeyA: -0.444429010152817
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.666666984558105
-orientationkeyX: 0.995998382568359
-orientationkeyY: 0.0309822000563145
-orientationkeyZ: 0.0838288962841034
-orientationkeyA: -1.28508996963501
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.833333015441895
-orientationkeyX: 0.235605999827385
-orientationkeyY: -0.949175119400024
-orientationkeyZ: -0.208701997995377
-orientationkeyA: -0.152302995324135
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.866666972637177
-orientationkeyX: 0.31318798661232
-orientationkeyY: -0.947107911109924
-orientationkeyZ: -0.0699997022747993
-orientationkeyA: -0.148830994963646
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.899999976158142
-orientationkeyX: 0.379856199026108
-orientationkeyY: -0.924608528614044
-orientationkeyZ: -0.0284340009093285
-orientationkeyA: -0.152940005064011
- 
- 
-object: Deer_Rbackhoof
- 
-time: 0.933332979679108
-orientationkeyX: 0.247229903936386
-orientationkeyY: -0.948677778244019
-orientationkeyZ: -0.197200000286102
-orientationkeyA: -0.15056599676609
- 
- 
-object: Deer_Rbackhoof
- 
-time: 1
-orientationkeyX: 0.181918904185295
-orientationkeyY: -0.819856822490692
-orientationkeyZ: -0.542899906635284
-orientationkeyA: -0.166856005787849
- 
- 
-object: Deer_Rfrontupperleg
- 
-time: 0
-orientationkeyX: -0.272519886493683
-orientationkeyY: 0.849559724330902
-orientationkeyZ: -0.45164281129837
-orientationkeyA: -0.172828003764153
- 
- 
-object: Deer_Rfrontupperleg
- 
-time: 0.100000001490116
-orientationkeyX: -0.241548001766205
-orientationkeyY: 0.694416880607605
-orientationkeyZ: -0.677819907665253
-orientationkeyA: -0.423833012580872
- 
- 
-object: Deer_Rfrontupperleg
- 
-time: 0.200000002980232
-orientationkeyX: -0.465870290994644
-orientationkeyY: 0.883468627929688
-orientationkeyZ: -0.0494790002703667
-orientationkeyA: -0.190528005361557
- 
- 
-object: Deer_Rfrontupperleg
- 
-time: 0.43333300948143
-orientationkeyX: 0.523372888565063
-orientationkeyY: 0.33210501074791
-orientationkeyZ: -0.78472101688385
-orientationkeyA: -0.346839994192123
- 
- 
-object: Deer_Rfrontupperleg
- 
-time: 0.5
-orientationkeyX: -0.907483875751495
-orientationkeyY: 0.405219912528992
-orientationkeyZ: -0.110769003629684
-orientationkeyA: -0.44132199883461
- 
- 
-object: Deer_Rfrontupperleg
- 
-time: 0.600000023841858
-orientationkeyX: 0.555806875228882
-orientationkeyY: -0.219582006335258
-orientationkeyZ: -0.80178701877594
-orientationkeyA: -0.637961983680725
- 
- 
-object: Deer_Rfrontupperleg
- 
-time: 0.699999988079071
-orientationkeyX: 0.45909321308136
-orientationkeyY: -0.0438052006065845
-orientationkeyZ: -0.887307524681091
-orientationkeyA: -0.580780923366547
- 
- 
-object: Deer_Rfrontupperleg
- 
-time: 1
-orientationkeyX: -0.272519886493683
-orientationkeyY: 0.849559724330902
-orientationkeyZ: -0.45164281129837
-orientationkeyA: -0.172828003764153
- 
- 
-object: Deer_Rfrontmidleg
- 
-time: 0
-orientationkeyX: -0.933125019073486
-orientationkeyY: 0.195519000291824
-orientationkeyZ: 0.301744997501373
-orientationkeyA: -1.00646996498108
- 
- 
-object: Deer_Rfrontmidleg
- 
-time: 0.100000001490116
-orientationkeyX: -0.883525311946869
-orientationkeyY: 0.0396860986948013
-orientationkeyZ: 0.466699212789536
-orientationkeyA: -0.799044072628021
- 
- 
-object: Deer_Rfrontmidleg
- 
-time: 0.200000002980232
-orientationkeyX: -0.991607010364532
-orientationkeyY: 0.127323001623154
-orientationkeyZ: 0.0224600993096828
-orientationkeyA: -0.915420889854431
- 
- 
-object: Deer_Rfrontmidleg
- 
-time: 0.43333300948143
-orientationkeyX: -0.943429589271545
-orientationkeyY: 0.274675905704498
-orientationkeyZ: 0.185724899172783
-orientationkeyA: -1.67233002185822
- 
- 
-object: Deer_Rfrontmidleg
- 
-time: 0.5
-orientationkeyX: -0.913334429264069
-orientationkeyY: 0.138791099190712
-orientationkeyZ: 0.382828205823898
-orientationkeyA: -0.722917020320892
- 
- 
-object: Deer_Rfrontmidleg
- 
-time: 0.600000023841858
-orientationkeyX: -0.881782114505768
-orientationkeyY: 0.31207799911499
-orientationkeyZ: 0.353648990392685
-orientationkeyA: -1.91685998439789
- 
- 
-object: Deer_Rfrontmidleg
- 
-time: 0.699999988079071
-orientationkeyX: -0.8821160197258
-orientationkeyY: 0.328451007604599
-orientationkeyZ: 0.33762601017952
-orientationkeyA: -1.35592997074127
- 
- 
-object: Deer_Rfrontmidleg
- 
-time: 1
-orientationkeyX: -0.933125019073486
-orientationkeyY: 0.195519000291824
-orientationkeyZ: 0.301744997501373
-orientationkeyA: -1.00646996498108
- 
- 
-object: Deer_Rfrontlowleg
- 
-time: 0
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.27253997325897
- 
- 
-object: Deer_Rfrontlowleg
- 
-time: 0.100000001490116
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.31716001033783
- 
- 
-object: Deer_Rfrontlowleg
- 
-time: 0.200000002980232
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.74802005290985
- 
- 
-object: Deer_Rfrontlowleg
- 
-time: 0.43333300948143
-orientationkeyX: 0.999870300292969
-orientationkeyY: 0.00520699983462691
-orientationkeyZ: 0.0152401002123952
-orientationkeyA: -1.89776003360748
- 
- 
-object: Deer_Rfrontlowleg
- 
-time: 0.5
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.927254021167755
- 
- 
-object: Deer_Rfrontlowleg
- 
-time: 0.600000023841858
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.721544981002808
- 
- 
-object: Deer_Rfrontlowleg
- 
-time: 0.699999988079071
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.410970985889435
- 
- 
-object: Deer_Rfrontlowleg
- 
-time: 1
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.27253997325897
- 
- 
-object: Deer_Rfronthoof
- 
-time: 0
-orientationkeyX: 0.981606721878052
-orientationkeyY: -0.0521598011255264
-orientationkeyZ: -0.183650895953178
-orientationkeyA: -0.905008018016815
- 
- 
-object: Deer_Rfronthoof
- 
-time: 0.100000001490116
-orientationkeyX: 0.965941607952118
-orientationkeyY: -0.255849897861481
-orientationkeyZ: -0.0386997014284134
-orientationkeyA: -0.712630927562714
- 
- 
-object: Deer_Rfronthoof
- 
-time: 0.200000002980232
-orientationkeyX: 0.855030715465546
-orientationkeyY: -0.45223480463028
-orientationkeyZ: -0.253783911466599
-orientationkeyA: -0.487780004739761
- 
- 
-object: Deer_Rfronthoof
- 
-time: 0.43333300948143
-orientationkeyX: -0.449138790369034
-orientationkeyY: -0.873673677444458
-orientationkeyZ: 0.186998903751373
-orientationkeyA: -0.283125013113022
- 
- 
-object: Deer_Rfronthoof
- 
-time: 0.5
-orientationkeyX: -0.781758427619934
-orientationkeyY: -0.441057711839676
-orientationkeyZ: 0.440819710493088
-orientationkeyA: -0.236873000860214
- 
- 
-object: Deer_Rfronthoof
- 
-time: 0.600000023841858
-orientationkeyX: -0.370885998010635
-orientationkeyY: -0.380576014518738
-orientationkeyZ: -0.847115993499756
-orientationkeyA: -0.293475985527039
- 
- 
-object: Deer_Rfronthoof
- 
-time: 0.699999988079071
-orientationkeyX: 0.556246101856232
-orientationkeyY: -0.00840040016919374
-orientationkeyZ: -0.83097517490387
-orientationkeyA: -0.292178988456726
- 
- 
-object: Deer_Rfronthoof
- 
-time: 1
-orientationkeyX: 0.981606721878052
-orientationkeyY: -0.0521598011255264
-orientationkeyZ: -0.183650895953178
-orientationkeyA: -0.905008018016815
- 
- 
-object: Deer_Lhaunch
- 
-time: 0
-orientationkeyX: -0.846680223941803
-orientationkeyY: 0.522799074649811
-orientationkeyZ: 0.0990642011165619
-orientationkeyA: -0.144030004739761
- 
- 
-object: Deer_Lhaunch
- 
-time: 0.100000001490116
-orientationkeyX: -0.991000711917877
-orientationkeyY: 0.0241806004196405
-orientationkeyZ: 0.131654903292656
-orientationkeyA: -0.29619100689888
- 
- 
-object: Deer_Lhaunch
- 
-time: 0.200000002980232
-orientationkeyX: -0.989908814430237
-orientationkeyY: 0.00784240011125803
-orientationkeyZ: 0.141488999128342
-orientationkeyA: -0.524160027503967
- 
- 
-object: Deer_Lhaunch
- 
-time: 0.43333300948143
-orientationkeyX: -0.962591111660004
-orientationkeyY: -0.00880440045148134
-orientationkeyZ: 0.270815014839172
-orientationkeyA: -0.61261397600174
- 
- 
-object: Deer_Lhaunch
- 
-time: 0.5
-orientationkeyX: 0.962312400341034
-orientationkeyY: -0.198817104101181
-orientationkeyZ: 0.185544103384018
-orientationkeyA: -0.208011999726295
- 
- 
-object: Deer_Lhaunch
- 
-time: 0.600000023841858
-orientationkeyX: 0.962839722633362
-orientationkeyY: -0.193454906344414
-orientationkeyZ: 0.188453897833824
-orientationkeyA: -0.211291000247002
- 
- 
-object: Deer_Lhaunch
- 
-time: 0.666666984558105
-orientationkeyX: 0.983129978179932
-orientationkeyY: -0.140005007386208
-orientationkeyZ: 0.117702998220921
-orientationkeyA: -0.302771002054214
- 
- 
-object: Deer_Lhaunch
+object: p_torso
  
 time: 0.800000011920929
-orientationkeyX: 0.995529890060425
-orientationkeyY: -0.065903402864933
-orientationkeyZ: 0.0676535964012146
-orientationkeyA: -0.487314999103546
+positionkeyX: 0.0130597995594144
+positionkeyY: 1.56695997714996
+positionkeyZ: 0.143726006150246
  
  
-object: Deer_Lhaunch
- 
-time: 1
-orientationkeyX: -0.846680223941803
-orientationkeyY: 0.522799074649811
-orientationkeyZ: 0.0990642011165619
-orientationkeyA: -0.144030004739761
- 
- 
-object: Deer_Lbackmidleg
- 
-time: 0
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.51833009719849
- 
- 
-object: Deer_Lbackmidleg
- 
-time: 0.100000001490116
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.83606004714966
- 
- 
-object: Deer_Lbackmidleg
- 
-time: 0.200000002980232
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.68296003341675
- 
- 
-object: Deer_Lbackmidleg
- 
-time: 0.43333300948143
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.974516987800598
- 
- 
-object: Deer_Lbackmidleg
- 
-time: 0.5
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.556599020957947
- 
- 
-object: Deer_Lbackmidleg
- 
-time: 0.666666984558105
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.85459995269775
- 
- 
-object: Deer_Lbackmidleg
- 
-time: 0.800000011920929
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.492747008800507
- 
- 
-object: Deer_Lbackmidleg
+object: p_torso
  
 time: 0.899999976158142
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.990576028823853
+positionkeyX: 0.0130599001422524
+positionkeyY: 0.784210979938507
+positionkeyZ: 0.496643006801605
  
  
-object: Deer_Lbackmidleg
+object: p_torso
  
-time: 0.933332979679108
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.19032001495361
- 
- 
-object: Deer_Lbackmidleg
- 
-time: 1
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.53868997097015
+time: 1.03332996368408
+positionkeyX: 0.0130599001422524
+positionkeyY: -0.00639929994940758
+positionkeyZ: 0.190678000450134
  
  
-object: Deer_Lbacklowleg
+object: p_torso
+ 
+time: 1.16666996479034
+positionkeyX: 0.0130599001422524
+positionkeyY: -0.0315131992101669
+positionkeyZ: 0.205170005559921
+ 
+ 
+object: p_torso
  
 time: 0
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.345434993505478
+orientationkeyX: -0.00934480037540197
+orientationkeyY: 0.0120563004165888
+orientationkeyZ: -0.999883711338043
+orientationkeyA: -1.57221984863281
  
  
-object: Deer_Lbacklowleg
+object: p_torso
  
-time: 0.100000001490116
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.667514026165009
+time: 0.133332997560501
+orientationkeyX: 0.410480886697769
+orientationkeyY: -0.407731890678406
+orientationkeyZ: -0.815634787082672
+orientationkeyA: -1.77310001850128
  
  
-object: Deer_Lbacklowleg
+object: p_torso
  
 time: 0.200000002980232
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.460563987493515
+orientationkeyX: 0.161625996232033
+orientationkeyY: -0.158766001462936
+orientationkeyZ: -0.973997116088867
+orientationkeyA: -1.5979700088501
  
  
-object: Deer_Lbacklowleg
- 
-time: 0.43333300948143
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.538151025772095
- 
- 
-object: Deer_Lbacklowleg
- 
-time: 0.5
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.412939995527267
- 
- 
-object: Deer_Lbacklowleg
- 
-time: 0.600000023841858
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.426593989133835
- 
- 
-object: Deer_Lbacklowleg
- 
-time: 0.666666984558105
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.420035988092422
- 
- 
-object: Deer_Lbacklowleg
- 
-time: 0.800000011920929
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.43554300069809
- 
- 
-object: Deer_Lbacklowleg
- 
-time: 0.899999976158142
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.28337299823761
- 
- 
-object: Deer_Lbacklowleg
- 
-time: 0.933332979679108
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.312812000513077
- 
- 
-object: Deer_Lbacklowleg
- 
-time: 1
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.385417997837067
- 
- 
-object: Deer_Lbackhoof
- 
-time: 0
-orientationkeyX: -0.796837210655212
-orientationkeyY: 0.0217282995581627
-orientationkeyZ: -0.603803217411041
-orientationkeyA: -0.697647988796234
- 
- 
-object: Deer_Lbackhoof
- 
-time: 0.100000001490116
-orientationkeyX: -0.997539281845093
-orientationkeyY: 0.0694596022367477
-orientationkeyZ: 0.00952889956533909
-orientationkeyA: -0.552422881126404
- 
- 
-object: Deer_Lbackhoof
- 
-time: 0.200000002980232
-orientationkeyX: -0.986331820487976
-orientationkeyY: 0.146154001355171
-orientationkeyZ: -0.0760829970240593
-orientationkeyA: -0.373062014579773
- 
- 
-object: Deer_Lbackhoof
- 
-time: 0.43333300948143
-orientationkeyX: 0.110953897237778
-orientationkeyY: 0.399894803762436
-orientationkeyZ: -0.90982049703598
-orientationkeyA: -0.14130100607872
- 
- 
-object: Deer_Lbackhoof
- 
-time: 0.5
-orientationkeyX: 0.999646425247192
-orientationkeyY: 0.0179999992251396
-orientationkeyZ: 0.019572900608182
-orientationkeyA: -0.964057981967926
- 
- 
-object: Deer_Lbackhoof
- 
-time: 0.600000023841858
-orientationkeyX: -0.972308874130249
-orientationkeyY: 0.227302998304367
-orientationkeyZ: -0.0543012991547585
-orientationkeyA: -0.283138990402222
- 
- 
-object: Deer_Lbackhoof
- 
-time: 0.666666984558105
-orientationkeyX: 0.998505115509033
-orientationkeyY: -0.0327394008636475
-orientationkeyZ: -0.0437682010233402
-orientationkeyA: -1.40522003173828
- 
- 
-object: Deer_Lbackhoof
- 
-time: 0.899999976158142
-orientationkeyX: -0.865925014019012
-orientationkeyY: -0.065147802233696
-orientationkeyZ: -0.495912998914719
-orientationkeyA: -0.526126980781555
- 
- 
-object: Deer_Lbackhoof
- 
-time: 0.933332979679108
-orientationkeyX: -0.867079377174377
-orientationkeyY: -0.0370903015136719
-orientationkeyZ: -0.496787190437317
-orientationkeyA: -0.581458985805511
- 
- 
-object: Deer_Lbackhoof
- 
-time: 1
-orientationkeyX: -0.773630917072296
-orientationkeyY: 0.0182760003954172
-orientationkeyZ: -0.633373022079468
-orientationkeyA: -0.693490982055664
- 
- 
-object: Deer_Lfrontupperleg
- 
-time: 0
-orientationkeyX: 0.508326888084412
-orientationkeyY: -0.36420089006424
-orientationkeyZ: 0.78035980463028
-orientationkeyA: -0.39708000421524
- 
- 
-object: Deer_Lfrontupperleg
- 
-time: 0.100000001490116
-orientationkeyX: 0.597348928451538
-orientationkeyY: -0.273625910282135
-orientationkeyZ: 0.753858923912048
-orientationkeyA: -0.36540099978447
- 
- 
-object: Deer_Lfrontupperleg
- 
-time: 0.200000002980232
-orientationkeyX: 0.551381886005402
-orientationkeyY: -0.218949005007744
-orientationkeyZ: 0.805008888244629
-orientationkeyA: -0.369951993227005
- 
- 
-object: Deer_Lfrontupperleg
- 
-time: 0.43333300948143
-orientationkeyX: 0.465816110372543
-orientationkeyY: -0.194233000278473
-orientationkeyZ: 0.863301217556
-orientationkeyA: -0.407029002904892
- 
- 
-object: Deer_Lfrontupperleg
- 
-time: 0.5
-orientationkeyX: 0.390714198350906
-orientationkeyY: -0.117256097495556
-orientationkeyZ: 0.913013398647308
-orientationkeyA: -0.535815000534058
- 
- 
-object: Deer_Lfrontupperleg
- 
-time: 0.600000023841858
-orientationkeyX: 0.566621780395508
-orientationkeyY: -0.0640755966305733
-orientationkeyZ: 0.82148277759552
-orientationkeyA: -0.391923993825912
- 
- 
-object: Deer_Lfrontupperleg
- 
-time: 1
-orientationkeyX: 0.508326888084412
-orientationkeyY: -0.36420089006424
-orientationkeyZ: 0.78035980463028
-orientationkeyA: -0.39708000421524
- 
- 
-object: Deer_Lfrontmidleg
- 
-time: 0
-orientationkeyX: -0.871875882148743
-orientationkeyY: 0.0788170993328094
-orientationkeyZ: -0.483342885971069
-orientationkeyA: -0.688010990619659
- 
- 
-object: Deer_Lfrontmidleg
- 
-time: 0.100000001490116
-orientationkeyX: -0.905322790145874
-orientationkeyY: -0.0726075023412704
-orientationkeyZ: -0.418471902608871
-orientationkeyA: -1.00015997886658
- 
- 
-object: Deer_Lfrontmidleg
- 
-time: 0.200000002980232
-orientationkeyX: -0.939314723014832
-orientationkeyY: -0.103992998600006
-orientationkeyZ: -0.32691490650177
-orientationkeyA: -1.25632989406586
- 
- 
-object: Deer_Lfrontmidleg
- 
-time: 0.43333300948143
-orientationkeyX: -0.91255921125412
-orientationkeyY: -0.0951125994324684
-orientationkeyZ: -0.397730112075806
-orientationkeyA: -1.68374001979828
- 
- 
-object: Deer_Lfrontmidleg
- 
-time: 0.5
-orientationkeyX: -0.726980805397034
-orientationkeyY: -0.0794074013829231
-orientationkeyZ: -0.682050824165344
-orientationkeyA: -1.14371001720428
- 
- 
-object: Deer_Lfrontmidleg
- 
-time: 0.600000023841858
-orientationkeyX: -0.943432927131653
-orientationkeyY: -0.15497399866581
-orientationkeyZ: -0.293116897344589
-orientationkeyA: -1.49765002727509
- 
- 
-object: Deer_Lfrontmidleg
- 
-time: 0.733332991600037
-orientationkeyX: -0.955604374408722
-orientationkeyY: -0.0652554035186768
-orientationkeyZ: -0.287336111068726
-orientationkeyA: -0.992573976516724
- 
- 
-object: Deer_Lfrontmidleg
- 
-time: 1
-orientationkeyX: -0.871875882148743
-orientationkeyY: 0.0788170993328094
-orientationkeyZ: -0.483342885971069
-orientationkeyA: -0.688010990619659
- 
- 
-object: Deer_Lfrontlowleg
- 
-time: 0
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.22467994689941
- 
- 
-object: Deer_Lfrontlowleg
- 
-time: 0.100000001490116
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.28448987007141
- 
- 
-object: Deer_Lfrontlowleg
- 
-time: 0.200000002980232
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.07606995105743
- 
- 
-object: Deer_Lfrontlowleg
- 
-time: 0.43333300948143
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.849290013313293
- 
- 
-object: Deer_Lfrontlowleg
- 
-time: 0.5
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.438887000083923
- 
- 
-object: Deer_Lfrontlowleg
- 
-time: 0.600000023841858
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.997680008411407
- 
- 
-object: Deer_Lfrontlowleg
- 
-time: 0.733332991600037
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.499419003725052
- 
- 
-object: Deer_Lfrontlowleg
- 
-time: 1
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -1.22467994689941
- 
- 
-object: Deer_Lfronthoof
- 
-time: 0
-orientationkeyX: 0.984986782073975
-orientationkeyY: -0.0197749007493258
-orientationkeyZ: 0.171492993831635
-orientationkeyA: -0.395527005195618
- 
- 
-object: Deer_Lfronthoof
- 
-time: 0.100000001490116
-orientationkeyX: 0.813074886798859
-orientationkeyY: -0.0188187006860971
-orientationkeyZ: 0.58185487985611
-orientationkeyA: -0.419200003147125
- 
- 
-object: Deer_Lfronthoof
- 
-time: 0.200000002980232
-orientationkeyX: 0.803666412830353
-orientationkeyY: 0.0380201004445553
-orientationkeyZ: 0.593864321708679
-orientationkeyA: -0.452306002378464
- 
- 
-object: Deer_Lfronthoof
- 
-time: 0.43333300948143
-orientationkeyX: 0.796463012695313
-orientationkeyY: 0.00494519993662834
-orientationkeyZ: 0.604667007923126
-orientationkeyA: -0.444633007049561
- 
- 
-object: Deer_Lfronthoof
- 
-time: 0.5
-orientationkeyX: -0.576463878154755
-orientationkeyY: 0.136151000857353
-orientationkeyZ: 0.80569988489151
-orientationkeyA: -0.349067986011505
- 
- 
-object: Deer_Lfronthoof
- 
-time: 0.600000023841858
-orientationkeyX: -0.951539099216461
-orientationkeyY: 0.175897002220154
-orientationkeyZ: 0.252256989479065
-orientationkeyA: -0.495719999074936
- 
- 
-object: Deer_Lfronthoof
- 
-time: 0.733332991600037
-orientationkeyX: 0.997303485870361
-orientationkeyY: -0.0731294006109238
-orientationkeyZ: 0.00615590019151568
-orientationkeyA: -0.491910994052887
- 
- 
-object: Deer_Lfronthoof
- 
-time: 1
-orientationkeyX: 0.984986782073975
-orientationkeyY: -0.0197749007493258
-orientationkeyZ: 0.171492993831635
-orientationkeyA: -0.395527005195618
- 
- 
-object: Deer_neckbase
- 
-time: 0
-orientationkeyX: 0.999998927116394
-orientationkeyY: 4.22000011894852E-5
-orientationkeyZ: -0.00147480005398393
-orientationkeyA: -0.864794075489044
- 
- 
-object: Deer_neckbase
- 
-time: 0.166666999459267
-orientationkeyX: 0.997642397880554
-orientationkeyY: 0.0469824001193047
-orientationkeyZ: -0.0500233992934227
-orientationkeyA: -0.181529000401497
- 
- 
-object: Deer_neckbase
+object: p_torso
  
 time: 0.266667008399963
-orientationkeyX: -0.741827309131622
-orientationkeyY: 0.626607179641724
-orientationkeyZ: -0.238863095641136
-orientationkeyA: -0.0543434992432594
+orientationkeyX: 0.165057003498077
+orientationkeyY: -0.16219499707222
+orientationkeyZ: -0.972856104373932
+orientationkeyA: -1.59913003444672
  
  
-object: Deer_neckbase
+object: p_torso
+ 
+time: 0.333332985639572
+orientationkeyX: 0.264508008956909
+orientationkeyY: -0.261640995740891
+orientationkeyZ: -0.928213119506836
+orientationkeyA: -1.64573013782501
+ 
+ 
+object: p_torso
  
 time: 0.43333300948143
-orientationkeyX: 0.999999821186066
-orientationkeyY: -0.000246100011281669
-orientationkeyZ: -0.000495299987960607
-orientationkeyA: -0.99563992023468
+orientationkeyX: 0.587514221668243
+orientationkeyY: -0.585238099098206
+orientationkeyZ: -0.55885910987854
+orientationkeyA: -2.12101006507874
  
  
-object: Deer_neckbase
+object: p_torso
  
 time: 0.5
-orientationkeyX: 0.999999582767487
-orientationkeyY: -0.000512800004798919
-orientationkeyZ: -0.000682400015648454
-orientationkeyA: -0.629121124744415
+orientationkeyX: 0.671263098716736
+orientationkeyY: -0.669535219669342
+orientationkeyZ: -0.318007111549377
+orientationkeyA: -2.52323007583618
  
  
-object: Deer_neckbase
+object: p_torso
  
-time: 0.600000023841858
-orientationkeyX: 0.999994874000549
-orientationkeyY: -0.00243750005029142
-orientationkeyZ: -0.00203280011191964
-orientationkeyA: -0.1666090041399
+time: 0.533333003520966
+orientationkeyX: 0.680106282234192
+orientationkeyY: -0.67847728729248
+orientationkeyZ: -0.277712106704712
+orientationkeyA: -2.59703993797302
  
  
-object: Deer_neckbase
+object: p_torso
+ 
+time: 0.566667020320892
+orientationkeyX: 0.629410088062286
+orientationkeyY: -0.627353072166443
+orientationkeyZ: -0.458552986383438
+orientationkeyA: -2.27983999252319
+ 
+ 
+object: p_torso
+ 
+time: 0.633333027362823
+orientationkeyX: 0.526968419551849
+orientationkeyY: -0.524470329284668
+orientationkeyZ: -0.668756484985352
+orientationkeyA: -1.96189999580383
+ 
+ 
+object: p_torso
+ 
+time: 0.699999988079071
+orientationkeyX: 0.579295098781586
+orientationkeyY: -0.576983094215393
+orientationkeyZ: -0.57576709985733
+orientationkeyA: -2.09551000595093
+ 
+ 
+object: p_torso
  
 time: 0.800000011920929
-orientationkeyX: 0.999999821186066
-orientationkeyY: 0.000135099995532073
-orientationkeyZ: -0.000601899984758347
-orientationkeyA: -1.48435997962952
+orientationkeyX: 0.579295098781586
+orientationkeyY: -0.576983094215393
+orientationkeyZ: -0.57576709985733
+orientationkeyA: -2.09551000595093
  
  
-object: Deer_neckbase
+object: p_torso
  
-time: 1
-orientationkeyX: 0.999998927116394
-orientationkeyY: 4.22000011894852E-5
-orientationkeyZ: -0.00147480005398393
-orientationkeyA: -0.864794075489044
+time: 0.899999976158142
+orientationkeyX: 0.259017109870911
+orientationkeyY: -0.256148099899292
+orientationkeyZ: -0.931288480758667
+orientationkeyA: -1.64244985580444
  
  
-object: Deer_neckend
+object: p_torso
+ 
+time: 1.03332996368408
+orientationkeyX: 0.255819112062454
+orientationkeyY: -0.252948999404907
+orientationkeyZ: -0.933045208454132
+orientationkeyA: -1.64058017730713
+ 
+ 
+object: p_torso
+ 
+time: 1.16666996479034
+orientationkeyX: -0.00934480037540197
+orientationkeyY: 0.0120563004165888
+orientationkeyZ: -0.999883711338043
+orientationkeyA: -1.57221984863281
+ 
+ 
+object: p_footL
  
 time: 0
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
+positionkeyX: -0.0212507992982864
+positionkeyY: 0.0727963000535965
+positionkeyZ: -0.115803003311157
  
  
-object: Deer_neckend
+object: p_footL
  
-time: 0.100000001490116
-orientationkeyX: -0.999875485897064
-orientationkeyY: 0.0035075000487268
-orientationkeyZ: -0.0153858000412583
-orientationkeyA: -0.0392508991062641
- 
- 
-object: Deer_neckend
- 
-time: 0.266667008399963
-orientationkeyX: -0.999998509883881
-orientationkeyY: -4.48999999207444E-5
-orientationkeyZ: -0.00175900000613183
-orientationkeyA: -0.453723013401031
+time: 0.133332997560501
+positionkeyX: 0.0767994001507759
+positionkeyY: 0.0728295966982841
+positionkeyZ: -0.0759209021925926
  
  
-object: Deer_neckend
+object: p_footL
+ 
+time: 0.233333006501198
+positionkeyX: -0.000412599998526275
+positionkeyY: 0.0729298964142799
+positionkeyZ: -0.129099994897842
+ 
+ 
+object: p_footL
  
 time: 0.43333300948143
-orientationkeyX: -0.413524001836777
-orientationkeyY: 0.848293006420135
-orientationkeyZ: 0.330751985311508
-orientationkeyA: -0.0201565008610487
+positionkeyX: 0.0172145999968052
+positionkeyY: 0.0728314965963364
+positionkeyZ: -0.111635997891426
  
  
-object: Deer_neckend
+object: p_footL
  
-time: 0.5
-orientationkeyX: 0.997811079025269
-orientationkeyY: -0.0641074031591415
-orientationkeyZ: -0.0162211004644632
-orientationkeyA: -0.226951003074646
- 
- 
-object: Deer_neckend
- 
-time: 0.600000023841858
-orientationkeyX: 0.999999284744263
-orientationkeyY: 0.000267600000370294
-orientationkeyZ: -0.00109579996205866
-orientationkeyA: -0.436333000659943
+time: 0.633333027362823
+positionkeyX: 0.00611680001020432
+positionkeyY: 0.0727930963039398
+positionkeyZ: -0.103197999298573
  
  
-object: Deer_neckend
+object: p_footL
+ 
+time: 0.866666972637177
+positionkeyX: 0.0288878995925188
+positionkeyY: 0.0727789029479027
+positionkeyZ: -0.097819596529007
+ 
+ 
+object: p_footL
+ 
+time: 1.16666996479034
+positionkeyX: -0.0212507992982864
+positionkeyY: 0.0727963000535965
+positionkeyZ: -0.115803003311157
+ 
+ 
+object: p_footL
+ 
+time: 0
+orientationkeyX: -0.0562495999038219
+orientationkeyY: -0.930885672569275
+orientationkeyZ: -0.360953897237778
+orientationkeyA: -0.0485955998301506
+ 
+ 
+object: p_footL
+ 
+time: 0.133332997560501
+orientationkeyX: -0.0122146997600794
+orientationkeyY: 0.999765813350677
+orientationkeyZ: -0.0178676005452871
+orientationkeyA: -0.845054984092712
+ 
+ 
+object: p_footL
+ 
+time: 0.233333006501198
+orientationkeyX: -0.0165723003447056
+orientationkeyY: -0.989675521850586
+orientationkeyZ: -0.142364904284477
+orientationkeyA: -0.123928003013134
+ 
+ 
+object: p_footL
+ 
+time: 0.300000011920929
+orientationkeyX: 0.00408730003982782
+orientationkeyY: -0.999613285064697
+orientationkeyZ: -0.0275066997855902
+orientationkeyA: -0.649681985378265
+ 
+ 
+object: p_footL
+ 
+time: 0.43333300948143
+orientationkeyX: -0.0143488999456167
+orientationkeyY: 0.999452888965607
+orientationkeyZ: -0.0297998990863562
+orientationkeyA: -0.543348014354706
+ 
+ 
+object: p_footL
+ 
+time: 0.633333027362823
+orientationkeyX: -0.0152623998001218
+orientationkeyY: 0.999273896217346
+orientationkeyZ: -0.034909900277853
+orientationkeyA: -0.470214009284973
+ 
+ 
+object: p_footL
+ 
+time: 0.866666972637177
+orientationkeyX: -0.0121366996318102
+orientationkeyY: 0.999774396419525
+orientationkeyZ: -0.0174314007163048
+orientationkeyA: -0.862163007259369
+ 
+ 
+object: p_footL
+ 
+time: 1.16666996479034
+orientationkeyX: -0.0562495999038219
+orientationkeyY: -0.930885672569275
+orientationkeyZ: -0.360953897237778
+orientationkeyA: -0.0485955998301506
+ 
+ 
+object: p_footR
+ 
+time: 0
+positionkeyX: -0.025399100035429
+positionkeyY: -0.0565594993531704
+positionkeyZ: -0.119272999465466
+ 
+ 
+object: p_footR
+ 
+time: 0.133332997560501
+positionkeyX: 0.0726511031389236
+positionkeyY: -0.0565261989831924
+positionkeyZ: -0.0793906003236771
+ 
+ 
+object: p_footR
+ 
+time: 0.233333006501198
+positionkeyX: -0.00456089992076159
+positionkeyY: -0.0564258992671967
+positionkeyZ: -0.132569998502731
+ 
+ 
+object: p_footR
+ 
+time: 0.43333300948143
+positionkeyX: 0.0130663001909852
+positionkeyY: -0.0565242990851402
+positionkeyZ: -0.115106001496315
+ 
+ 
+object: p_footR
+ 
+time: 0.633333027362823
+positionkeyX: 0.00196849997155368
+positionkeyY: -0.0565626993775368
+positionkeyZ: -0.106668002903461
+ 
+ 
+object: p_footR
+ 
+time: 0.866666972637177
+positionkeyX: 0.0247396007180214
+positionkeyY: -0.0565767996013165
+positionkeyZ: -0.101288996636868
+ 
+ 
+object: p_footR
+ 
+time: 1.16666996479034
+positionkeyX: -0.025399100035429
+positionkeyY: -0.0565594993531704
+positionkeyZ: -0.119272999465466
+ 
+ 
+object: p_footR
+ 
+time: 0
+orientationkeyX: -0.0881464034318924
+orientationkeyY: -0.76469498872757
+orientationkeyZ: 0.638334989547729
+orientationkeyA: -0.0308373998850584
+ 
+ 
+object: p_footR
+ 
+time: 0.133332997560501
+orientationkeyX: 0.00716869998723269
+orientationkeyY: 0.999720096588135
+orientationkeyZ: 0.0225469004362822
+orientationkeyA: -0.866748988628387
+ 
+ 
+object: p_footR
+ 
+time: 0.233333006501198
+orientationkeyX: -0.0338025987148285
+orientationkeyY: -0.981172382831573
+orientationkeyZ: 0.190153107047081
+orientationkeyA: -0.102930001914501
+ 
+ 
+object: p_footR
+ 
+time: 0.300000011920929
+orientationkeyX: -0.0136796003207564
+orientationkeyY: -0.999482572078705
+orientationkeyZ: 0.0291082002222538
+orientationkeyA: -0.628095984458923
+ 
+ 
+object: p_footR
+ 
+time: 0.43333300948143
+orientationkeyX: 0.0055697001516819
+orientationkeyY: 0.999364793300629
+orientationkeyZ: 0.0351997017860413
+orientationkeyA: -0.565060973167419
+ 
+ 
+object: p_footR
+ 
+time: 0.633333027362823
+orientationkeyX: 0.00489840004593134
+orientationkeyY: 0.999167203903198
+orientationkeyZ: 0.0405079014599323
+orientationkeyA: -0.491935014724731
+ 
+ 
+object: p_footR
+ 
+time: 0.866666972637177
+orientationkeyX: 0.00722800008952618
+orientationkeyY: 0.999730110168457
+orientationkeyZ: 0.0220774002373219
+orientationkeyA: -0.883857011795044
+ 
+ 
+object: p_footR
+ 
+time: 1.16666996479034
+orientationkeyX: -0.0881464034318924
+orientationkeyY: -0.76469498872757
+orientationkeyZ: 0.638334989547729
+orientationkeyA: -0.0308373998850584
+ 
+ 
+object: p_wingR
+ 
+time: 0
+orientationkeyX: 0.964784920215607
+orientationkeyY: -0.238721996545792
+orientationkeyZ: 0.110462002456188
+orientationkeyA: -0.648688018321991
+ 
+ 
+object: p_wingR
+ 
+time: 0.133332997560501
+orientationkeyX: 0.734918773174286
+orientationkeyY: -0.0603237003087997
+orientationkeyZ: 0.675466775894165
+orientationkeyA: -1.48956000804901
+ 
+ 
+object: p_wingR
+ 
+time: 0.233333006501198
+orientationkeyX: 0.299288213253021
+orientationkeyY: -0.0911561027169228
+orientationkeyZ: -0.94979852437973
+orientationkeyA: -0.897041022777557
+ 
+ 
+object: p_wingR
+ 
+time: 0.300000011920929
+orientationkeyX: 0.299288213253021
+orientationkeyY: -0.0911561027169228
+orientationkeyZ: -0.94979852437973
+orientationkeyA: -0.897041022777557
+ 
+ 
+object: p_wingR
+ 
+time: 0.400000005960464
+orientationkeyX: 0.68291300535202
+orientationkeyY: 0.38630598783493
+orientationkeyZ: 0.619997978210449
+orientationkeyA: -1.56912004947662
+ 
+ 
+object: p_wingR
+ 
+time: 0.533333003520966
+orientationkeyX: 0.299288213253021
+orientationkeyY: -0.0911561027169228
+orientationkeyZ: -0.94979852437973
+orientationkeyA: -0.897041022777557
+ 
+ 
+object: p_wingR
+ 
+time: 0.566667020320892
+orientationkeyX: 0.851479411125183
+orientationkeyY: 0.181928098201752
+orientationkeyZ: 0.491818189620972
+orientationkeyA: -0.312904000282288
+ 
+ 
+object: p_wingR
+ 
+time: 0.633333027362823
+orientationkeyX: 0.721766829490662
+orientationkeyY: 0.176806002855301
+orientationkeyZ: 0.669172823429108
+orientationkeyA: -0.429078012704849
+ 
+ 
+object: p_wingR
+ 
+time: 0.699999988079071
+orientationkeyX: 0.988761126995087
+orientationkeyY: 0.0737254023551941
+orientationkeyZ: -0.130061998963356
+orientationkeyA: -0.32049098610878
+ 
+ 
+object: p_wingR
+ 
+time: 0.733332991600037
+orientationkeyX: 0.783787429332733
+orientationkeyY: -0.0671131014823914
+orientationkeyZ: -0.617392182350159
+orientationkeyA: -0.432505995035172
+ 
+ 
+object: p_wingR
  
 time: 0.800000011920929
-orientationkeyX: 0.999997794628143
-orientationkeyY: 0.000510199985001236
-orientationkeyZ: -0.00202760007232428
-orientationkeyA: -0.235620006918907
+orientationkeyX: 0.783787429332733
+orientationkeyY: -0.0671131014823914
+orientationkeyZ: -0.617392182350159
+orientationkeyA: -0.432505995035172
  
  
-object: Deer_neckend
+object: p_wingR
+ 
+time: 0.899999976158142
+orientationkeyX: 0.428730100393295
+orientationkeyY: -0.214880004525185
+orientationkeyZ: -0.877506196498871
+orientationkeyA: -0.905224978923798
+ 
+ 
+object: p_wingR
  
 time: 1
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
+orientationkeyX: 0.45547080039978
+orientationkeyY: -0.657516717910767
+orientationkeyZ: -0.600181698799133
+orientationkeyA: -0.691380023956299
  
  
-object: Deer_head
+object: p_wingR
+ 
+time: 1.16666996479034
+orientationkeyX: 0.964784920215607
+orientationkeyY: -0.238721996545792
+orientationkeyZ: 0.110462002456188
+orientationkeyA: -0.648688018321991
+ 
+ 
+object: p_head
  
 time: 0
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
+orientationkeyX: 0.479113906621933
+orientationkeyY: -0.822634875774384
+orientationkeyZ: 0.306140005588531
+orientationkeyA: -0.139243006706238
  
  
-object: Deer_head
+object: p_head
  
-time: 0.166666999459267
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.359246999025345
+time: 0.133332997560501
+orientationkeyX: 0.0593704991042614
+orientationkeyY: 0.998163878917694
+orientationkeyZ: -0.0119954999536276
+orientationkeyA: -1.42309999465942
  
  
-object: Deer_head
+object: p_head
+ 
+time: 0.200000002980232
+orientationkeyX: 0.0667745023965836
+orientationkeyY: 0.997737407684326
+orientationkeyZ: -0.00782219972461462
+orientationkeyA: -1.25794005393982
+ 
+ 
+object: p_head
+ 
+time: 0.333332985639572
+orientationkeyX: 0.0787836015224457
+orientationkeyY: 0.99689120054245
+orientationkeyZ: -0.00104620005004108
+orientationkeyA: -1.05181992053986
+ 
+ 
+object: p_head
  
 time: 0.43333300948143
-orientationkeyX: -0.999561011791229
-orientationkeyY: 0.0273281000554562
-orientationkeyZ: 0.0114412000402808
-orientationkeyA: -1.21272993087769
+orientationkeyX: 0.18276709318161
+orientationkeyY: 0.981444299221039
+orientationkeyZ: 0.0579940006136894
+orientationkeyA: -0.415533989667892
  
  
-object: Deer_head
+object: p_head
  
-time: 0.5
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.558504998683929
- 
- 
-object: Deer_head
- 
-time: 0.600000023841858
-orientationkeyX: 1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.244345992803574
+time: 0.566667020320892
+orientationkeyX: 0.0376290008425713
+orientationkeyY: 0.998997926712036
+orientationkeyZ: -0.0242312997579575
+orientationkeyA: -2.16760993003845
  
  
-object: Deer_head
+object: p_head
+ 
+time: 0.633333027362823
+orientationkeyX: 0.109306000173092
+orientationkeyY: 0.993875920772552
+orientationkeyZ: 0.0162148997187614
+orientationkeyA: -0.732118010520935
+ 
+ 
+object: p_head
+ 
+time: 0.666666984558105
+orientationkeyX: 0.0545739009976387
+orientationkeyY: 0.998401582241058
+orientationkeyZ: -0.0146973999217153
+orientationkeyA: -1.55030000209808
+ 
+ 
+object: p_head
+ 
+time: 0.699999988079071
+orientationkeyX: 0.0611791983246803
+orientationkeyY: 0.998066425323486
+orientationkeyZ: -0.0109764002263546
+orientationkeyA: -1.37951004505157
+ 
+ 
+object: p_head
+ 
+time: 0.766667008399963
+orientationkeyX: 0.0611791983246803
+orientationkeyY: 0.998066425323486
+orientationkeyZ: -0.0109764002263546
+orientationkeyA: -1.37951004505157
+ 
+ 
+object: p_head
+ 
+time: 0.899999976158142
+orientationkeyX: 0.233781099319458
+orientationkeyY: 0.968370378017426
+orientationkeyZ: 0.0872078984975815
+orientationkeyA: -0.318379014730453
+ 
+ 
+object: p_head
+ 
+time: 1.03332996368408
+orientationkeyX: 0.685488998889923
+orientationkeyY: -0.600411117076874
+orientationkeyZ: 0.411839008331299
+orientationkeyA: -0.0989606976509094
+ 
+ 
+object: p_head
+ 
+time: 1.16666996479034
+orientationkeyX: 0.479113906621933
+orientationkeyY: -0.822634875774384
+orientationkeyZ: 0.306140005588531
+orientationkeyA: -0.139243006706238
+ 
+ 
+object: p_wingL
+ 
+time: 0
+orientationkeyX: -0.991797208786011
+orientationkeyY: -0.126813992857933
+orientationkeyZ: 0.0160169005393982
+orientationkeyA: -0.641726970672607
+ 
+ 
+object: p_wingL
+ 
+time: 0.133332997560501
+orientationkeyX: -0.798669576644897
+orientationkeyY: -0.0852845013141632
+orientationkeyZ: -0.595695674419403
+orientationkeyA: -1.67540001869202
+ 
+ 
+object: p_wingL
+ 
+time: 0.233333006501198
+orientationkeyX: -0.367383003234863
+orientationkeyY: 0.0730168968439102
+orientationkeyZ: 0.927199125289917
+orientationkeyA: -0.909580886363983
+ 
+ 
+object: p_wingL
+ 
+time: 0.300000011920929
+orientationkeyX: -0.367383003234863
+orientationkeyY: 0.0730168968439102
+orientationkeyZ: 0.927199125289917
+orientationkeyA: -0.909580886363983
+ 
+ 
+object: p_wingL
+ 
+time: 0.400000005960464
+orientationkeyX: -0.705653786659241
+orientationkeyY: 0.00531780021265149
+orientationkeyZ: -0.708536803722382
+orientationkeyA: -1.25158989429474
+ 
+ 
+object: p_wingL
+ 
+time: 0.533333003520966
+orientationkeyX: -0.367383003234863
+orientationkeyY: 0.0730168968439102
+orientationkeyZ: 0.927199125289917
+orientationkeyA: -0.909580886363983
+ 
+ 
+object: p_wingL
+ 
+time: 0.566667020320892
+orientationkeyX: -0.715608716011047
+orientationkeyY: 0.589712679386139
+orientationkeyZ: -0.374356895685196
+orientationkeyA: -0.356770992279053
+ 
+ 
+object: p_wingL
+ 
+time: 0.633333027362823
+orientationkeyX: -0.655130922794342
+orientationkeyY: 0.491297900676727
+orientationkeyZ: -0.57395988702774
+orientationkeyA: -0.448134988546371
+ 
+ 
+object: p_wingL
+ 
+time: 0.699999988079071
+orientationkeyX: -0.655130922794342
+orientationkeyY: 0.491297900676727
+orientationkeyZ: -0.57395988702774
+orientationkeyA: -0.448134988546371
+ 
+ 
+object: p_wingL
+ 
+time: 0.733332991600037
+orientationkeyX: -0.901707887649536
+orientationkeyY: 0.37772598862648
+orientationkeyZ: 0.21034699678421
+orientationkeyA: -0.383367985486984
+ 
+ 
+object: p_wingL
  
 time: 0.800000011920929
-orientationkeyX: -1
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: -0.558504998683929
+orientationkeyX: -0.901707887649536
+orientationkeyY: 0.37772598862648
+orientationkeyZ: 0.21034699678421
+orientationkeyA: -0.383367985486984
  
  
-object: Deer_head
+object: p_wingL
  
-time: 1
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_Lhorn
- 
-time: 0
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
+time: 0.899999976158142
+orientationkeyX: -0.551179170608521
+orientationkeyY: -0.0615534000098705
+orientationkeyZ: 0.8321133852005
+orientationkeyA: -0.79654598236084
  
  
-object: Deer_Lhorn
- 
-time: 0.43333300948143
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_Lhorn
- 
-time: 0.5
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_Lhorn
- 
-time: 0.600000023841858
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_Lhorn
+object: p_wingL
  
 time: 1
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
+orientationkeyX: -0.317018091678619
+orientationkeyY: -0.673622190952301
+orientationkeyZ: 0.667632222175598
+orientationkeyA: -0.566761016845703
  
  
-object: Deer_Rhorn
+object: p_wingL
  
-time: 0
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_Rhorn
- 
-time: 0.43333300948143
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_Rhorn
- 
-time: 0.5
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_Rhorn
- 
-time: 0.600000023841858
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: Deer_Rhorn
- 
-time: 1
-orientationkeyX: 0
-orientationkeyY: 0
-orientationkeyZ: 0
-orientationkeyA: 0
- 
- 
-object: head
- 
-time: 1
-orientationkeyX: -0.99364697933197
-orientationkeyY: -0.106365002691746
-orientationkeyZ: 0.0367712005972862
-orientationkeyA: -0.0158983003348112
- 
- 
-object: head01
- 
-time: 1
-orientationkeyX: -0.99364697933197
-orientationkeyY: -0.106365002691746
-orientationkeyZ: 0.0367712005972862
-orientationkeyA: -0.0158983003348112
- 
- 
-object: impact
- 
-time: 1
-orientationkeyX: 0.679266929626465
-orientationkeyY: -0.691495895385742
-orientationkeyZ: 0.245824992656708
-orientationkeyA: -0.00243799993768334
+time: 1.16666996479034
+orientationkeyX: -0.991797208786011
+orientationkeyY: -0.126813992857933
+orientationkeyZ: 0.0160169005393982
+orientationkeyA: -0.641726970672607
  
  

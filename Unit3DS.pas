@@ -1385,16 +1385,16 @@ begin
             // RotationAngle is in radians
             aQuaternion := MakeQuaternion  ( CurrentAnimation.orientationKeys[ok].KeyValue.X,CurrentAnimation.orientationKeys[ok].KeyValue.Y,CurrentAnimation.orientationKeys[ok].KeyValue.Z,CurrentAnimation.orientationKeys[ok].angle  );
             TTransformation(TransformList.Items[1]).Angle := RadToDeg(aQuaternion.A)  ; //
-            TTransformation(TransformList.Items[1]).X := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.x;
-            TTransformation(TransformList.Items[1]).Y := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.y;
-            TTransformation(TransformList.Items[1]).Z := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.z;
+            TTransformation(TransformList.Items[1]).X := aQuaternion.x;
+            TTransformation(TransformList.Items[1]).Y := aQuaternion.y;
+            TTransformation(TransformList.Items[1]).Z := aQuaternion.z;
 
            for C := 0 to ChildrenCount -1 do begin
               aQuaternion := MakeQuaternion  ( CurrentAnimation.orientationKeys[ok].KeyValue.X,CurrentAnimation.orientationKeys[ok].KeyValue.Y,CurrentAnimation.orientationKeys[ok].KeyValue.Z,CurrentAnimation.orientationKeys[ok].angle  );
               TTransformation(Children[c].TransformList[1]).angle :=RadToDeg(aQuaternion.A) ;
-              TTransformation(Children[c].TransformList[1]).X := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.z;
-              TTransformation(Children[c].TransformList[1]).Y := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.y;
-              TTransformation(Children[c].TransformList[1]).Z := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.z;
+              TTransformation(Children[c].TransformList[1]).X := aQuaternion.x;
+              TTransformation(Children[c].TransformList[1]).Y := aQuaternion.y;
+              TTransformation(Children[c].TransformList[1]).Z := aQuaternion.z;
             end;
            end;
 
@@ -1403,9 +1403,10 @@ begin
       FElapsedTime :=0;
 
  // CloseFile (flog);
+{
 	// Now we know the position and rotation for this animation frame.
 	// Let's calculate the transformation matrix (m_final) for this bone...
- {
+
 	m_rel := clsMatrix.create;
 	m_frame := clsMatrix.create;
 
