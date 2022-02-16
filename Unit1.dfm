@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 210
   Caption = 'Delphi Neverwinter Model Viewer'
   ClientHeight = 602
-  ClientWidth = 854
+  ClientWidth = 1091
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -140,10 +140,10 @@ object Form1: TForm1
     end
   end
   object Memo1: TMemo
-    Left = 605
-    Top = 429
-    Width = 241
-    Height = 89
+    Left = 696
+    Top = 279
+    Width = 350
+    Height = 252
     Lines.Strings = (
       'Memo1')
     TabOrder = 1

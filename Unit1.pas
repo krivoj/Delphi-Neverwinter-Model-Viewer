@@ -97,7 +97,7 @@ var
   MdlPath,TexturePath,SuperModelPath: string;
   ModelLoaded: Boolean;
   SelectedObject: T3DObject;
-
+  cframe : Single;
 implementation
 
 uses UglContext;
@@ -142,7 +142,10 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  Model.Anim(0.1);
+  cframe := cframe + 1;
+  Model.Anim(cframe);
+  if cframe > 8 then cframe:=0;
+
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -180,15 +183,15 @@ begin
       Memo1.Lines.Add( 'o:.Z ' + FloatToStr (o.Orientation.Z) );    }
       Anim := Model.FindAnimation(ComboBox1.Items[ComboBox1.ItemIndex]);
       oa :=Anim.FindAnimatedObject(o.ObjectName) ;
-{      Memo1.Lines.Add( 'oa positionkeys' );
+      Memo1.Lines.Add( 'oa positionkeys ' + inttostr(oa.positionkeycount) );
       for I := 0 to oa.PositionKeyCount -1 do begin
         Memo1.Lines.Add( 'o:FRAMEpk ' + IntToStr (I ) );
         Memo1.Lines.Add( 'o:pk.x ' + FloatToStr (oa.PositionKeys[i].KeyValue.x ) );
         Memo1.Lines.Add( 'o:pk.y ' + FloatToStr (oa.PositionKeys[i].KeyValue.y ) );
         Memo1.Lines.Add( 'o:pk.z ' + FloatToStr (oa.PositionKeys[i].KeyValue.z ) );
 
-      end;        }
-      Memo1.Lines.Add( 'oa orientationkeys' );
+      end;
+      Memo1.Lines.Add( 'oa orientationkeys ' + inttostr(oa.orientationkeycount) );
       for I := 0 to oa.orientationKeyCount -1 do begin
         Memo1.Lines.Add( 'o:FRAMEok ' + IntToStr (I ) );
         Memo1.Lines.Add( 'o:ok.angle rad' + FloatToStr ( oa.orientationKeys[i].Angle )  + ' deg ' +FloatToStr (RadToDeg( oa.orientationKeys[i].Angle ) ));
@@ -256,6 +259,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   i: Integer;
 begin
+  cframe := -1;
   FormatSettings.DecimalSeparator :='.';
   MdlPath := ExtractFilePath(Application.ExeName) + 'mdl\';
   TexturePath := ExtractFilePath(Application.ExeName) + 'Textures\';
@@ -335,7 +339,8 @@ begin
   ms := GetTickCount;
   ElapsedTime := (ms - lastTickCount) / 1000;
 //  Model.Anim (ElapsedTime);  // anim the complete MDL file
-  Caption := floattostr(elapsedtime);
+  //Caption := floattostr(elapsedtime);
+  Caption := Floattostr(cframe) ;
   LastTickCount := ms;
 
   ClearGL;     // Clear frame buffer

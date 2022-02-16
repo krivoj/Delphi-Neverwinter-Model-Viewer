@@ -11,6 +11,10 @@ interface
 
 uses Windows;
 
+type TQuaternion = record
+  x,y,z,a: Single;
+end;
+
 type
   TVector2D = record
     X, Y:Single;
@@ -22,6 +26,10 @@ type
     X, Y, Z:Single;
 end;
 
+type
+  TVector4D = record
+    X, Y, Z, Angle:Single;
+end;
 
 type
   TByteColor = record
@@ -39,7 +47,7 @@ type
     Alpha:Single;
 end;
 
-
+function MakeQuaternion ( x,y,z,a : single): TQuaternion;
 function VectorSetValue(Value:Single):TVector3D;
 procedure VectorClear(var Vector:TVector3D);
 procedure VectorInvert(var Vector:TVector3D);
@@ -122,6 +130,13 @@ begin
   Vector.X := Vector.X / Result;
   Vector.Y := Vector.Y / Result;
   Vector.Z := Vector.Z / Result;
+end;
+function MakeQuaternion ( x,y,z,a : single): TQuaternion;
+begin
+  result.x := x * sin(a / 2);
+  result.y := y * sin(a / 2);
+  result.z := z * sin(a / 2);
+  result.a := cos(a / 2);
 end;
 
 

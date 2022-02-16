@@ -276,7 +276,6 @@ end;
     procedure SetRenderMode(const Value: TRenderMode);
     procedure DrawBox;
   public
-    Root : Boolean;
     Rot  : Single;
     Verts:array of TVector3D;
     Normals:array of TVector3D;
@@ -339,7 +338,7 @@ end;
   T3DModel = class(TObject)
   private
     FActiveAnimationName: string;    // if <> '' then process animation by name in model.draw event
-    FActiveAnimation: TAnimation;    { TODO : basta questo }
+    FActiveAnimation: TAnimation;
     FActiveAnimationIndex: Integer;
     FMaterials:array of TMaterial;
     FFileHandle:Integer;
@@ -380,7 +379,7 @@ end;
     property MaterialCount:Integer read GetMaterialCount;
     property AnimationCount:Integer read GetAnimationCount;
     property ActiveAnimationName: string read FActiveAnimationName write SwitchToAnimation;
-    function GetRoot: T3DObject;
+
 end;
 function IsOpen(const txt:TextFile):Boolean;
 procedure ZeroMem32(P:Pointer;Size:integer);
@@ -1170,7 +1169,7 @@ begin
       begin
         FMaterial.CopyFrom(SourceMaterial);
         Break;
-      end;  
+      end;
    end;
   PreviousChunk.NexFilePosition;
 end;
@@ -1305,6 +1304,7 @@ z : string;
 begin
 
   //Anim (20);
+ // if ( FObjectName ='Deer_body') and ( cframe = 2) then asm int 3 ; end;
 
   FTransformList.Push;
   if FSelected then
@@ -1343,6 +1343,7 @@ var
 		startPosition : array [0..2] of single;
     tempm : array [0..15] of single;
     aRoot : T3DObject;
+    aQuaternion: Tquaternion;
 begin
 //    AssignFile(flog, 'log.txt'); Append(flog);
  // if objectname ='Deer_neckend' then asm Int 3; end;
@@ -1352,116 +1353,51 @@ begin
   if FModel.AnimationCount <= 0 then Exit;
     //  if 'Deer_Rfrontlowleg' = FObjectName then asm int 3; end;
 
-    for pk := CurrentAnimation.PositionKeyCount downto 1 do begin // 1 non 0
-        if (FElapsedTime >= CurrentAnimation.PositionKeys [pk-1].KeyTime) and
-        (FElapsedTime < CurrentAnimation.PositionKeys [pk].KeyTime) then begin
-          FLastCursorAnim := pk-1;
+    pk := Trunc(Ms);
+    ok:= Trunc(MS);
+//    for pk := CurrentAnimation.PositionKeyCount downto 1 do begin // 1 non 0
+//        if (FElapsedTime >= CurrentAnimation.PositionKeys [pk-1].KeyTime) and
+//        (FElapsedTime < CurrentAnimation.PositionKeys [pk].KeyTime) then begin
+//          FLastCursorAnim := pk-1;
 
             { TODO : fare delta e fraction }
-          aRoot := FModel.GetRoot ;
-
-          TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X  + position.x;
-          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.Y  + position.y;
-          TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk].KeyValue.Z  + position.Z;
-           for C := 0 to ChildrenCount -1 do begin
-              TTransformation(Children[c].TransformList[0]).X := TTransformation(TransformList.Items[0]).X   + position.X;
-              TTransformation(Children[c].TransformList[0]).Y := TTransformation(TransformList.Items[0]).Y   + position.Y;
-              TTransformation(Children[c].TransformList[0]).Z := TTransformation(TransformList.Items[0]).Z   + position.Z;
-           end;
-
-          {TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X;
-          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.Y;
+          if pk < CurrentAnimation.PositionKeyCount  then begin
+          TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X;
+          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.Y ;
           TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk].KeyValue.Z;
-           for C := 0 to ChildrenCount -1 do begin
-              TTransformation(Children[c].TransformList[0]).X := TTransformation(TransformList.Items[0]).X;
-              TTransformation(Children[c].TransformList[0]).Y := TTransformation(TransformList.Items[0]).Y;
-              TTransformation(Children[c].TransformList[0]).Z := TTransformation(TransformList.Items[0]).Z;
-           end;    }
 
-       Break;
-        end
-        else if (FElapsedTime >= CurrentAnimation.PositionKeys [CurrentAnimation.PositionKeyCount-1].KeyTime) then begin
-          TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.X +position.x;
-          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.Y +position.y;
-          TTransformation(TransformList.Items[0]).z := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.z +position.z;
-           for C := 0 to ChildrenCount -1 do begin
-              TTransformation(Children[c].TransformList[0]).X := TTransformation(TransformList.Items[0]).X  + position.X;
-              TTransformation(Children[c].TransformList[0]).Y := TTransformation(TransformList.Items[0]).Y + position.Y;
-              TTransformation(Children[c].TransformList[0]).z := TTransformation(TransformList.Items[0]).z  + position.z;
-           end;
+         {  for C := 0 to ChildrenCount -1 do begin
+              TTransformation(Children[c].TransformList[0]).X := TTransformation(Children[c].TransformList[0]).X + TTransformation(TransformList.Items[0]).X;
+              TTransformation(Children[c].TransformList[0]).Y := TTransformation(Children[c].TransformList[0]).Y + TTransformation(TransformList.Items[0]).Y;
+              TTransformation(Children[c].TransformList[0]).Z := TTransformation(Children[c].TransformList[0]).Z + TTransformation(TransformList.Items[0]).Z;
+           end; }
+           end
+          else begin
+             TTransformation(TransformList.Items[0]).X := Position.X;
+             TTransformation(TransformList.Items[0]).Y := Position.Y;
+             TTransformation(TransformList.Items[0]).Z := Position.Z;
+          end;
 
-{          TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.X;
-          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.Y;
-          TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[CurrentAnimation.PositionKeyCount-1].KeyValue.Z;
-           for C := 0 to ChildrenCount -1 do begin
-              TTransformation(Children[c].TransformList[0]).X := TTransformation(TransformList.Items[0]).X ;
-              TTransformation(Children[c].TransformList[0]).Y := TTransformation(TransformList.Items[0]).Y;
-              TTransformation(Children[c].TransformList[0]).Z := TTransformation(TransformList.Items[0]).Z;
-           end;   }
-
-          FElapsedTime :=0;
-          Break;
-        end;
-    end;
- // Exit;
-    for ok := CurrentAnimation.orientationKeyCount -1 downto 1 do begin // 1 non 0
-      if (FElapsedTime >= CurrentAnimation.orientationKeys [ok-1].KeyTime) and
-      (FElapsedTime < CurrentAnimation.orientationKeys [ok].KeyTime) then begin
         outputdebugstring (pchar(  'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' orientationkeyIndex: '+IntToStr(ok-1)  ));
 
+         // if ObjectName = 'Deer_body' then asm int 3 ; end;
+          if ok < CurrentAnimation.OrientationKeyCount then begin
+            // RotationAngle is in radians
+            aQuaternion := MakeQuaternion  ( CurrentAnimation.orientationKeys[ok].KeyValue.X,CurrentAnimation.orientationKeys[ok].KeyValue.Y,CurrentAnimation.orientationKeys[ok].KeyValue.Z,CurrentAnimation.orientationKeys[ok].angle  );
+            TTransformation(TransformList.Items[1]).Angle := RadToDeg(aQuaternion.A)  ; //
+            TTransformation(TransformList.Items[1]).X := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.x;
+            TTransformation(TransformList.Items[1]).Y := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.y;
+            TTransformation(TransformList.Items[1]).Z := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.z;
 
-{            TTransformation(TransformList.Items[1]).Angle := RadToDeg(CurrentAnimation.orientationKeys[ok].Angle); //
-            TTransformation(TransformList.Items[1]).X := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
-            TTransformation(TransformList.Items[1]).Y := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
-            TTransformation(TransformList.Items[1]).Z := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
            for C := 0 to ChildrenCount -1 do begin
-              TTransformation(Children[c].TransformList[1]).angle := RadToDeg(CurrentAnimation.orientationKeys[ok].Angle);
-              TTransformation(Children[c].TransformList[1]).X := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
-              TTransformation(Children[c].TransformList[1]).Y := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
-              TTransformation(Children[c].TransformList[1]).Z := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
-            end;    }
-
-            TTransformation(TransformList.Items[1]).Angle := RadToDeg(CurrentAnimation.orientationKeys[ok].Angle); //
-            TTransformation(TransformList.Items[1]).X := (CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
-            TTransformation(TransformList.Items[1]).Y := (CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
-            TTransformation(TransformList.Items[1]).Z := (CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
-           for C := 0 to ChildrenCount -1 do begin
-              TTransformation(Children[c].TransformList[1]).angle := RadToDeg(CurrentAnimation.orientationKeys[ok].Angle);
-              TTransformation(Children[c].TransformList[1]).X := (CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
-              TTransformation(Children[c].TransformList[1]).Y := (CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
-              TTransformation(Children[c].TransformList[1]).Z := (CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
+              aQuaternion := MakeQuaternion  ( CurrentAnimation.orientationKeys[ok].KeyValue.X,CurrentAnimation.orientationKeys[ok].KeyValue.Y,CurrentAnimation.orientationKeys[ok].KeyValue.Z,CurrentAnimation.orientationKeys[ok].angle  );
+              TTransformation(Children[c].TransformList[1]).angle :=RadToDeg(aQuaternion.A) ;
+              TTransformation(Children[c].TransformList[1]).X := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.z;
+              TTransformation(Children[c].TransformList[1]).Y := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.y;
+              TTransformation(Children[c].TransformList[1]).Z := -TTransformation(TransformList.Items[1]).Angle*aQuaternion.z;
             end;
+           end;
 
-        Break;
-          //end;
-
-      end
-      else if (FElapsedTime > CurrentAnimation.orientationKeys [CurrentAnimation.orientationKeyCount-1].KeyTime) then begin
-          {  TTransformation(TransformList.Items[1]).Angle := RadToDeg( CurrentAnimation.orientationKeys[ok-1].Angle );//RadToDeg
-            TTransformation(TransformList.Items[1]).X := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
-            TTransformation(TransformList.Items[1]).Y := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
-            TTransformation(TransformList.Items[1]).Z := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
-           for C := 0 to ChildrenCount -1 do begin
-              TTransformation(Children[c].TransformList[1]).angle := RadToDeg(CurrentAnimation.orientationKeys[ok].Angle);
-              TTransformation(Children[c].TransformList[1]).X := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
-              TTransformation(Children[c].TransformList[1]).Y := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
-              TTransformation(Children[c].TransformList[1]).Z := TTransformation(TransformList.Items[1]).Angle*(CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
-            end;  }
-
-            TTransformation(TransformList.Items[1]).Angle := RadToDeg( CurrentAnimation.orientationKeys[ok-1].Angle );//RadToDeg
-            TTransformation(TransformList.Items[1]).X := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
-            TTransformation(TransformList.Items[1]).Y := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
-            TTransformation(TransformList.Items[1]).Z := RadToDeg(CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
-           for C := 0 to ChildrenCount -1 do begin
-              TTransformation(Children[c].TransformList[1]).angle := RadToDeg(CurrentAnimation.orientationKeys[ok].Angle);
-              TTransformation(Children[c].TransformList[1]).X := (CurrentAnimation.orientationKeys[ok].KeyValue.X);//+ position.x;
-              TTransformation(Children[c].TransformList[1]).Y := (CurrentAnimation.orientationKeys[ok].KeyValue.Y);//+ position.y;
-              TTransformation(Children[c].TransformList[1]).Z := (CurrentAnimation.orientationKeys[ok].KeyValue.Z);//+ position.z;
-            end;
-        Break;
-      end;
-
-    end;
 
     if FElapsedTime > FModel.Animations[FModel.FActiveAnimationIndex].FLength then
       FElapsedTime :=0;
@@ -1500,7 +1436,6 @@ begin
 		m_final.postMultiply( m_rel );
 	end;         }
 end;
-
 procedure T3DObject.DrawBox;
 //var OldLineWidth:Single;
 begin
@@ -1711,7 +1646,7 @@ begin
 
     For ao := 0 to Animation.AnimatedObjectCount -1 do begin
       if Animation.AnimatedObjects [ao].ObjectName = Objects[i].ObjectName then begin  // this Object
-          if Objects[i].ObjectName = 'Deer_body' then asm int 3 ; end;
+//          if Objects[i].ObjectName = 'Deer_body' then asm int 3 ; end;
          SetLength( Objects[i].CurrentAnimation.PositionKeys, Animation.AnimatedObjects [ao].PositionKeyCount);
          for pk := 0 to Animation.AnimatedObjects [ao].PositionKeyCount -1 do begin
           Objects[i].CurrentAnimation.PositionKeys[pk].KeyTime := Animation.AnimatedObjects [ao].PositionKeys[pk].KeyTime;
@@ -1724,7 +1659,7 @@ begin
           Objects[i].CurrentAnimation.orientationKeys[ok].KeyValue := Animation.AnimatedObjects [ao].orientationKeys[ok].KeyValue;
           Objects[i].CurrentAnimation.orientationKeys[ok].Angle := Animation.AnimatedObjects [ao].orientationKeys[ok].Angle;
          end;
-         break;
+         Break;
       end;
     end;
   end;
@@ -1740,6 +1675,7 @@ end;
 
 procedure T3DModel.Anim (ms: Single) ;
 var I:Integer;
+ppp, ooo : string;
 begin
 // Animroot mi dice da quale index iniziare
 {  FActiveAnimation.FindAnimatedObject( FActiveAnimation.AnimationRoot );
@@ -1753,9 +1689,13 @@ begin
 
   for I:=0 to ObjectCount-1 do begin
    if Objects[I].Visible then begin
-   // if objects[i].FObjectName = 'Deer_tail' then
-
-    Objects[I].Anim (ms) ;
+   // if objects[i].FObjectName = 'Deer_body' then asm int 3 end;
+     // ppp := FloatToStr(Objects [I].Position.X) + ' ' + FloatToStr(Objects [I].Position.Y) + ' ' +FloatToStr(Objects [I].Position.Z);
+    //  ooo := FloatToStr(Objects [I].Orientation.X) + ' ' + FloatToStr(Objects [I].Orientation.Y) + ' ' +FloatToStr(Objects [I].Orientation.Z);
+     // ms := 2;
+      Objects[I].Anim (ms) ;
+    //  ppp := FloatToStr(Objects [I].Position.X) + ' ' + FloatToStr(Objects [I].Position.Y) + ' ' +FloatToStr(Objects [I].Position.Z);
+    //  ooo := FloatToStr(Objects [I].Orientation.X) + ' ' + FloatToStr(Objects [I].Orientation.Y) + ' ' +FloatToStr(Objects [I].Orientation.Z);
    end;
 
   end;
@@ -1795,19 +1735,6 @@ begin
     end;
 
 end;
-
-function T3DModel.GetRoot: T3DObject;
-var I:Integer;
-begin
-  for I:=0 to ObjectCount-1 do begin
-    if Objects[I].Root then begin
-      result := Objects[I];
-      Exit;
-    end;
-  end;
-
-end;
-
 
 function T3DModel.Select(const Index: Integer): T3DObject;
 var I:Integer;
@@ -2034,8 +1961,7 @@ begin
                 if uppercase(Object3d.ParentObjectName) <> uppercase('NULL') then begin
                   Object3d.ParentObject := FindObject(Object3d.ParentObjectName);
                   Object3d.ParentObject.AddChildren ( Object3d ) ;
-                end
-                else Object3d.Root := True;
+                end;
               end
               else if leftstr ( aString, 8) = 'position'  then begin
                 TmpVector := MakeVector3Dp ( aString );
@@ -2253,9 +2179,9 @@ begin
 
   end;
 
+  CloseFile (flog);
 
   end;
-  CloseFile (flog);
 
 end;
 function T3DModel.MakeVector3D (aString: string ): TVector3D;
@@ -2365,3 +2291,4 @@ end.
     Rotation[2] := RotationKeyFrames[i].Value[2];
 	end;
 }
+
