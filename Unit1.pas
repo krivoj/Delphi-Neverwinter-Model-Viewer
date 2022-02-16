@@ -143,7 +143,7 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   cframe := cframe + 1;
-  Model.Anim(cframe);
+  Model.Anim(Gettime);
   if cframe > 8 then cframe:=0;
 
 end;
