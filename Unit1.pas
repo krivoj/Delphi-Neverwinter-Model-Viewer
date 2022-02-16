@@ -142,9 +142,9 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  cframe := cframe + 1;
-  Model.Anim(Gettime);
-  if cframe > 8 then cframe:=0;
+  cframe := cframe + 0.1;
+  Model.Anim( cframe  );
+  if cframe > 1 then cframe:=0;
 
 end;
 
@@ -338,7 +338,7 @@ begin
   Inc(nFrames);
   ms := GetTickCount;
   ElapsedTime := (ms - lastTickCount) / 1000;
-//  Model.Anim (ElapsedTime);  // anim the complete MDL file
+  Model.Anim (ElapsedTime);  // anim the complete MDL file
   //Caption := floattostr(elapsedtime);
   Caption := Floattostr(cframe) ;
   LastTickCount := ms;

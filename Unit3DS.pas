@@ -285,6 +285,8 @@ end;
     Faces:array of TFace;
     Children : TObjectlist <T3DObject>;
     CurrentAnimation : TAnimatedObject;
+    AnimationIndex : Integer; // uso futuro  { TODO : fare questa versione eliminare switchanimation }
+    //    Animation : Tlist of TObject3dAnimationInfo  -->  PositionKeys: array of TAnimatedFrame; OrientationKeys: array of TAnimatedFrame;
     constructor Create;
     destructor Destroy;override;
     procedure Draw;
@@ -1338,7 +1340,7 @@ var
   ao, pk,i,c,ok:Integer; TmpVector: TVector3D; flog: TextFile; DeltaTime, fraction: Single;
   m_rel,	m_frame : clsMatrix;
     	pPosition : array [0..2] of single;
-  	rRotation : array [0..2] of single;
+  	rRotation : array [0..3] of single;
     startRotation : array [0..2] of single;
 		m_relative : clsMatrix;				// fixed transformation matrix relative to parent
 		m_final : clsMatrix;				  // absolute in accordance to animation
@@ -1346,47 +1348,69 @@ var
     tempm : array [0..15] of single;
     aRoot : T3DObject;
     aQuaternion: Tquaternion;
+    label rotation;
 begin
 //    AssignFile(flog, 'log.txt'); Append(flog);
  // if objectname ='Deer_neckend' then asm Int 3; end;
 
-
+//  CurrentAnimation := Animations[AnimationIndex] uso futuro
   FElapsedTime := FElapsedTime + ms;
   if FModel.AnimationCount <= 0 then Exit;
     //  if 'Deer_Rfrontlowleg' = FObjectName then asm int 3; end;
 
     pk := Trunc(Ms);
     ok:= Trunc(MS);
-//    for pk := CurrentAnimation.PositionKeyCount downto 1 do begin // 1 non 0
-//        if (FElapsedTime >= CurrentAnimation.PositionKeys [pk-1].KeyTime) and
-//        (FElapsedTime < CurrentAnimation.PositionKeys [pk].KeyTime) then begin
-//          FLastCursorAnim := pk-1;
+  CurrentAnimation.CurrentTime := CurrentAnimation.CurrentTime + ms;
+  if CurrentAnimation.PositionKeyCount = 0 then begin
+    goto rotation;
+  end;
+	i := 0;
+	while( (i < CurrentAnimation.PositionKeyCount-1) and (CurrentAnimation.PositionKeys[i].KeyTime < CurrentAnimation.CurrentTime) ) do
+		i := i + 1;
 
-            { TODO : fare delta e fraction }
+	if i > CurrentAnimation.PositionKeyCount then begin
+    goto rotation;
+  end;
 
-          if pk < CurrentAnimation.PositionKeyCount  then begin
-          TTransformation(TransformList.Items[0]).X := CurrentAnimation.PositionKeys[pk].KeyValue.X;
-          TTransformation(TransformList.Items[0]).Y := CurrentAnimation.PositionKeys[pk].KeyValue.Y;
-          TTransformation(TransformList.Items[0]).Z := CurrentAnimation.PositionKeys[pk].KeyValue.Z;
+  if CurrentAnimation.CurrentTime > CurrentAnimation.Animlength then begin
+    goto rotation;
+  end;
+
+	if( i > 0 ) then 	begin
+		// Interpolate between 2 key frames
+
+		// time between the 2 key frames
+		deltaTime := CurrentAnimation.PositionKeys[i].KeyTime - CurrentAnimation.PositionKeys[i-1].KeyTime;
+    if deltaTime <= 0 then Exit;
+
+		// relative position of interpolation point to the keyframes [0..1]
+		fraction := (CurrentAnimation.CurrentTime - CurrentAnimation.PositionKeys[i-1].KeyTime) / deltaTime;
+    if fraction <=0 then Exit;
+    if fraction >=1 then Exit;
+
+		PPosition[0] := CurrentAnimation.PositionKeys[i-1].KeyValue.X + fraction * (CurrentAnimation.PositionKeys[i].KeyValue.X - CurrentAnimation.PositionKeys[i-1].KeyValue.X);
+		PPosition[1] := CurrentAnimation.PositionKeys[i-1].KeyValue.Y + fraction * (CurrentAnimation.PositionKeys[i].KeyValue.Y - CurrentAnimation.PositionKeys[i-1].KeyValue.Y);
+		PPosition[2] := CurrentAnimation.PositionKeys[i-1].KeyValue.Z + fraction * (CurrentAnimation.PositionKeys[i].KeyValue.Z - CurrentAnimation.PositionKeys[i-1].KeyValue.Z);
+
+   end
+   else begin
+    PPosition[0] :=  CurrentAnimation.PositionKeys[i].KeyValue.X;
+    PPosition[1] :=  CurrentAnimation.PositionKeys[i].KeyValue.Y;
+    PPosition[2] :=  CurrentAnimation.PositionKeys[i].KeyValue.Z;
+  end;
 
           { for C := 0 to ChildrenCount -1 do begin
               TTransformation(Children[c].TransformList[0]).X := TTransformation(Children[c].TransformList[0]).X + TTransformation(TransformList.Items[0]).X;
               TTransformation(Children[c].TransformList[0]).Y := TTransformation(Children[c].TransformList[0]).Y + TTransformation(TransformList.Items[0]).Y;
               TTransformation(Children[c].TransformList[0]).Z := TTransformation(Children[c].TransformList[0]).Z + TTransformation(TransformList.Items[0]).Z;
            end; }
-           end
-          else begin
-             TTransformation(TransformList.Items[0]).X := Position.X;
-             TTransformation(TransformList.Items[0]).Y := Position.Y;
-             TTransformation(TransformList.Items[0]).Z := Position.Z;
-          end;
 
         outputdebugstring (pchar(  'time: ' + FloatToStr(FElapsedTime)+ ' object: '+ FObjectName + ' orientationkeyIndex: '+IntToStr(ok-1)  ));
 
          // if ObjectName = 'Deer_body' then asm int 3 ; end;
 	// Find appropriate rotation key frame
-
-  CurrentAnimation.CurrentTime := CurrentAnimation.CurrentTime + ms;
+Rotation:
+  //CurrentAnimation.CurrentTime := CurrentAnimation.CurrentTime + ms;
   if CurrentAnimation.OrientationKeyCount = 0 then begin
     CurrentAnimation.CurrentTime := 0;
     Exit;
@@ -1420,18 +1444,20 @@ begin
 		RRotation[0] := CurrentAnimation.orientationKeys[i-1].KeyValue.X + fraction * (CurrentAnimation.orientationKeys[i].KeyValue.X - CurrentAnimation.orientationKeys[i-1].KeyValue.X);
 		RRotation[1] := CurrentAnimation.orientationKeys[i-1].KeyValue.Y + fraction * (CurrentAnimation.orientationKeys[i].KeyValue.Y - CurrentAnimation.orientationKeys[i-1].KeyValue.Y);
 		RRotation[2] := CurrentAnimation.orientationKeys[i-1].KeyValue.Z + fraction * (CurrentAnimation.orientationKeys[i].KeyValue.Z - CurrentAnimation.orientationKeys[i-1].KeyValue.Z);
+		RRotation[3] := (CurrentAnimation.orientationKeys[i].angle);
 
    end
    else begin
     RRotation[0] :=  CurrentAnimation.orientationKeys[i].KeyValue.X;
     RRotation[1] :=  CurrentAnimation.orientationKeys[i].KeyValue.Y;
     RRotation[2] :=  CurrentAnimation.orientationKeys[i].KeyValue.Z;
+    RRotation[3] :=  CurrentAnimation.orientationKeys[i].angle;
   end;
 
 
     // RotationAngle is in radians
     //CurrentAnimation.orientationKeys[ok].angle := RadToDeg(aQuaternion.A);
-    aQuaternion := MakeQuaternion  ( RRotation[0],RRotation[1],RRotation[2],CurrentAnimation.orientationKeys[ok].angle  );
+    aQuaternion := MakeQuaternion  ( RRotation[0],RRotation[1],RRotation[2],RRotation[3]  );
 //    aQuaternion := MakeQuaternion  ( CurrentAnimation.orientationKeys[ok].KeyValue.X,CurrentAnimation.orientationKeys[ok].KeyValue.Y,CurrentAnimation.orientationKeys[ok].KeyValue.Z,CurrentAnimation.orientationKeys[ok].angle  );
     TTransformation(TransformList.Items[1]).Angle := RadToDeg(aQuaternion.A)  ; //
     TTransformation(TransformList.Items[1]).X := aQuaternion.x;
