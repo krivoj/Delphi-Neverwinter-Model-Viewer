@@ -1456,14 +1456,28 @@ Rotation:
 
 
     // RotationAngle is in radians
-    //CurrentAnimation.orientationKeys[ok].angle := RadToDeg(aQuaternion.A);
+
     aQuaternion := MakeQuaternion  ( RRotation[0],RRotation[1],RRotation[2],RRotation[3]  );
-//    aQuaternion := MakeQuaternion  ( CurrentAnimation.orientationKeys[ok].KeyValue.X,CurrentAnimation.orientationKeys[ok].KeyValue.Y,CurrentAnimation.orientationKeys[ok].KeyValue.Z,CurrentAnimation.orientationKeys[ok].angle  );
     TTransformation(TransformList.Items[1]).Angle := RadToDeg(aQuaternion.A)  ; //
     TTransformation(TransformList.Items[1]).X := aQuaternion.x;
     TTransformation(TransformList.Items[1]).Y := aQuaternion.y;
     TTransformation(TransformList.Items[1]).Z := aQuaternion.z;
 
+
+    TTransformation(TransformList.Items[2]).Angle := RadToDeg(aQuaternion.A)  ; //
+    TTransformation(TransformList.Items[2]).X := aQuaternion.x;
+    TTransformation(TransformList.Items[2]).Y := 0;//aQuaternion.y;
+    TTransformation(TransformList.Items[2]).Z := 0;//aQuaternion.z;
+
+    TTransformation(TransformList.Items[3]).Angle := RadToDeg(aQuaternion.A)  ; //
+    TTransformation(TransformList.Items[3]).X := 0;//aQuaternion.x;
+    TTransformation(TransformList.Items[3]).Y := aQuaternion.y;
+    TTransformation(TransformList.Items[3]).Z := 0;//aQuaternion.z;
+
+    TTransformation(TransformList.Items[4]).Angle := RadToDeg(aQuaternion.A)  ; //
+    TTransformation(TransformList.Items[4]).X := 0;//aQuaternion.x;
+    TTransformation(TransformList.Items[4]).Y := 0;//aQuaternion.y;
+    TTransformation(TransformList.Items[4]).Z := aQuaternion.z;
            {for C := 0 to ChildrenCount -1 do begin
               aQuaternion := MakeQuaternion  ( CurrentAnimation.orientationKeys[ok].KeyValue.X,CurrentAnimation.orientationKeys[ok].KeyValue.Y,CurrentAnimation.orientationKeys[ok].KeyValue.Z,CurrentAnimation.orientationKeys[ok].angle  );
               TTransformation(Children[c].TransformList[1]).angle :=  RadToDeg(aQuaternion.A) ;
@@ -2008,6 +2022,8 @@ begin
 end;
 function T3DModel.LoadGeometry(const fmodel: TextFile;  MdlPath, TexturePath:string): string;
 var  aString, newmodel : string; Object3d,ParentObject3d,Child : T3DObject; TmpVector : TVector3D;i: Integer;
+    aQuaternion: Tquaternion;
+
 begin
   while LeftStr( aString ,12 ) <> 'endmodelgeom' do begin
     Readln ( fModel, aString);
@@ -2030,6 +2046,8 @@ begin
               Object3d.ObjectType :=  ExtractWordL (2,aString,' ');
               Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
               Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
+              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
+              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
 
 
             while Leftstr(  aString , 7) <> 'endnode' do begin
@@ -2048,6 +2066,7 @@ begin
                 ParentObject3d := FindObject( Object3d.ParentObjectName );
                 TmpVector := VectorAdd ( TmpVector , ParentObject3d.Position);
                 Object3d.position := TmpVector;
+
                 TTransformation(Object3d.TransformList.items[0]).Angle := 0;
                 TTransformation(Object3d.TransformList.items[0]).X := Object3d.position.X;
                 TTransformation(Object3d.TransformList.items[0]).Y := Object3d.position.Y;
@@ -2059,10 +2078,22 @@ begin
                 TmpVector := MakeVector3Dp ( aString );
                 TmpVector := VectorAdd ( TmpVector , ParentObject3d.orientation);
                 Object3d.orientation := TmpVector;
-                TTransformation(Object3d.TransformList.items[1]).Angle := RadToDeg(StrToFloat(ExtractWordL(4,aString,' ')));
-                TTransformation(Object3d.TransformList.items[1]).X := TTransformation(Object3d.TransformList.items[1]).Angle * Object3d.orientation.X;
-                TTransformation(Object3d.TransformList.items[1]).Y := TTransformation(Object3d.TransformList.items[1]).Angle * Object3d.orientation.Y;
-                TTransformation(Object3d.TransformList.items[1]).Z := TTransformation(Object3d.TransformList.items[1]).Angle * Object3d.orientation.Z;
+                aQuaternion := MakeQuaternion  ( Object3d.orientation.X,Object3d.orientation.Y,Object3d.orientation.Z,RadToDeg(StrToFloat(ExtractWordL(4,aString,' ')))  );
+
+                TTransformation(Object3d.TransformList.items[1]).Angle := aQuaternion.a;
+                TTransformation(Object3d.TransformList.items[1]).X :=  aQuaternion.x;
+                TTransformation(Object3d.TransformList.items[1]).Y :=  aQuaternion.y;
+                TTransformation(Object3d.TransformList.items[1]).Z :=  aQuaternion.z;
+
+                TTransformation(Object3d.TransformList.items[2]).Angle := aQuaternion.a;
+                TTransformation(Object3d.TransformList.items[2]).X :=  aQuaternion.x;
+                TTransformation(Object3d.TransformList.items[2]).Y :=  aQuaternion.y;
+                TTransformation(Object3d.TransformList.items[2]).Z :=  aQuaternion.z;
+
+                TTransformation(Object3d.TransformList.items[3]).Angle := aQuaternion.a;
+                TTransformation(Object3d.TransformList.items[3]).X := aQuaternion.x;
+                TTransformation(Object3d.TransformList.items[3]).Y := aQuaternion.y;
+                TTransformation(Object3d.TransformList.items[3]).Z := aQuaternion.z;
 
                 //                Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
               end
