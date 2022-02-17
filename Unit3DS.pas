@@ -1362,6 +1362,7 @@ begin
   //  pk := Trunc(Ms);
   //  ok:= Trunc(MS);
 
+  ms := ms / 4;
   CurrentAnimatedObject.CurrentTime := CurrentAnimatedObject.CurrentTime + ms;
 
   if CurrentAnimatedObject.PositionKeyCount = 0 then begin
@@ -1727,11 +1728,11 @@ begin
 end;
 procedure T3DModel.SwitchToAnimation ( const value:string);
 var
-  i,ao,pk,ok: Integer;Animation:TAnimation;
+  i,ao,pk,ok,c: Integer;Animation:TAnimation;
   root : TAnimatedObject;
   tmpVector : TVector3D;
   object3d,ParentObject3d : T3DObject;
-  AnimatedObject,ParentAnimatedObject3d: TAnimatedObject;
+  AnimatedObject,ParentAnimatedObject3d,aChild: TAnimatedObject;
 
 begin
   FActiveAnimationName := value;
@@ -1768,27 +1769,38 @@ begin
        if AnimatedObject.ObjectName <> 'rootdummy' then begin // if AnimatedObject <> Root
 
        for pk := 0 to AnimatedObject.PositionKeyCount -1 do begin    // sposto tutto insieme gltranslate
-        AnimatedObject.PositionKeys[pk].KeyTime := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyTime   ;
+        AnimatedObject.PositionKeys[pk].KeyTime := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyTime   ;  // setto keytime e x,y,z
         object3d := FindObject( AnimatedObject.ObjectName );
         tmpVector := object3d.Position;
         AnimatedObject.PositionKeys[pk].KeyValue.X := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyValue.X + tmpVector.X;
         AnimatedObject.PositionKeys[pk].KeyValue.Y := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyValue.Y + tmpVector.Y;
-        AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;
-        AnimatedObject.PositionKeys[pk].Angle := {ParentAnimatedObject3d}Root.PositionKeys[pk].Angle;
+        AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;   // per non farlo volare
+        AnimatedObject.PositionKeys[pk].Angle := 0;//{ParentAnimatedObject3d}Root.PositionKeys[pk].Angle;
        end;
      end;
 
        for ok := 0 to AnimatedObject.OrientationKeyCount -1 do begin
+         for c := 0 to AnimatedObject.Children.Count -1 do begin
+          aChild := AnimatedObject.Children[c];
+          aChild.OrientationKeys[ok].KeyValue.X := AnimatedObject.OrientationKeys[ok].KeyValue.X + aChild.OrientationKeys[ok].KeyValue.X ;
+          aChild.OrientationKeys[ok].KeyValue.Y := AnimatedObject.OrientationKeys[ok].KeyValue.Y + aChild.OrientationKeys[ok].KeyValue.Y ;
+          aChild.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + aChild.OrientationKeys[ok].KeyValue.Z ;
+          aChild.OrientationKeys[ok].Angle := AnimatedObject.OrientationKeys[ok].KeyValue.Z + aChild.OrientationKeys[ok].Angle ;
 
-         // if ParentAnimatedObject3d.OrientationKeyCount > 0 then begin   // se ho un parent gli sommo le orientation
-          //  AnimatedObject.OrientationKeys[ok].KeyTime := ParentAnimatedObject3d.OrientationKeys[ok].KeyTime   ;
-            object3d := FindObject( AnimatedObject.ObjectName );
-            tmpVector := object3d.Orientation;
+         end;
 
-        AnimatedObject.OrientationKeys[ok].KeyValue.X := root.OrientationKeys[ok].KeyValue.X + tmpVector.X;
-        AnimatedObject.OrientationKeys[ok].KeyValue.Y := root.OrientationKeys[ok].KeyValue.Y + tmpVector.Y;
-        AnimatedObject.OrientationKeys[ok].KeyValue.Z := root.OrientationKeys[ok].KeyValue.Z + tmpVector.Z;
-        //AnimatedObject.OrientationKeys[ok].Angle := root.OrientationKeys[ok].Angle;
+
+         // se ho un parent gli sommo le orientation
+{         if ParentAnimatedObject3d.OrientationKeyCount > ok then begin   // se esiste quel orientationKey (il parent può avere una animazione più corta)
+          object3d := FindObject( AnimatedObject.ObjectName );
+          tmpVector := object3d.Orientation;
+          AnimatedObject.OrientationKeys[ok].KeyValue.X := AnimatedObject.OrientationKeys[ok].KeyValue.X + ParentAnimatedObject3d.OrientationKeys[ok].KeyValue.X;// + tmpVector.X;
+          AnimatedObject.OrientationKeys[ok].KeyValue.Y := AnimatedObject.OrientationKeys[ok].KeyValue.Y + ParentAnimatedObject3d.OrientationKeys[ok].KeyValue.Y;// + tmpVector.Y;
+          AnimatedObject.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + ParentAnimatedObject3d.OrientationKeys[ok].KeyValue.Z;// + tmpVector.Z;
+          AnimatedObject.OrientationKeys[ok].Angle := ParentAnimatedObject3d.OrientationKeys[ok].Angle;
+         end;    }
+
+
        end;
 
      end;
@@ -1796,7 +1808,8 @@ begin
    end;
 
   // copio dalla Animation.AnimatedObjects le informazioni scritte sopra nella objects reale.
-  // in pratica Object3d.CurrentAnimatedObject sono le informazione che il render tratta
+  // in pratica Object3d.CurrentAnimatedObject sono le informazione che il render tratta.
+  // le modifiche all'animazione le faccio sopra, questo è solo il risultato finale
 
   for i := 0 to ObjectCount -1 do begin
     Object3d := Objects[i];
