@@ -1467,7 +1467,7 @@ normalo:
     // RotationAngle is in radians
    // TransformList.AddTransformEx( )   { TODO : transformlist dinamiche.clear allinizo }
     aQuaternion := MakeQuaternion  ( RRotation[0],RRotation[1],RRotation[2],RRotation[3]  );
-    TTransformation(TransformList.Items[1]).Angle := -RadToDeg(aQuaternion.A)  ; //
+    TTransformation(TransformList.Items[1]).Angle := RadToDeg(aQuaternion.A)  ; //
     TTransformation(TransformList.Items[1]).X := aQuaternion.x;
     TTransformation(TransformList.Items[1]).Y := aQuaternion.y;
     TTransformation(TransformList.Items[1]).Z := aQuaternion.z;     { TODO : WHY???? }
