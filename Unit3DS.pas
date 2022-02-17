@@ -6,7 +6,6 @@
 // *********************** Release 19/11/2003 ********************************
 // ***************************************************************************
 // + MDL Neverwinter Night Gabriele Canazza
-     { TODO : fare childern. quando c'è la rotazione ad esempio di 30 gradi tutti ichildern devono ruotare di 30 ecc...}
      { TODO : a_ba.mdl animations supermodel + a_ba non combat , spells ecc...}
      { TODO : a_ba.mdl viene caricato prima, dopo il model fa un override, ma i shoulder ci saranno}
      { TODO : Array Texture e fix texture head/left
@@ -1738,7 +1737,7 @@ begin
   FActiveAnimationName := value;
   for I := 0 to AnimationCount -1 do begin
     if Animations[i].FAnimationName = FActiveAnimationName then begin
-      FActiveAnimation := Animations[i];    { TODO : eliminare name , li prende dall'animazione oggetto }
+      FActiveAnimation := Animations[i];
       FActiveAnimationIndex := I;
       Break;
     end;
@@ -1767,7 +1766,7 @@ begin
 
      ParentAnimatedObject3d := AnimatedObject.ParentAnimatedObject;
     // if ParentAnimatedObject3d <> nil then begin
-       if AnimatedObject <> Root then begin
+     if AnimatedObject <> Root then begin
 
        for pk := 0 to AnimatedObject.PositionKeyCount -1 do begin    // sposto tutto insieme gltranslate
         AnimatedObject.PositionKeys[pk].KeyTime := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyTime   ;  // setto keytime e x,y,z
@@ -1775,6 +1774,7 @@ begin
         tmpVector := object3d.Position;
         AnimatedObject.PositionKeys[pk].KeyValue.X := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyValue.X + tmpVector.X;
         AnimatedObject.PositionKeys[pk].KeyValue.Y := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyValue.Y + tmpVector.Y;
+       // AnimatedObject.PositionKeys[pk].KeyValue.Z := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyValue.Z + tmpVector.Z;
         AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;   // per non farlo volare
         AnimatedObject.PositionKeys[pk].Angle := 0;//{ParentAnimatedObject3d}Root.PositionKeys[pk].Angle;
        end;
@@ -1792,20 +1792,27 @@ begin
 
 
          // se ho un parent gli sommo le orientation
-        { if ParentAnimatedObject3d.OrientationKeyCount > ok then begin   // se esiste quel orientationKey (il parent può avere una animazione più corta)
+         if ParentAnimatedObject3d.OrientationKeyCount > ok then begin   // se esiste quel orientationKey (il parent può avere una animazione più corta)
           object3d := FindObject( AnimatedObject.ObjectName );
           tmpVector := object3d.Orientation;
           AnimatedObject.OrientationKeys[ok].KeyValue.X := AnimatedObject.OrientationKeys[ok].KeyValue.X + ParentAnimatedObject3d.OrientationKeys[ok].KeyValue.X;// + tmpVector.X;
           AnimatedObject.OrientationKeys[ok].KeyValue.Y := AnimatedObject.OrientationKeys[ok].KeyValue.Y + ParentAnimatedObject3d.OrientationKeys[ok].KeyValue.Y;// + tmpVector.Y;
           AnimatedObject.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + ParentAnimatedObject3d.OrientationKeys[ok].KeyValue.Z;// + tmpVector.Z;
           AnimatedObject.OrientationKeys[ok].Angle := ParentAnimatedObject3d.OrientationKeys[ok].Angle;
-         end;  }
-          object3d := FindObject( AnimatedObject.ObjectName );
+         end;
+
+         { object3d := FindObject( AnimatedObject.ObjectName );
           tmpVector := object3d.Orientation;
           AnimatedObject.OrientationKeys[ok].KeyValue.X := AnimatedObject.OrientationKeys[ok].KeyValue.X + tmpVector.X;
           AnimatedObject.OrientationKeys[ok].KeyValue.Y := AnimatedObject.OrientationKeys[ok].KeyValue.Y + tmpVector.Y;
-          AnimatedObject.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + tmpVector.Z;
+          AnimatedObject.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + tmpVector.Z;   }
          // AnimatedObject.OrientationKeys[ok].Angle := ParentAnimatedObject3d.OrientationKeys[ok].Angle;
+       {   object3d := FindObject( AnimatedObject.ObjectName );
+          tmpVector := object3d.Orientation;
+          AnimatedObject.OrientationKeys[ok].KeyValue.X := AnimatedObject.OrientationKeys[ok].KeyValue.X + root.OrientationKeys[ok].KeyValue.x;
+          AnimatedObject.OrientationKeys[ok].KeyValue.Y := AnimatedObject.OrientationKeys[ok].KeyValue.Y + root.OrientationKeys[ok].KeyValue.y;
+          AnimatedObject.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + root.OrientationKeys[ok].KeyValue.z;
+          AnimatedObject.OrientationKeys[ok].Angle := AnimatedObject.OrientationKeys[ok].Angle + root.OrientationKeys[ok].Angle; }
 
 
        end;
@@ -2176,7 +2183,7 @@ begin
                 TTransformation(Object3d.TransformList.items[1]).Y :=  aQuaternion.y;
                 TTransformation(Object3d.TransformList.items[1]).Z :=  aQuaternion.z;
 
-                TTransformation(Object3d.TransformList.items[2]).Angle := aQuaternion.a;
+              {  TTransformation(Object3d.TransformList.items[2]).Angle := aQuaternion.a;
                 TTransformation(Object3d.TransformList.items[2]).X :=  aQuaternion.x;
                 TTransformation(Object3d.TransformList.items[2]).Y :=  aQuaternion.y;
                 TTransformation(Object3d.TransformList.items[2]).Z :=  aQuaternion.z;
@@ -2189,7 +2196,7 @@ begin
                 TTransformation(Object3d.TransformList.items[4]).Angle := aQuaternion.a;
                 TTransformation(Object3d.TransformList.items[4]).X := aQuaternion.x;
                 TTransformation(Object3d.TransformList.items[4]).Y := aQuaternion.y;
-                TTransformation(Object3d.TransformList.items[4]).Z := aQuaternion.z;
+                TTransformation(Object3d.TransformList.items[4]).Z := aQuaternion.z;    }
 
                 //                Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
               end
@@ -2199,9 +2206,24 @@ begin
                  if ExtractWordL (2,aString,' ') <> 'NULL' then begin
                   Object3d.Material.FMaterialFile :=  TexturePath + ExtractWordL (2,aString,' ') ;
                   Object3d.Material.FHasTexture:=LoadTexture(Object3d.Material.FMaterialFile, Object3d.Material.FGenTexture, False);
+              { TODO : qui material }  //  Object3d.Material.Ambient.SetRGBA(  );
+//                   Object3d.Material.Shininess;
                  end;
 
               end
+              else if  leftstr ( aString, 7) = 'ambient' then begin
+                Object3d.Material.Ambient.SetRGBA( StrToFloat( ExtractWordL (2,aString,' ')),StrToFloat( ExtractWordL (3,aString,' ')),StrToFloat( ExtractWordL (4,aString,' ')),0   );
+              end
+              else if  leftstr ( aString, 7) = 'diffuse' then begin
+                Object3d.Material.Diffuse.SetRGBA( StrToFloat( ExtractWordL (2,aString,' ')),StrToFloat( ExtractWordL (3,aString,' ')),StrToFloat( ExtractWordL (4,aString,' ')),0   );
+              end
+              else if  leftstr ( aString, 7) = 'specular' then begin
+                Object3d.Material.Specular.SetRGBA( StrToFloat( ExtractWordL (2,aString,' ')),StrToFloat( ExtractWordL (3,aString,' ')),StrToFloat( ExtractWordL (4,aString,' ')),0   );
+              end
+              else if  leftstr ( aString, 8) = 'shininess' then begin
+                Object3d.Material.Shininess := StrToFloat( ExtractWordL (2,aString,' '));
+              end
+
               else if  leftstr (  aString , 5) = 'verts' then begin
                 Object3d.VertexCount := StrToInt( ExtractWordL (2,aString,' '));
                 SetLength(Object3d.Verts,Object3d.VertexCount);
