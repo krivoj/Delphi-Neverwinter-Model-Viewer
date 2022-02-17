@@ -278,13 +278,12 @@ end;
     procedure SetRenderMode(const Value: TRenderMode);
     procedure DrawBox;
   public
-    Rot  : Single;
     Verts:array of TVector3D;
     Normals:array of TVector3D;
     TexVerts:array of TVector2D;
     Faces:array of TFace;
     Children : TObjectlist <T3DObject>;
-    CurrentAnimation : TAnimatedObject;
+    CurrentAnimatedObject : TAnimatedObject;
     AnimationIndex : Integer; // uso futuro  { TODO : fare questa versione eliminare switchanimation }
     //    Animation : Tlist of TObject3dAnimationInfo  -->  PositionKeys: array of TAnimatedFrame; OrientationKeys: array of TAnimatedFrame;
     constructor Create;
@@ -1115,7 +1114,7 @@ begin
   TexVerts:=nil;
   Faces:=nil;
   Children:=nil;
-  CurrentAnimation := TAnimatedObject.Create;
+  CurrentAnimatedObject := TAnimatedObject.Create;
   RenderMode:=rmTriangles;
   FMaterial:=TMaterial.Create;
   FTransformList:=TTransformList.Create;
@@ -1133,7 +1132,7 @@ begin
   glDeleteTextures(1, FMaterial.FGenTexture);
   FMaterial.Free;
   FTransformList.Free;
-  CurrentAnimation.Free;
+  CurrentAnimatedObject.Free;
   Children.Free;
   inherited;
 end;
@@ -1353,8 +1352,8 @@ begin
 //    AssignFile(flog, 'log.txt'); Append(flog);
  // if objectname ='Deer_neckend' then asm Int 3; end;
 
-      //    if (ObjectName = 'Deer_body') and (CurrentAnimation.OrientationKeyCount > 0 )   then asm int 3 ; end;
-//  CurrentAnimation := Animations[AnimationIndex] uso futuro
+      //    if (ObjectName = 'Deer_body') and (CurrentAnimatedObject.OrientationKeyCount > 0 )   then asm int 3 ; end;
+//  CurrentAnimatedObject := Animations[AnimationIndex] uso futuro
   FElapsedTime := FElapsedTime + ms;
   if FModel.AnimationCount <= 0 then Exit;
     //  if 'Deer_Rfrontlowleg' = FObjectName then asm int 3; end;
@@ -1363,20 +1362,20 @@ begin
   //  pk := Trunc(Ms);
   //  ok:= Trunc(MS);
 
-  CurrentAnimation.CurrentTime := CurrentAnimation.CurrentTime + ms;
+  CurrentAnimatedObject.CurrentTime := CurrentAnimatedObject.CurrentTime + ms;
 
-  if CurrentAnimation.PositionKeyCount = 0 then begin
+  if CurrentAnimatedObject.PositionKeyCount = 0 then begin
     goto rotation;
   end;
 	i := 0;
-	while( (i < CurrentAnimation.PositionKeyCount-1) and (CurrentAnimation.PositionKeys[i].KeyTime < CurrentAnimation.CurrentTime) ) do
+	while( (i < CurrentAnimatedObject.PositionKeyCount-1) and (CurrentAnimatedObject.PositionKeys[i].KeyTime < CurrentAnimatedObject.CurrentTime) ) do
 		i := i + 1;
 
-	if i > CurrentAnimation.PositionKeyCount then begin
+	if i > CurrentAnimatedObject.PositionKeyCount then begin
     goto rotation;
   end;
 
-  if CurrentAnimation.CurrentTime > CurrentAnimation.Animlength then begin
+  if CurrentAnimatedObject.CurrentTime > CurrentAnimatedObject.Animlength then begin
     goto rotation;
   end;
 
@@ -1384,23 +1383,23 @@ begin
 		// Interpolate between 2 key frames
 
 		// time between the 2 key frames
-		deltaTime := CurrentAnimation.PositionKeys[i].KeyTime - CurrentAnimation.PositionKeys[i-1].KeyTime;
+		deltaTime := CurrentAnimatedObject.PositionKeys[i].KeyTime - CurrentAnimatedObject.PositionKeys[i-1].KeyTime;
     if deltaTime <= 0 then Exit;
 
 		// relative position of interpolation point to the keyframes [0..1]
-		fraction := (CurrentAnimation.CurrentTime - CurrentAnimation.PositionKeys[i-1].KeyTime) / deltaTime;
+		fraction := (CurrentAnimatedObject.CurrentTime - CurrentAnimatedObject.PositionKeys[i-1].KeyTime) / deltaTime;
     if (fraction <=0) or (fraction >=1) then goto normalp;
 
-		PPosition[0] := CurrentAnimation.PositionKeys[i-1].KeyValue.X + fraction * (CurrentAnimation.PositionKeys[i].KeyValue.X - CurrentAnimation.PositionKeys[i-1].KeyValue.X);
-		PPosition[1] := CurrentAnimation.PositionKeys[i-1].KeyValue.Y + fraction * (CurrentAnimation.PositionKeys[i].KeyValue.Y - CurrentAnimation.PositionKeys[i-1].KeyValue.Y);
-		PPosition[2] := CurrentAnimation.PositionKeys[i-1].KeyValue.Z + fraction * (CurrentAnimation.PositionKeys[i].KeyValue.Z - CurrentAnimation.PositionKeys[i-1].KeyValue.Z);
+		PPosition[0] := CurrentAnimatedObject.PositionKeys[i-1].KeyValue.X + fraction * (CurrentAnimatedObject.PositionKeys[i].KeyValue.X - CurrentAnimatedObject.PositionKeys[i-1].KeyValue.X);
+		PPosition[1] := CurrentAnimatedObject.PositionKeys[i-1].KeyValue.Y + fraction * (CurrentAnimatedObject.PositionKeys[i].KeyValue.Y - CurrentAnimatedObject.PositionKeys[i-1].KeyValue.Y);
+		PPosition[2] := CurrentAnimatedObject.PositionKeys[i-1].KeyValue.Z + fraction * (CurrentAnimatedObject.PositionKeys[i].KeyValue.Z - CurrentAnimatedObject.PositionKeys[i-1].KeyValue.Z);
 
    end
    else begin
 normalp:
-    PPosition[0] :=  CurrentAnimation.PositionKeys[i].KeyValue.X;
-    PPosition[1] :=  CurrentAnimation.PositionKeys[i].KeyValue.Y;
-    PPosition[2] :=  CurrentAnimation.PositionKeys[i].KeyValue.Z;
+    PPosition[0] :=  CurrentAnimatedObject.PositionKeys[i].KeyValue.X;
+    PPosition[1] :=  CurrentAnimatedObject.PositionKeys[i].KeyValue.Y;
+    PPosition[2] :=  CurrentAnimatedObject.PositionKeys[i].KeyValue.Z;
   end;
     TTransformation(TransformList.Items[0]).Angle := 0  ; //
     TTransformation(TransformList.Items[0]).X := PPosition[0];
@@ -1419,22 +1418,22 @@ normalp:
        //   if ObjectName = 'Deer_body' then asm int 3 ; end;
 	// Find appropriate rotation key frame
 Rotation:
-  //CurrentAnimation.CurrentTime := CurrentAnimation.CurrentTime + ms;
-  if CurrentAnimation.OrientationKeyCount = 0 then begin
-    CurrentAnimation.CurrentTime := 0;
+  //CurrentAnimatedObject.CurrentTime := CurrentAnimatedObject.CurrentTime + ms;
+  if CurrentAnimatedObject.OrientationKeyCount = 0 then begin
+    CurrentAnimatedObject.CurrentTime := 0;
     Exit;
   end;
 	i := 0;
-	while( (i < CurrentAnimation.OrientationKeyCount-1) and (CurrentAnimation.orientationKeys[i].KeyTime < CurrentAnimation.CurrentTime) ) do
+	while( (i < CurrentAnimatedObject.OrientationKeyCount-1) and (CurrentAnimatedObject.orientationKeys[i].KeyTime < CurrentAnimatedObject.CurrentTime) ) do
 		i := i + 1;
 
-	if i > CurrentAnimation.OrientationKeyCount then begin
-    CurrentAnimation.CurrentTime := 0;
+	if i > CurrentAnimatedObject.OrientationKeyCount then begin
+    CurrentAnimatedObject.CurrentTime := 0;
     Exit;
   end;
 
-  if CurrentAnimation.CurrentTime > CurrentAnimation.Animlength then begin
-    CurrentAnimation.CurrentTime := 0;
+  if CurrentAnimatedObject.CurrentTime > CurrentAnimatedObject.Animlength then begin
+    CurrentAnimatedObject.CurrentTime := 0;
     Exit;
   end;
 
@@ -1442,25 +1441,25 @@ Rotation:
 		// Interpolate between 2 key frames
 
 		// time between the 2 key frames
-		deltaTime := CurrentAnimation.orientationKeys[i].KeyTime - CurrentAnimation.orientationKeys[i-1].KeyTime;
+		deltaTime := CurrentAnimatedObject.orientationKeys[i].KeyTime - CurrentAnimatedObject.orientationKeys[i-1].KeyTime;
     if deltaTime <= 0 then Exit;
 
 		// relative position of interpolation point to the keyframes [0..1]
-		fraction := (CurrentAnimation.CurrentTime - CurrentAnimation.orientationKeys[i-1].KeyTime) / deltaTime;
+		fraction := (CurrentAnimatedObject.CurrentTime - CurrentAnimatedObject.orientationKeys[i-1].KeyTime) / deltaTime;
     if (fraction <=0) or (fraction >=1) then goto normalo;
 
-		RRotation[0] := CurrentAnimation.orientationKeys[i-1].KeyValue.X + fraction * (CurrentAnimation.orientationKeys[i].KeyValue.X - CurrentAnimation.orientationKeys[i-1].KeyValue.X);
-		RRotation[1] := CurrentAnimation.orientationKeys[i-1].KeyValue.Y + fraction * (CurrentAnimation.orientationKeys[i].KeyValue.Y - CurrentAnimation.orientationKeys[i-1].KeyValue.Y);
-		RRotation[2] := CurrentAnimation.orientationKeys[i-1].KeyValue.Z + fraction * (CurrentAnimation.orientationKeys[i].KeyValue.Z - CurrentAnimation.orientationKeys[i-1].KeyValue.Z);
-		RRotation[3] := (CurrentAnimation.orientationKeys[i].angle);
+		RRotation[0] := CurrentAnimatedObject.orientationKeys[i-1].KeyValue.X + fraction * (CurrentAnimatedObject.orientationKeys[i].KeyValue.X - CurrentAnimatedObject.orientationKeys[i-1].KeyValue.X);
+		RRotation[1] := CurrentAnimatedObject.orientationKeys[i-1].KeyValue.Y + fraction * (CurrentAnimatedObject.orientationKeys[i].KeyValue.Y - CurrentAnimatedObject.orientationKeys[i-1].KeyValue.Y);
+		RRotation[2] := CurrentAnimatedObject.orientationKeys[i-1].KeyValue.Z + fraction * (CurrentAnimatedObject.orientationKeys[i].KeyValue.Z - CurrentAnimatedObject.orientationKeys[i-1].KeyValue.Z);
+		RRotation[3] := (CurrentAnimatedObject.orientationKeys[i].angle);
 
    end
    else begin
 normalo:
-    RRotation[0] :=  CurrentAnimation.orientationKeys[i].KeyValue.X;
-    RRotation[1] :=  CurrentAnimation.orientationKeys[i].KeyValue.Y;
-    RRotation[2] :=  CurrentAnimation.orientationKeys[i].KeyValue.Z;
-    RRotation[3] :=  CurrentAnimation.orientationKeys[i].angle;
+    RRotation[0] :=  CurrentAnimatedObject.orientationKeys[i].KeyValue.X;
+    RRotation[1] :=  CurrentAnimatedObject.orientationKeys[i].KeyValue.Y;
+    RRotation[2] :=  CurrentAnimatedObject.orientationKeys[i].KeyValue.Z;
+    RRotation[3] :=  CurrentAnimatedObject.orientationKeys[i].angle;
   end;
 
 
@@ -1731,7 +1730,9 @@ var
   i,ao,pk,ok: Integer;Animation:TAnimation;
   root : TAnimatedObject;
   tmpVector : TVector3D;
-  ob : T3DObject;
+  object3d,ParentObject3d : T3DObject;
+  AnimatedObject,ParentAnimatedObject3d: TAnimatedObject;
+
 begin
   FActiveAnimationName := value;
   for I := 0 to AnimationCount -1 do begin
@@ -1751,54 +1752,74 @@ begin
      end;
    end;
 
-
+   // sommo i valori del rootdummy a tutti i children creando forzatamente le positionKey
    For ao := 0 to Animation.AnimatedObjectCount -1 do begin
-     if  Animation.AnimatedObjects [ao].ObjectName <> 'rootdummy' then begin
-     SetLength( Animation.AnimatedObjects [ao].PositionKeys, Root.PositionKeyCount);
-     for pk := 0 to Animation.AnimatedObjects [ao].PositionKeyCount -1 do begin
-      Animation.AnimatedObjects[ao].PositionKeys[pk].KeyTime := root.PositionKeys[pk].KeyTime   ;
-      ob := FindObject( Animation.AnimatedObjects[ao].ObjectName );
-      tmpVector := ob.Position;
-//      Animation.AnimatedObjects[ao].PositionKeys[pk].KeyValue := Vectoradd (root.PositionKeys[pk].KeyValue, tmpVector )  ;
-      Animation.AnimatedObjects[ao].PositionKeys[pk].KeyValue.X := root.PositionKeys[pk].KeyValue.X + tmpVector.X;
-      Animation.AnimatedObjects[ao].PositionKeys[pk].KeyValue.Y := root.PositionKeys[pk].KeyValue.Y + tmpVector.Y;
-      Animation.AnimatedObjects[ao].PositionKeys[pk].KeyValue.Z := tmpVector.Z;
-      Animation.AnimatedObjects[ao].PositionKeys[pk].Angle := root.PositionKeys[pk].Angle;
-     end;
-     for pk := 0 to Animation.AnimatedObjects [ao].OrientationKeyCount -1 do begin
-      Animation.AnimatedObjects[ao].OrientationKeys[pk].KeyTime := root.OrientationKeys[pk].KeyTime   ;
-      ob := FindObject( Animation.AnimatedObjects[ao].ObjectName );
-      tmpVector := ob.Orientation;
-//      Animation.AnimatedObjects[ao].OrientationKeys[pk].KeyValue := Vectoradd (root.OrientationKeys[pk].KeyValue, tmpVector )  ;
-      Animation.AnimatedObjects[ao].OrientationKeys[pk].KeyValue.X := root.OrientationKeys[pk].KeyValue.X + tmpVector.X;
-      Animation.AnimatedObjects[ao].OrientationKeys[pk].KeyValue.Y := root.OrientationKeys[pk].KeyValue.Y + tmpVector.Y;
-      Animation.AnimatedObjects[ao].OrientationKeys[pk].KeyValue.Z := root.OrientationKeys[pk].KeyValue.Z + tmpVector.Z;
-      Animation.AnimatedObjects[ao].OrientationKeys[pk].Angle := root.OrientationKeys[pk].Angle;
-     end;
-
+     AnimatedObject:= Animation.AnimatedObjects [ao];
+     if AnimatedObject.ObjectName <> 'rootdummy' then begin
+       SetLength( Animation.AnimatedObjects [ao].PositionKeys, Root.PositionKeyCount); // forzo i positionCount
      end;
    end;
 
+   For ao := 0 to Animation.AnimatedObjectCount -1 do begin
+     AnimatedObject:= Animation.AnimatedObjects [ao];
+
+     ParentAnimatedObject3d := AnimatedObject.ParentAnimatedObject;
+     if ParentAnimatedObject3d <> nil then begin
+       if AnimatedObject.ObjectName <> 'rootdummy' then begin // if AnimatedObject <> Root
+
+       for pk := 0 to AnimatedObject.PositionKeyCount -1 do begin    // sposto tutto insieme gltranslate
+        AnimatedObject.PositionKeys[pk].KeyTime := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyTime   ;
+        object3d := FindObject( AnimatedObject.ObjectName );
+        tmpVector := object3d.Position;
+        AnimatedObject.PositionKeys[pk].KeyValue.X := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyValue.X + tmpVector.X;
+        AnimatedObject.PositionKeys[pk].KeyValue.Y := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyValue.Y + tmpVector.Y;
+        AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;
+        AnimatedObject.PositionKeys[pk].Angle := {ParentAnimatedObject3d}Root.PositionKeys[pk].Angle;
+       end;
+     end;
+
+       for ok := 0 to AnimatedObject.OrientationKeyCount -1 do begin
+
+         // if ParentAnimatedObject3d.OrientationKeyCount > 0 then begin   // se ho un parent gli sommo le orientation
+          //  AnimatedObject.OrientationKeys[ok].KeyTime := ParentAnimatedObject3d.OrientationKeys[ok].KeyTime   ;
+            object3d := FindObject( AnimatedObject.ObjectName );
+            tmpVector := object3d.Orientation;
+
+        AnimatedObject.OrientationKeys[ok].KeyValue.X := root.OrientationKeys[ok].KeyValue.X + tmpVector.X;
+        AnimatedObject.OrientationKeys[ok].KeyValue.Y := root.OrientationKeys[ok].KeyValue.Y + tmpVector.Y;
+        AnimatedObject.OrientationKeys[ok].KeyValue.Z := root.OrientationKeys[ok].KeyValue.Z + tmpVector.Z;
+        //AnimatedObject.OrientationKeys[ok].Angle := root.OrientationKeys[ok].Angle;
+       end;
+
+     end;
+
+   end;
+
+  // copio dalla Animation.AnimatedObjects le informazioni scritte sopra nella objects reale.
+  // in pratica Object3d.CurrentAnimatedObject sono le informazione che il render tratta
+
   for i := 0 to ObjectCount -1 do begin
-    Objects[i].CurrentAnimation.Clear;
+    Object3d := Objects[i];
+    Object3d.CurrentAnimatedObject.Clear;
 
     For ao := 0 to Animation.AnimatedObjectCount -1 do begin
-      if Animation.AnimatedObjects [ao].ObjectName = Objects[i].ObjectName then begin  // this Object
+     AnimatedObject:= Animation.AnimatedObjects [ao];
+      if AnimatedObject.ObjectName = Objects[i].ObjectName then begin  // this Object
   //        if Objects[i].ObjectName = 'Deer_body' then asm int 3 ; end;
-         Objects[i].CurrentAnimation.CurrentTime := 0;
-         Objects[i].CurrentAnimation.AnimLength := Animation.FLength;
+         Object3d.CurrentAnimatedObject.CurrentTime := 0;
+         Object3d.CurrentAnimatedObject.AnimLength := Animation.FLength;
 
-         SetLength( Objects[i].CurrentAnimation.PositionKeys, Animation.AnimatedObjects [ao].PositionKeyCount);
-         for pk := 0 to Animation.AnimatedObjects [ao].PositionKeyCount -1 do begin
-          Objects[i].CurrentAnimation.PositionKeys[pk].KeyTime := Animation.AnimatedObjects [ao].PositionKeys[pk].KeyTime;
-          Objects[i].CurrentAnimation.PositionKeys[pk].KeyValue := Animation.AnimatedObjects [ao].PositionKeys[pk].KeyValue;
-          Objects[i].CurrentAnimation.PositionKeys[pk].Angle := Animation.AnimatedObjects [ao].PositionKeys[pk].Angle;
+         SetLength( Object3d.CurrentAnimatedObject.PositionKeys, AnimatedObject.PositionKeyCount);
+         for pk := 0 to AnimatedObject.PositionKeyCount -1 do begin
+          Object3d.CurrentAnimatedObject.PositionKeys[pk].KeyTime := AnimatedObject.PositionKeys[pk].KeyTime;
+          Object3d.CurrentAnimatedObject.PositionKeys[pk].KeyValue := AnimatedObject.PositionKeys[pk].KeyValue;
+          Object3d.CurrentAnimatedObject.PositionKeys[pk].Angle := AnimatedObject.PositionKeys[pk].Angle;
          end;
-         SetLength( Objects[i].CurrentAnimation.orientationKeys, Animation.AnimatedObjects [ao].orientationKeyCount);
-         for ok := 0 to Animation.AnimatedObjects [ao].orientationKeyCount -1 do begin
-          Objects[i].CurrentAnimation.orientationKeys[ok].KeyTime := Animation.AnimatedObjects [ao].orientationKeys[ok].KeyTime;
-          Objects[i].CurrentAnimation.orientationKeys[ok].KeyValue := Animation.AnimatedObjects [ao].orientationKeys[ok].KeyValue;
-          Objects[i].CurrentAnimation.orientationKeys[ok].Angle := Animation.AnimatedObjects [ao].orientationKeys[ok].Angle;
+         SetLength( Object3d.CurrentAnimatedObject.orientationKeys, AnimatedObject.orientationKeyCount);
+         for ok := 0 to AnimatedObject.orientationKeyCount -1 do begin
+          Object3d.CurrentAnimatedObject.orientationKeys[ok].KeyTime := AnimatedObject.orientationKeys[ok].KeyTime;
+          Object3d.CurrentAnimatedObject.orientationKeys[ok].KeyValue := AnimatedObject.orientationKeys[ok].KeyValue;
+          Object3d.CurrentAnimatedObject.orientationKeys[ok].Angle := AnimatedObject.orientationKeys[ok].Angle;
          end;
 
 

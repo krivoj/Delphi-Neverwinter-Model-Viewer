@@ -240,7 +240,7 @@ begin
   Edit3.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).z  );
   Edit4.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).angle  );
 
-  Memo1.Lines.Add( IntToStr( SelectedObject.CurrentAnimation.PositionKeyCount));
+  Memo1.Lines.Add( IntToStr( SelectedObject.CurrentAnimatedObject.PositionKeyCount));
  { Edit1.Text := FloatToStr( SelectedObject.Position.x  );
   Edit2.Text := FloatToStr( SelectedObject.Position.y  );
   Edit3.Text := FloatToStr( SelectedObject.Position.z  );   }
