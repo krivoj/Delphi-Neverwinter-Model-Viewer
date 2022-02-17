@@ -1747,16 +1747,17 @@ begin
 
 
    For ao := 0 to Animation.AnimatedObjectCount -1 do begin
-     if Animation.AnimatedObjects [ao].ObjectName  = 'rootdummy' then begin
+     if Animation.AnimatedObjects [ao].ObjectName  = Animation.AnimationRoot then begin
       root := Animation.AnimatedObjects [ao];
+     // Root := root.Children[0]; // FIX
       Break;
      end;
    end;
-                                  { TODO : devo ricavare meglio root }
+
    // sommo i valori del rootdummy a tutti i children creando forzatamente le positionKey
    For ao := 0 to Animation.AnimatedObjectCount -1 do begin
      AnimatedObject:= Animation.AnimatedObjects [ao];
-     if AnimatedObject.ObjectName <> 'rootdummy' then begin
+     if AnimatedObject <> Root then begin
        SetLength( Animation.AnimatedObjects [ao].PositionKeys, Root.PositionKeyCount); // forzo i positionCount
      end;
    end;
@@ -1765,8 +1766,8 @@ begin
      AnimatedObject:= Animation.AnimatedObjects [ao];
 
      ParentAnimatedObject3d := AnimatedObject.ParentAnimatedObject;
-     if ParentAnimatedObject3d <> nil then begin
-       if AnimatedObject.ObjectName <> 'rootdummy' then begin // if AnimatedObject <> Root
+    // if ParentAnimatedObject3d <> nil then begin
+       if AnimatedObject <> Root then begin
 
        for pk := 0 to AnimatedObject.PositionKeyCount -1 do begin    // sposto tutto insieme gltranslate
         AnimatedObject.PositionKeys[pk].KeyTime := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyTime   ;  // setto keytime e x,y,z
@@ -1809,7 +1810,7 @@ begin
 
        end;
 
-     end;
+    // end;
 
    end;
 
@@ -2307,7 +2308,7 @@ begin
     Readln ( fModel, aString);  aString := TrimLeft(aString);
     if Leftstr(  aString , 6) ='length' then Anim.FLength := StrToFloat(ExtractWordL( 2,aString,' ' )) // Milliseconds
     else if Leftstr(  aString , 9) ='transtime' then Anim.FTranstime:= StrToFloat(ExtractWordL( 2,aString,' ' ))
-    else if Leftstr(  aString , 8) ='animroot' then Anim.AnimationRoot:='rootdummy'//;HACK ExtractWordL( 2,aString,' ' )
+    else if Leftstr(  aString , 8) ='animroot' then Anim.AnimationRoot:= ExtractWordL( 2,aString,' ' )
    // else if Leftstr(  aString , 8) ='event' then Anim.AnimationRoot:= ExtractWordL( 2,aString,' ' ) { TODO : event 0.5 hit }
 
     else if  (leftstr ( aString, 10) = 'node dummy' )or ( Leftstr(  aString , 12) = 'node trimesh')   or ( Leftstr(  aString , 15) = 'node danglymesh') then begin
@@ -2352,7 +2353,19 @@ begin
     end;
   end;
 
-
+  for I := 0 to Anim.AnimatedObjectCount -1 do begin   // individuo chi ha i positionKeys
+    if Anim.AnimatedObjects[i].PositionKeyCount > 0 then begin
+      Anim.AnimationRoot:= Anim.AnimatedObjects[i].ObjectName;
+      Break;
+    end;
+  end;
+  {  for C := 0 to Anim.AnimatedObjects[IndexAllpos].Children.Count -1 do begin
+      for P := 0 to Anim.AnimatedObjects[IndexAllpos].PositionKeyCount -1 do begin
+        newPK := Anim.AnimatedObjects[C].AddPositionKey;
+        newPK.KeyTime := Anim.AnimatedObjects[IndexAllpos].PositionKeys[P].KeyTime;
+        newPK.KeyValue := Anim.AnimatedObjects[IndexAllpos].PositionKeys[P].KeyValue;
+      end;
+    end; }
 {$IFDEF  DEBUG}
   if  Anim.FAnimationName = 'ca1slashl' then begin
   AssignFile(flog, 'log.txt'); rewrite(flog);
