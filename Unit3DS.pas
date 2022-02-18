@@ -16,7 +16,7 @@ unit Unit3DS;
 interface
 
 
-uses Windows, Classes, Graphics, Vectors,StrUtils, System.Generics.Collections, matrix;
+uses Windows, Classes, Graphics, Vectors,StrUtils, System.Generics.Collections;
 
 
 const
@@ -369,6 +369,7 @@ end;
       function LoadAnimations(const fmodel: TextFile;  MdlPath,  SuperModelPath, supermodel :string): Boolean;
         procedure ProcessNewAnim  ( const fmodel: TextFile; FirstString: string );
     function MakeVector3D (aString: string): TVector3D;
+    function MakeVector3Df ( x , y , z : single  ): TVector3D;
     function MakeVector3Dp (aString: string): TVector3D;
     function MakeFace (aString: string): TFace;
     function MakeVector2D (aString: string): TVector2D;
@@ -405,7 +406,7 @@ function AddToken    (const aToken, S: String;   Separator: Char;   StringLimit:
 
 implementation
 
-uses SysUtils, OpenGL, Textures, Math,unit1;
+uses SysUtils, OpenGL, Textures, Math{unit1};
 Const DosDelimSet  : set of AnsiChar = ['\', ':', #0];
 Const stMaxFileLen  = 260;
 
@@ -1245,8 +1246,7 @@ begin
   SetLength(TempNormals, FaceCount);
   SetLength(Normals, VertexCount);
 
-  for I:=0 to FaceCount-1 do
-   begin
+  for I:=0 to FaceCount-1 do begin
      vPoly[0]:=Verts[Faces[I].VertIndex[0]];
      vPoly[1]:=Verts[Faces[I].VertIndex[1]];
      vPoly[2]:=Verts[Faces[I].VertIndex[2]];
@@ -1316,10 +1316,9 @@ begin
   glBegin(FRMode);
   glEnable( GL_TEXTURE_2D );
   //glEnable( GL_TEXTURE_GEN_T );
-    z :=FObjectName;
-    for F:=0 to FaceCount-1 do
-     for iVertex:=0 to 2 do
-      begin
+
+    for F:=0 to FaceCount-1 do begin
+      for iVertex:=0 to 2 do  begin
         PointIndex:=Faces[F].VertIndex[iVertex];
         glNormal3f(Normals[PointIndex].X, Normals[PointIndex].Y, Normals[PointIndex].Z);
         if Material.HasTexture then
@@ -1328,20 +1327,42 @@ begin
            glColor(Material.Diffuse.Vector.Red, Material.Diffuse.Vector.Green, Material.Diffuse.Vector.Blue);
         glVertex3f(Verts[PointIndex].X, Verts[PointIndex].Y, Verts[PointIndex].Z);
       end;
+    end;
   glEnd;
   glPopName;
   FTransformList.Pop;
 
+
+
+
+{		glBegin(GL_POINTS);
+    for F:=0 to FaceCount-1 do begin
+      for iVertex:=0 to 2 do  begin
+        PointIndex:=Faces[F].VertIndex[iVertex];
+  glPointSize(5.0);
+	glColor4f(0.0, 1.0, 0.0, 1.0);
+  //glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+        glVertex3f(Verts[PointIndex].X, Verts[PointIndex].Y, Verts[PointIndex].Z);
+        glLineWidth(2.0);
+        glColor4f(1.0, 1.0, 1.0, 1.0);
+      end;
+    end;
+		glEnd();  }
+
+{		glBegin(GL_LINES);
+			glVertex3f(parent[3][0], parent[3][1], parent[3][2]);
+			glVertex3f(mine[3][0], mine[3][1], mine[3][2]);
+		glEnd();  }
 end;
 procedure T3DObject.Anim( ms: Single);
 var
   ao, pk,i,c,ok:Integer; TmpVector: TVector3D; flog: TextFile; DeltaTime, fraction: Single;
-  m_rel,	m_frame : clsMatrix;
+//  m_rel,	m_frame : clsMatrix;
     	pPosition : array [0..2] of single;
   	rRotation : array [0..3] of single;
     startRotation : array [0..2] of single;
-		m_relative : clsMatrix;				// fixed transformation matrix relative to parent
-		m_final : clsMatrix;				  // absolute in accordance to animation
+	//	m_relative : clsMatrix;				// fixed transformation matrix relative to parent
+	//	m_final : clsMatrix;				  // absolute in accordance to animation
 		startPosition : array [0..2] of single;
     tempm : array [0..15] of single;
     aRoot : T3DObject;
@@ -1401,11 +1422,16 @@ normalp:
     PPosition[1] :=  CurrentAnimatedObject.PositionKeys[i].KeyValue.Y;
     PPosition[2] :=  CurrentAnimatedObject.PositionKeys[i].KeyValue.Z;
   end;
+
     TTransformation(TransformList.Items[0]).Angle := 0  ; //
     TTransformation(TransformList.Items[0]).X := PPosition[0];
     TTransformation(TransformList.Items[0]).Y := PPosition[1];
     TTransformation(TransformList.Items[0]).Z := PPosition[2];
 
+//    Position := FModel.MakeVector3Df ( PPosition[0],PPosition[1],PPosition[2]);
+         //  for C := 0 to ChildrenCount -1 do begin
+         //     Children[c].Position := VectorAdd ( Children[c].ParentObject.Position, Children[c].Position );
+         //  end;
 
   { for C := 0 to ChildrenCount -1 do begin
       TTransformation(Children[c].TransformList[0]).X := PPosition[0];
@@ -1471,67 +1497,12 @@ normalo:
     TTransformation(TransformList.Items[1]).Y := aQuaternion.y;
     TTransformation(TransformList.Items[1]).Z := aQuaternion.z;     { TODO : WHY???? }
 
- {
-    TTransformation(TransformList.Items[2]).Angle := RadToDeg(aQuaternion.A)  ; //
-    TTransformation(TransformList.Items[2]).X := aQuaternion.x;
-    TTransformation(TransformList.Items[2]).Y := 0;//aQuaternion.y;
-    TTransformation(TransformList.Items[2]).Z := 0;//aQuaternion.z;
 
-    TTransformation(TransformList.Items[3]).Angle := RadToDeg(aQuaternion.A)  ; //
-    TTransformation(TransformList.Items[3]).X := 0;//aQuaternion.x;
-    TTransformation(TransformList.Items[3]).Y := aQuaternion.y;
-    TTransformation(TransformList.Items[3]).Z := 0;//aQuaternion.z;
-
-    TTransformation(TransformList.Items[4]).Angle := RadToDeg(aQuaternion.A)  ; //
-    TTransformation(TransformList.Items[4]).X := 0;//aQuaternion.x;
-    TTransformation(TransformList.Items[4]).Y := 0;//aQuaternion.y;
-    TTransformation(TransformList.Items[4]).Z := aQuaternion.z;   }
-        {   for C := 0 to ChildrenCount -1 do begin
-              aQuaternion := MakeQuaternion  ( RRotation[0],RRotation[1],RRotation[2],RRotation[3]  );
-              TTransformation(Children[c].TransformList[1]).angle :=  RadToDeg(aQuaternion.A) ;
-              TTransformation(Children[c].TransformList[1]).X := aQuaternion.z;
-              TTransformation(Children[c].TransformList[1]).Y := aQuaternion.y;
-              TTransformation(Children[c].TransformList[1]).Z := aQuaternion.x;
-            end;  }
-
+      //  AdjustNormals;
 
     if FElapsedTime > FModel.Animations[FModel.FActiveAnimationIndex].FLength then
       FElapsedTime :=0;
 
- // CloseFile (flog);
-{
-	// Now we know the position and rotation for this animation frame.
-	// Let's calculate the transformation matrix (m_final) for this bone...
-
-	m_rel := clsMatrix.create;
-	m_frame := clsMatrix.create;
-
-	// Create a transformation matrix from the position and rotation of this
-	// joint in the rest position
-	m_rel.setRotationRadians( startRotation );
-	m_rel.setTranslation( startPosition );
-
-	// Create a transformation matrix from the position and rotation
-	// m_frame: additional transformation for this frame of the animation
-	m_frame.setRotationRadians( rRotation );
-	m_frame.setTranslation( Position );
-
-	// Add the animation state to the rest position
-	m_rel.postMultiply( m_frame );
-
-	//
-	if ( ParentObject = nil ) then					// this is the root node
-  begin
-    m_rel.getMatrix(tempm);
-		m_final.setMatrixValues(tempm);	// m_final := m_rel
-  end
-	else									// not the root node
-	begin
-		// m_final := parent's m_final * m_rel (matrix concatenation)
-    m_final.getMatrix(tempm);
-		m_final.setMatrixValues(tempm);
-		m_final.postMultiply( m_rel );
-	end;         }
 end;
 procedure T3DObject.DrawBox;
 //var OldLineWidth:Single;
@@ -1764,49 +1735,48 @@ begin
    For ao := 0 to Animation.AnimatedObjectCount -1 do begin
      AnimatedObject:= Animation.AnimatedObjects [ao];
 
-     ParentAnimatedObject3d := AnimatedObject.ParentAnimatedObject;
-    // if ParentAnimatedObject3d <> nil then begin
+    // if ParentAnimatedObject3d <> nil then begin // prendo la position del parent
      if AnimatedObject <> Root then begin
-
-       for pk := 0 to AnimatedObject.PositionKeyCount -1 do begin    // sposto tutto insieme gltranslate
-        AnimatedObject.PositionKeys[pk].KeyTime := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyTime   ;  // setto keytime e x,y,z
-        object3d := FindObject( AnimatedObject.ObjectName );
-        tmpVector := object3d.Position;
-        AnimatedObject.PositionKeys[pk].KeyValue.X := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyValue.X + tmpVector.X;
-        AnimatedObject.PositionKeys[pk].KeyValue.Y := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyValue.Y + tmpVector.Y;
-       // AnimatedObject.PositionKeys[pk].KeyValue.Z := {ParentAnimatedObject3d}Root.PositionKeys[pk].KeyValue.Z + tmpVector.Z;
-        AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;   // per non farlo volare
-        AnimatedObject.PositionKeys[pk].Angle := 0;//{ParentAnimatedObject3d}Root.PositionKeys[pk].Angle;
+       ParentAnimatedObject3d := AnimatedObject.ParentAnimatedObject;
+       if ParentAnimatedObject3d <> nil then begin
+         for pk := 0 to AnimatedObject.PositionKeyCount -1 do begin    // sposto tutto insieme gltranslate
+          AnimatedObject.PositionKeys[pk].KeyTime := ParentAnimatedObject3d.PositionKeys[pk].KeyTime   ;  // setto keytime e x,y,z
+          object3d := FindObject( AnimatedObject.ObjectName );
+          tmpVector := object3d.Position;
+          AnimatedObject.PositionKeys[pk].KeyValue.X := ParentAnimatedObject3d.PositionKeys[pk].KeyValue.X - tmpVector.X;
+          AnimatedObject.PositionKeys[pk].KeyValue.Y := ParentAnimatedObject3d.PositionKeys[pk].KeyValue.Y - tmpVector.Y;
+          AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;   // per non farlo volare
+         end;
        end;
      end;
 
        for ok := 0 to AnimatedObject.OrientationKeyCount -1 do begin
-{         for c := 0 to AnimatedObject.Children.Count -1 do begin
+       {  for c := 0 to AnimatedObject.Children.Count -1 do begin
           aChild := AnimatedObject.Children[c];
           aChild.OrientationKeys[ok].KeyValue.X := AnimatedObject.OrientationKeys[ok].KeyValue.X + aChild.OrientationKeys[ok].KeyValue.X ;
           aChild.OrientationKeys[ok].KeyValue.Y := AnimatedObject.OrientationKeys[ok].KeyValue.Y + aChild.OrientationKeys[ok].KeyValue.Y ;
           aChild.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + aChild.OrientationKeys[ok].KeyValue.Z ;
           aChild.OrientationKeys[ok].Angle := AnimatedObject.OrientationKeys[ok].KeyValue.Z + aChild.OrientationKeys[ok].Angle ;
 
-         end;     }
+         end; }
 
 
          // se ho un parent gli sommo le orientation
-         if ParentAnimatedObject3d.OrientationKeyCount > ok then begin   // se esiste quel orientationKey (il parent può avere una animazione più corta)
+       {  if ParentAnimatedObject3d.OrientationKeyCount > ok then begin   // se esiste quel orientationKey (il parent può avere una animazione più corta)
           object3d := FindObject( AnimatedObject.ObjectName );
           tmpVector := object3d.Orientation;
           AnimatedObject.OrientationKeys[ok].KeyValue.X := AnimatedObject.OrientationKeys[ok].KeyValue.X + ParentAnimatedObject3d.OrientationKeys[ok].KeyValue.X;// + tmpVector.X;
           AnimatedObject.OrientationKeys[ok].KeyValue.Y := AnimatedObject.OrientationKeys[ok].KeyValue.Y + ParentAnimatedObject3d.OrientationKeys[ok].KeyValue.Y;// + tmpVector.Y;
           AnimatedObject.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + ParentAnimatedObject3d.OrientationKeys[ok].KeyValue.Z;// + tmpVector.Z;
           AnimatedObject.OrientationKeys[ok].Angle := ParentAnimatedObject3d.OrientationKeys[ok].Angle;
-         end;
+         end;  }
 
          { object3d := FindObject( AnimatedObject.ObjectName );
           tmpVector := object3d.Orientation;
           AnimatedObject.OrientationKeys[ok].KeyValue.X := AnimatedObject.OrientationKeys[ok].KeyValue.X + tmpVector.X;
           AnimatedObject.OrientationKeys[ok].KeyValue.Y := AnimatedObject.OrientationKeys[ok].KeyValue.Y + tmpVector.Y;
-          AnimatedObject.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + tmpVector.Z;   }
-         // AnimatedObject.OrientationKeys[ok].Angle := ParentAnimatedObject3d.OrientationKeys[ok].Angle;
+          AnimatedObject.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + tmpVector.Z;
+          AnimatedObject.OrientationKeys[ok].Angle := AnimatedObject.OrientationKeys[ok].Angle;}
        {   object3d := FindObject( AnimatedObject.ObjectName );
           tmpVector := object3d.Orientation;
           AnimatedObject.OrientationKeys[ok].KeyValue.X := AnimatedObject.OrientationKeys[ok].KeyValue.X + root.OrientationKeys[ok].KeyValue.x;
@@ -1816,10 +1786,9 @@ begin
 
 
        end;
+    end;
 
-    // end;
 
-   end;
 
   // copio dalla Animation.AnimatedObjects le informazioni scritte sopra nella objects reale.
   // in pratica Object3d.CurrentAnimatedObject sono le informazione che il render tratta.
@@ -2143,9 +2112,6 @@ begin
               Object3d.ObjectType :=  ExtractWordL (2,aString,' ');
               Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
               Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
-              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
-              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
-              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
 
 
             while Leftstr(  aString , 7) <> 'endnode' do begin
@@ -2426,6 +2392,15 @@ begin
 {$ENDIF}
 
 end;
+function T3DModel.MakeVector3Df ( x , y , z : single  ): TVector3D;
+begin
+
+  Result.x := x;
+  Result.y := y;
+  Result.z := z;
+
+end;
+
 function T3DModel.MakeVector3D (aString: string ): TVector3D;
 begin
 

@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 210
   Caption = 'Delphi Neverwinter Model Viewer'
   ClientHeight = 602
-  ClientWidth = 1091
+  ClientWidth = 1108
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,9 +23,16 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Top = 0
-    Width = 113
-    Height = 577
+    Width = 137
+    Height = 594
     TabOrder = 0
+    object Label1: TLabel
+      Left = 12
+      Top = 568
+      Width = 32
+      Height = 13
+      Caption = 'Label1'
+    end
     object ListBox1: TListBox
       Left = 0
       Top = 0
@@ -37,7 +44,7 @@ object Form1: TForm1
     end
     object Button6: TButton
       Left = 0
-      Top = 542
+      Top = 537
       Width = 58
       Height = 25
       Caption = 'Zoom In'
@@ -46,7 +53,7 @@ object Form1: TForm1
     end
     object Button7: TButton
       Left = 55
-      Top = 542
+      Top = 537
       Width = 58
       Height = 25
       Caption = 'Zoom Out'
@@ -121,7 +128,7 @@ object Form1: TForm1
       Text = '0'
     end
     object Button3: TButton
-      Left = 16
+      Left = 0
       Top = 381
       Width = 57
       Height = 18
@@ -130,20 +137,29 @@ object Form1: TForm1
       OnClick = Button3Click
     end
     object Button4: TButton
-      Left = 75
-      Top = 382
+      Left = 63
+      Top = 405
       Width = 34
       Height = 18
       Caption = 'pr'
       TabOrder = 12
       OnClick = Button4Click
     end
+    object Button5: TButton
+      Left = 55
+      Top = 381
+      Width = 57
+      Height = 18
+      Caption = 'Parent'
+      TabOrder = 13
+      OnClick = Button5Click
+    end
   end
   object Memo1: TMemo
-    Left = 696
-    Top = 279
+    Left = 744
+    Top = 518
     Width = 350
-    Height = 252
+    Height = 84
     Lines.Strings = (
       'Memo1')
     TabOrder = 1

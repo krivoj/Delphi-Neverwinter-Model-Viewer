@@ -53,6 +53,8 @@ type
     Memo1: TMemo;
     Button3: TButton;
     Button4: TButton;
+    Label1: TLabel;
+    Button5: TButton;
     procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -69,6 +71,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
     procedure Selection(const X, Y: GLdouble);
@@ -175,13 +178,17 @@ begin
   o := model.FindObject( ComboBox2.Items[ComboBox2.ItemIndex]);
   memo1.Clear;
   if o <> nil  then begin
-{      Memo1.Lines.Add( 'p:.X ' + FloatToStr (o.Position.X) );
+      Memo1.Lines.Add( 'p:.X ' + FloatToStr (o.Position.X) );
       Memo1.Lines.Add( 'p:.Y ' + FloatToStr (o.Position.Y) );
       Memo1.Lines.Add( 'p:.Z ' + FloatToStr (o.Position.Z) );
       Memo1.Lines.Add( 'o:.X ' + FloatToStr (o.Orientation.X ) );
       Memo1.Lines.Add( 'o:.Y ' + FloatToStr (o.Orientation.Y) );
-      Memo1.Lines.Add( 'o:.Z ' + FloatToStr (o.Orientation.Z) );    }
+      Memo1.Lines.Add( 'o:.Z ' + FloatToStr (o.Orientation.Z) );
+
       Anim := Model.FindAnimation(ComboBox1.Items[ComboBox1.ItemIndex]);
+      if Anim = nil then Exit;
+
+
       oa :=Anim.FindAnimatedObject(o.ObjectName) ;
       Memo1.Lines.Add( 'oa positionkeys ' + inttostr(oa.positionkeycount) );
       for I := 0 to oa.PositionKeyCount -1 do begin
@@ -199,6 +206,21 @@ begin
         Memo1.Lines.Add( 'o:ok.y ' + FloatToStr (oa.orientationKeys[i].KeyValue.y ) );
         Memo1.Lines.Add( 'o:ok.z ' + FloatToStr (oa.orientationKeys[i].KeyValue.z ) );
       end;
+  end;
+
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+var o : T3DObject;i:Integer;oa:TAnimatedObject; Anim : TAnimation;
+begin
+  o := model.FindObject( ComboBox2.Items[ComboBox2.ItemIndex]);
+  memo1.Clear;
+  if o <> nil  then begin
+      Anim := Model.FindAnimation(ComboBox1.Items[ComboBox1.ItemIndex]);
+      if Anim = nil then Exit;
+
+      oa :=Anim.FindAnimatedObject(o.ObjectName) ;
+      Memo1.Lines.Add( 'parent ' + oa.ParentAnimatedObjectName );
   end;
 
 end;
@@ -293,11 +315,15 @@ begin
 // an object pointer to the selected object. You can use this pointer for
 // changing color for example.
  // SelectedObject:= Model.Select(Selected(X, Y));
+  if SelectedObject <> nil then begin
+    Label1.Caption := SelectedObject.ObjectName;
+    Edit1.Text := FloatToStr( SelectedObject.Position.X );
+    Edit2.Text := FloatToStr( SelectedObject.Position.Y );
+    Edit3.Text := FloatToStr( SelectedObject.Position.Z );
+  end;
+
 // ********************************** END NEW **********************************
-//  Edit1.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).x  );
-//  Edit2.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).y  );
- // Edit3.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).z  );
- // Edit4.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).angle  );
+//  Edit4.Text := FloatToStr( TTransformation(SelectedObject.TransformList.Items[0]).angle  );
 
  // Caption:= SelectedObject.ObjectName;
 end;
