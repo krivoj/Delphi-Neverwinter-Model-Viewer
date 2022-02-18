@@ -1728,7 +1728,11 @@ begin
    For ao := 0 to Animation.AnimatedObjectCount -1 do begin
      AnimatedObject:= Animation.AnimatedObjects [ao];
      if AnimatedObject <> Root then begin
-       SetLength( Animation.AnimatedObjects [ao].PositionKeys, Root.PositionKeyCount); // forzo i positionCount
+       SetLength( AnimatedObject.PositionKeys, Root.PositionKeyCount); // forzo i positionCount
+       for pk := 0 to AnimatedObject.PositionKeyCount-1 do begin
+        // AnimatedObject.PositionKeys[pk] := Root.PositionKeys[pk];
+       end;
+
      end;
    end;
 
@@ -1743,9 +1747,23 @@ begin
           AnimatedObject.PositionKeys[pk].KeyTime := ParentAnimatedObject3d.PositionKeys[pk].KeyTime   ;  // setto keytime e x,y,z
           object3d := FindObject( AnimatedObject.ObjectName );
           tmpVector := object3d.Position;
-          AnimatedObject.PositionKeys[pk].KeyValue.X := ParentAnimatedObject3d.PositionKeys[pk].KeyValue.X - tmpVector.X;
-          AnimatedObject.PositionKeys[pk].KeyValue.Y := ParentAnimatedObject3d.PositionKeys[pk].KeyValue.Y - tmpVector.Y;
+
+          AnimatedObject.PositionKeys[pk].KeyValue.X := Root.PositionKeys[pk].KeyValue.X + tmpVector.X;
+          AnimatedObject.PositionKeys[pk].KeyValue.Y := Root.PositionKeys[pk].KeyValue.Y + tmpVector.Y;
           AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;   // per non farlo volare
+
+//          AnimatedObject.PositionKeys[pk].KeyValue.X := ParentAnimatedObject3d.PositionKeys[pk].KeyValue.X;// + tmpVector.X;
+//          AnimatedObject.PositionKeys[pk].KeyValue.Y := ParentAnimatedObject3d.PositionKeys[pk].KeyValue.Y;//+ tmpVector.Y;
+//          AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;   // per non farlo volare
+
+        //  AnimatedObject.PositionKeys[pk].KeyValue.X := AnimatedObject.PositionKeys[pk].KeyValue.X + tmpVector.X;
+        //  AnimatedObject.PositionKeys[pk].KeyValue.Y := AnimatedObject.PositionKeys[pk].KeyValue.Y + tmpVector.Y;
+        //  AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;   // per non farlo volare
+            if ParentObject3d <> nil then begin
+
+           // AnimatedObject.PositionKeys[pk].KeyValue.X := AnimatedObject.PositionKeys[pk].KeyValue.X + ParentObject3d.Position.X;
+           // AnimatedObject.PositionKeys[pk].KeyValue.Y := AnimatedObject.PositionKeys[pk].KeyValue.Y + ParentObject3d.Position.Y;
+            end;
          end;
        end;
      end;
@@ -1819,7 +1837,7 @@ begin
          end;
 
 
-         Break;
+        // Continue;
       end;
     end;
   end;
@@ -1853,7 +1871,7 @@ begin
      // ppp := FloatToStr(Objects [I].Position.X) + ' ' + FloatToStr(Objects [I].Position.Y) + ' ' +FloatToStr(Objects [I].Position.Z);
     //  ooo := FloatToStr(Objects [I].Orientation.X) + ' ' + FloatToStr(Objects [I].Orientation.Y) + ' ' +FloatToStr(Objects [I].Orientation.Z);
      // ms := 2;
-   // if objects[i].FObjectName = 'Deer_body' then
+    if objects[i].FObjectName ='Deer_Lfrontmidleg'  then //Deer_body
       Objects[I].Anim (ms) ;
     //  ppp := FloatToStr(Objects [I].Position.X) + ' ' + FloatToStr(Objects [I].Position.Y) + ' ' +FloatToStr(Objects [I].Position.Z);
     //  ooo := FloatToStr(Objects [I].Orientation.X) + ' ' + FloatToStr(Objects [I].Orientation.Y) + ' ' +FloatToStr(Objects [I].Orientation.Z);
