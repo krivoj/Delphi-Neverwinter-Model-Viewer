@@ -368,11 +368,6 @@ end;
       function LoadGeometry(const fmodel: TextFile;  MdlPath, TexturePath:string): string;
       function LoadAnimations(const fmodel: TextFile;  MdlPath,  SuperModelPath, supermodel :string): Boolean;
         procedure ProcessNewAnim  ( const fmodel: TextFile; FirstString: string );
-    function MakeVector3D (aString: string): TVector3D;
-    function MakeVector3Df ( x , y , z : single  ): TVector3D;
-    function MakeVector3Dp (aString: string): TVector3D;
-    function MakeFace (aString: string): TFace;
-    function MakeVector2D (aString: string): TVector2D;
     function FindObject(const aName:string):T3DObject;
     function FindAnimation(const aName:string):TAnimation;
     function Select(const Index:Integer):T3DObject;
@@ -400,6 +395,11 @@ function getToken( var sString: String; const sDelim: String ): String;
 function GetNextToken  (Const S: string;   Separator: char;   var StartPos: integer): String;
 procedure Split  (const S: String;   Separator: Char;   MyStringList: TStringList) ;
 function AddToken    (const aToken, S: String;   Separator: Char;   StringLimit: integer): String;
+function MakeVector3Df ( x , y , z : single  ): TVector3D;
+function MakeVector3D (aString: string ): TVector3D;
+function MakeVector3Dp (aString: string ): TVector3D;
+function MakeFace (aString: string): TFace;
+function MakeVector2D (aString: string): TVector2D;
 
 
 
@@ -409,6 +409,44 @@ implementation
 uses SysUtils, OpenGL, Textures, Math{unit1};
 Const DosDelimSet  : set of AnsiChar = ['\', ':', #0];
 Const stMaxFileLen  = 260;
+
+function MakeVector3Df ( x , y , z : single  ): TVector3D;
+begin
+
+  Result.x := x;
+  Result.y := y;
+  Result.z := z;
+
+end;
+
+function MakeVector3D (aString: string ): TVector3D;
+begin
+
+  Result.x := StrToFloat( ExtractWordL (1,aString,' '));
+  Result.y := StrToFloat( ExtractWordL (2,aString,' '));
+  Result.z := StrToFloat( ExtractWordL (3,aString,' '));
+
+end;
+function MakeVector3Dp (aString: string ): TVector3D;
+begin
+
+  Result.x := StrToFloat( ExtractWordL (2,aString,' '));
+  Result.y := StrToFloat( ExtractWordL (3,aString,' '));
+  Result.z := StrToFloat( ExtractWordL (4,aString,' '));
+
+end;
+function MakeFace (aString: string): TFace;
+begin
+  Result.VertIndex[0] :=StrToInt( ExtractWordL (1,aString,' '));
+  Result.VertIndex[1] :=StrToInt( ExtractWordL (2,aString,' '));
+  Result.VertIndex[2] :=StrToInt( ExtractWordL (3,aString,' '));
+end;
+function MakeVector2D (aString: string): TVector2D;
+begin
+  Result.x := StrToFloat( ExtractWordL (1,aString,' '));
+  Result.y := StrToFloat( ExtractWordL (2,aString,' '));
+
+end;
 
 // utils
 function IsOpen(const txt:TextFile):Boolean;
@@ -1318,6 +1356,7 @@ begin
   //glEnable( GL_TEXTURE_GEN_T );
 
     for F:=0 to FaceCount-1 do begin
+
       for iVertex:=0 to 2 do  begin
         PointIndex:=Faces[F].VertIndex[iVertex];
         glNormal3f(Normals[PointIndex].X, Normals[PointIndex].Y, Normals[PointIndex].Z);
@@ -1326,6 +1365,10 @@ begin
           else
            glColor(Material.Diffuse.Vector.Red, Material.Diffuse.Vector.Green, Material.Diffuse.Vector.Blue);
         glVertex3f(Verts[PointIndex].X, Verts[PointIndex].Y, Verts[PointIndex].Z);
+
+//        Position := makevector3df ( Verts[PointIndex].X , Verts[PointIndex].Y,Verts[PointIndex].Z);
+//        Position := makevector3df ( Normals[PointIndex].X, Normals[PointIndex].Y, Normals[PointIndex].Z);
+
       end;
     end;
   glEnd;
@@ -1367,6 +1410,7 @@ var
     tempm : array [0..15] of single;
     aRoot : T3DObject;
     aQuaternion: Tquaternion;
+    oldposition : TVector3d;
     label rotation, normalo, normalp;
 begin
 //    AssignFile(flog, 'log.txt'); Append(flog);
@@ -1384,7 +1428,7 @@ begin
 
   ms := ms / 4;
   CurrentAnimatedObject.CurrentTime := CurrentAnimatedObject.CurrentTime + ms;
-
+  oldPosition := Position;
   if CurrentAnimatedObject.PositionKeyCount = 0 then begin
     goto rotation;
   end;
@@ -1428,7 +1472,10 @@ normalp:
     TTransformation(TransformList.Items[0]).Y := PPosition[1];
     TTransformation(TransformList.Items[0]).Z := PPosition[2];
 
-//    Position := FModel.MakeVector3Df ( PPosition[0],PPosition[1],PPosition[2]);
+//        Position := makevector3df ( Verts[PointIndex].X , Verts[PointIndex].Y,Verts[PointIndex].Z);
+//        Position := makevector3df ( Normals[PointIndex].X, Normals[PointIndex].Y, Normals[PointIndex].Z);
+
+    //    Position := FModel.MakeVector3Df ( PPosition[0],PPosition[1],PPosition[2]);
          //  for C := 0 to ChildrenCount -1 do begin
          //     Children[c].Position := VectorAdd ( Children[c].ParentObject.Position, Children[c].Position );
          //  end;
@@ -1496,7 +1543,14 @@ normalo:
     TTransformation(TransformList.Items[1]).X := aQuaternion.x;
     TTransformation(TransformList.Items[1]).Y := aQuaternion.y;
     TTransformation(TransformList.Items[1]).Z := aQuaternion.z;     { TODO : WHY???? }
+     outputdebugstring (pchar(  FloatToStr(Position.X)  + FloatToStr(Position.Y) + FloatToStr(Position.Z)) );
 
+    aQuaternion := MakeQuaternion  ( RRotation[0],oldposition.x,oldposition.y,oldposition.z  );
+    TTransformation(TransformList.Items[2]).Angle := RadToDeg(aQuaternion.A)  ; //
+    TTransformation(TransformList.Items[2]).X := aQuaternion.x;;
+    TTransformation(TransformList.Items[2]).Y := aQuaternion.y;;
+    TTransformation(TransformList.Items[2]).Z := aQuaternion.z;;     { TODO : WHY???? }
+     outputdebugstring (pchar(  FloatToStr(Position.X)  + FloatToStr(Position.Y) + FloatToStr(Position.Z)) );
 
       //  AdjustNormals;
 
@@ -1871,8 +1925,11 @@ begin
      // ppp := FloatToStr(Objects [I].Position.X) + ' ' + FloatToStr(Objects [I].Position.Y) + ' ' +FloatToStr(Objects [I].Position.Z);
     //  ooo := FloatToStr(Objects [I].Orientation.X) + ' ' + FloatToStr(Objects [I].Orientation.Y) + ' ' +FloatToStr(Objects [I].Orientation.Z);
      // ms := 2;
-    if objects[i].FObjectName ='Deer_Lfrontmidleg'  then //Deer_body
+   // if objects[i].FObjectName ='Deer_Lfrontmidleg'  then //Deer_body
       Objects[I].Anim (ms) ;
+      //        Position := makevector3df ( Verts[PointIndex].X , Verts[PointIndex].Y,Verts[PointIndex].Z);
+//        Position := makevector3df ( Normals[PointIndex].X, Normals[PointIndex].Y, Normals[PointIndex].Z);
+
     //  ppp := FloatToStr(Objects [I].Position.X) + ' ' + FloatToStr(Objects [I].Position.Y) + ' ' +FloatToStr(Objects [I].Position.Z);
     //  ooo := FloatToStr(Objects [I].Orientation.X) + ' ' + FloatToStr(Objects [I].Orientation.Y) + ' ' +FloatToStr(Objects [I].Orientation.Z);
    end;
@@ -1950,9 +2007,9 @@ procedure TTransformation.Apply;
 begin
   if FEnabled then
    case FTransformType of
-     ttRotate    : glRotate(FAngle, FX, FY, FZ);
-     ttTranslate : glTranslate(FX, FY, FZ);
-     ttScale     : glScale(FX, FY, FZ);
+     ttRotate    : glRotatef(FAngle, FX, FY, FZ);
+     ttTranslate : glTranslatef(FX, FY, FZ);
+     ttScale     : glScalef(FX, FY, FZ);
    end;
 end;
 
@@ -2129,6 +2186,7 @@ begin
               Object3d.ObjectName := ExtractWordL (3,aString,' ');
               Object3d.ObjectType :=  ExtractWordL (2,aString,' ');
               Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
+              Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
               Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
 
 
@@ -2408,43 +2466,6 @@ begin
 
   end;
 {$ENDIF}
-
-end;
-function T3DModel.MakeVector3Df ( x , y , z : single  ): TVector3D;
-begin
-
-  Result.x := x;
-  Result.y := y;
-  Result.z := z;
-
-end;
-
-function T3DModel.MakeVector3D (aString: string ): TVector3D;
-begin
-
-  Result.x := StrToFloat( ExtractWordL (1,aString,' '));
-  Result.y := StrToFloat( ExtractWordL (2,aString,' '));
-  Result.z := StrToFloat( ExtractWordL (3,aString,' '));
-
-end;
-function T3DModel.MakeVector3Dp (aString: string ): TVector3D;
-begin
-
-  Result.x := StrToFloat( ExtractWordL (2,aString,' '));
-  Result.y := StrToFloat( ExtractWordL (3,aString,' '));
-  Result.z := StrToFloat( ExtractWordL (4,aString,' '));
-
-end;
-function T3DModel.MakeFace (aString: string): TFace;
-begin
-  Result.VertIndex[0] :=StrToInt( ExtractWordL (1,aString,' '));
-  Result.VertIndex[1] :=StrToInt( ExtractWordL (2,aString,' '));
-  Result.VertIndex[2] :=StrToInt( ExtractWordL (3,aString,' '));
-end;
-function T3DModel.MakeVector2D (aString: string): TVector2D;
-begin
-  Result.x := StrToFloat( ExtractWordL (1,aString,' '));
-  Result.y := StrToFloat( ExtractWordL (2,aString,' '));
 
 end;
 initialization
