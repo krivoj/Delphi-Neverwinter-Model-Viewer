@@ -102,13 +102,12 @@ object Form1: TForm1
       Text = '0'
     end
     object Button2: TButton
-      Left = 16
-      Top = 397
+      Left = 0
+      Top = 405
       Width = 57
       Height = 18
       Caption = 'to0'
       TabOrder = 8
-      Visible = False
       OnClick = Button2Click
     end
     object ComboBox2: TComboBox

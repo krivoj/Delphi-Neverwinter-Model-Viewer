@@ -152,11 +152,11 @@ begin
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
+var o : T3DObject;i:Integer;
 begin
-  TTransformation(SelectedObject.TransformList.Items[0]).Angle := StrToFloat(Edit4.text) *180/3.14;
-  TTransformation(SelectedObject.TransformList.Items[0]).X := StrToFloat(Edit1.text);
-  TTransformation(SelectedObject.TransformList.Items[0]).Y := StrToFloat(Edit2.text);
-  TTransformation(SelectedObject.TransformList.Items[0]).Z := StrToFloat(Edit3.text);
+  o := model.FindObject( 'Deer_body' );
+  o.fdebug := True;
+
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
