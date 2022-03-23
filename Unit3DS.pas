@@ -143,7 +143,8 @@ end;
 type
 
   T3DModel = class;
-
+  T3dObject = class;
+  TAnimatedObject = class;
 // TChunk only used for loading the 3ds file. This class is destroyed after
 // loading
   TChunk = class(TObject)
@@ -231,6 +232,7 @@ end;
     ObjectName : string;
     ParentAnimatedObjectName : string;
     ParentAnimatedObject : TAnimatedObject;
+    ParentAnimatedObject3d : T3DObject;
     PositionKeys: array of TAnimatedFrame;
     OrientationKeys: array of TAnimatedFrame;
     CurrentTime : single;
@@ -257,7 +259,7 @@ end;
     FObjectType:string;
     FParentObjectName:string;
     FParentObject:T3DObject;
-    FPosition,FOrientation : TVector3D;
+    FOldPosition,FPosition,FOrientation : TVector3D;
     FMaterial:TMaterial;
     FVertexCount, FTexVertexCount,
     FFaceCount, FNormalCount:Integer;
@@ -300,6 +302,7 @@ end;
     property ObjectType:string read FObjectType write FObjectType;
     property ParentObjectName:string read FParentObjectName write FParentObjectName;
     property ParentObject:T3DObject read FParentObject write FParentObject;
+    property OldPosition : TVector3D read fOldPosition write fOldPosition;
     property Position : TVector3D read fPosition write fPosition;
     property Orientation : TVector3D read FOrientation write FOrientation;
     property Material:TMaterial read FMaterial;
@@ -350,8 +353,9 @@ end;
     procedure CleanUp;
     procedure CleanUpMdl;
     procedure ComputeNormals;
-    procedure SwitchToAnimation ( const value:string);
+    procedure SwitchAnimation ( const value:string);
   public
+    Root : T3DObject;
     Name : string;
     Objects:array of T3DObject;
     Animations: array of TAnimation;
@@ -375,7 +379,7 @@ end;
     property ObjectCount:Integer read GetObjectCount;
     property MaterialCount:Integer read GetMaterialCount;
     property AnimationCount:Integer read GetAnimationCount;
-    property ActiveAnimationName: string read FActiveAnimationName write SwitchToAnimation;
+    property ActiveAnimationName: string read FActiveAnimationName write SwitchAnimation;
 
 end;
 function IsOpen(const txt:TextFile):Boolean;
@@ -1346,16 +1350,15 @@ begin
   //Anim (20);
 //  if ( FObjectName ='Deer_body') and (fdebug) then asm int 3 ; end;
 
-  if ( FObjectName ='Deer_body') and (fdebug) then begin
+ { if ( FObjectName ='Deer_body') and (fdebug) then begin
     AssignFile(flog, 'logDeer_body.txt');
     Append ( flog);
     writeln ( flog, 'X: ' + FloatToStr(TTransformation(FTransformList[2]).Fx) + ' Y: ' +  FloatToStr(TTransformation(FTransformList[2]).Fy) + ' Z: ' + FloatToStr(TTransformation(FTransformList[2]).Fz) + ' A: ' + FloatToStr(TTransformation(FTransformList[2]).Angle)   );
     CloseFile(flog);
-  end;
+  end; }
 
   FTransformList.Push;
-  if FSelected then
-   DrawBox;
+  //if FSelected then DrawBox;
   Material.SetMaterial;
   glPushName(FObjectIndex);
   glBegin(FRMode);
@@ -1417,7 +1420,6 @@ var
     tempm : array [0..15] of single;
     aRoot : T3DObject;
     aQuaternion: Tquaternion;
-    oldposition : TVector3d;
     label rotation, normalo, normalp;
 begin
 //    AssignFile(flog, 'log.txt'); Append(flog);
@@ -1445,6 +1447,7 @@ begin
   ms := ms / 4;
   CurrentAnimatedObject.CurrentTime := CurrentAnimatedObject.CurrentTime + ms;
   oldPosition := Position;
+
   if CurrentAnimatedObject.PositionKeyCount = 0 then begin
     goto rotation;
   end;
@@ -1478,20 +1481,27 @@ begin
    end
    else begin
 normalp:
-    PPosition[0] :=  CurrentAnimatedObject.PositionKeys[i].KeyValue.X;
-    PPosition[1] :=  CurrentAnimatedObject.PositionKeys[i].KeyValue.Y;
+    PPosition[0] :=  fmodel.root.Position.X + CurrentAnimatedObject.PositionKeys[i].KeyValue.X;
+    PPosition[1] :=  fmodel.root.Position.Y + CurrentAnimatedObject.PositionKeys[i].KeyValue.Y;
     PPosition[2] :=  CurrentAnimatedObject.PositionKeys[i].KeyValue.Z;
   end;
   Rotation:
 
-    if (PPosition[0] <> 0) or (PPosition[1] <> 0) or (PPosition[2] <> 0 ) then begin
+  if ParentObject <> nil then begin
+
+    PPosition[0] := PPosition[0] + ParentObject.Position.X;
+    PPosition[1] := PPosition[1] + ParentObject.Position.Y;
+    PPosition[2] := ParentObject.Position.Z;
+  end;
+
+  if (PPosition[0] <> 0) or (PPosition[1] <> 0) or (PPosition[2] <> 0 ) then begin
     TTransformation(TransformList.Items[0]).Angle := 0  ; //
     TTransformation(TransformList.Items[0]).X := PPosition[0];
     TTransformation(TransformList.Items[0]).Y := PPosition[1];
     TTransformation(TransformList.Items[0]).Z := PPosition[2];
-    end;
+  end;
 
-  Position := VectorAdd( OldPosition , MakeVector3Df ( PPosition[0],PPosition[1],PPosition[2]));
+//  Position := VectorAdd( OldPosition , MakeVector3Df ( PPosition[0],PPosition[1],PPosition[2]));
 //  if (Position.X <> oldposition.x)  or (Position.y <> oldposition.y) or (Position.z <> oldposition.z) then asm int 3 ; end;
 
 
@@ -1562,25 +1572,33 @@ normalo:
     // TransformList.AddTransformEx( )   { TODO : transformlist dinamiche.clear allinizo }
   //  if (ObjectName = 'Deer_body') and (fdebug) then asm int 3 ; end;
 
+    for I := 1 to 2 do begin
+    TTransformation(TransformList.Items[i]).Angle := 0;
+    TTransformation(TransformList.Items[i]).X := 0;
+    TTransformation(TransformList.Items[i]).Y := 0;
+    TTransformation(TransformList.Items[i]).Z := 0;
+
+    end;
 
     if (RRotation[0] <> 0) or (RRotation[1] <> 0) or (RRotation[2] <> 0 ) then begin
     aQuaternion := MakeQuaternion  ( RRotation[0],RRotation[1],RRotation[2],RRotation[3]  );
     TTransformation(TransformList.Items[2]).Angle := RadToDeg(aQuaternion.A)  ; //
     TTransformation(TransformList.Items[2]).X := aQuaternion.x;
     TTransformation(TransformList.Items[2]).Y := aQuaternion.y;
-    TTransformation(TransformList.Items[2]).Z := aQuaternion.z;     { TODO : WHY???? }
+    TTransformation(TransformList.Items[2]).Z := aQuaternion.z;
    // if Trunc(TTransformation(TransformList.Items[2]).Angle) = 57 then asm int 3; end;
 
      outputdebugstring (pchar(  FloatToStr(Position.X)  + FloatToStr(Position.Y) + FloatToStr(Position.Z)) );
     end;
 
+
     if (RRotation[0] <> 0) or (RRotation[1] <> 0) or (RRotation[2] <> 0 ) then begin
-    aQuaternion := MakeQuaternion  ( oldposition.x,oldposition.y,oldposition.z,RRotation[3]  );
+    aQuaternion := MakeQuaternion  ( CurrentAnimatedObject.ParentAnimatedObject3d.Position.x ,CurrentAnimatedObject.ParentAnimatedObject3d.Position.y,CurrentAnimatedObject.ParentAnimatedObject3d.Position.z,RRotation[3]  );
     TTransformation(TransformList.Items[1]).Angle := RadToDeg(aQuaternion.A)  ; //
     TTransformation(TransformList.Items[1]).X := aQuaternion.x;
     TTransformation(TransformList.Items[1]).Y := aQuaternion.y;
-    TTransformation(TransformList.Items[1]).Z := aQuaternion.z;     { TODO : WHY???? }
-     outputdebugstring (pchar(  FloatToStr(oldPosition.X)  + FloatToStr(oldPosition.Y) + FloatToStr(oldPosition.Z)) );
+    TTransformation(TransformList.Items[1]).Z := aQuaternion.z;
+     outputdebugstring (pchar(  FloatToStr(Position.X)  + FloatToStr(Position.Y) + FloatToStr(Position.Z)) );
     end;
       //  AdjustNormals;
 
@@ -1630,6 +1648,7 @@ begin
   glEnd;
 
   glEnable(GL_LIGHTING);
+
   //glLineWidth(OldLineWidth);
 end;
 
@@ -1780,10 +1799,10 @@ begin
   for I:=0 to ObjectCount-1 do
    Objects[I].AdjustNormals;
 end;
-procedure T3DModel.SwitchToAnimation ( const value:string);
+procedure T3DModel.SwitchAnimation ( const value:string);
 var
   i,ao,pk,ok,c: Integer;Animation:TAnimation;
-  root : TAnimatedObject;
+  Anroot : TAnimatedObject;
   tmpVector : TVector3D;
   object3d,ParentObject3d : T3DObject;
   AnimatedObject,ParentAnimatedObject3d,aChild: TAnimatedObject;
@@ -1802,7 +1821,9 @@ begin
 
    For ao := 0 to Animation.AnimatedObjectCount -1 do begin
      if Animation.AnimatedObjects [ao].ObjectName  = Animation.AnimationRoot then begin
-      root := Animation.AnimatedObjects [ao];
+      anroot := Animation.AnimatedObjects [ao];
+      Root := FindObject( anroot.ObjectName );
+
      // Root := root.Children[0]; // FIX
       Break;
      end;
@@ -1811,10 +1832,10 @@ begin
    // sommo i valori del rootdummy a tutti i children creando forzatamente le positionKey
    For ao := 0 to Animation.AnimatedObjectCount -1 do begin
      AnimatedObject:= Animation.AnimatedObjects [ao];
-     if AnimatedObject <> Root then begin
-       SetLength( AnimatedObject.PositionKeys, Root.PositionKeyCount); // forzo i positionCount
+     if AnimatedObject <> AnRoot then begin
+       SetLength( AnimatedObject.PositionKeys, AnRoot.PositionKeyCount); // forzo i positionCount
        for pk := 0 to AnimatedObject.PositionKeyCount-1 do begin
-         //AnimatedObject.PositionKeys[pk] := Root.PositionKeys[pk];
+        // AnimatedObject.PositionKeys[pk] := Root.PositionKeys[pk];
        end;
 
      end;
@@ -1824,7 +1845,7 @@ begin
      AnimatedObject:= Animation.AnimatedObjects [ao];
 
     // if ParentAnimatedObject3d <> nil then begin // prendo la position del parent
-     if AnimatedObject <> Root then begin
+     if AnimatedObject <> AnRoot then begin
        ParentAnimatedObject3d := AnimatedObject.ParentAnimatedObject;
        if ParentAnimatedObject3d <> nil then begin
          for pk := 0 to AnimatedObject.PositionKeyCount -1 do begin    // sposto tutto insieme gltranslate
@@ -1832,9 +1853,9 @@ begin
           object3d := FindObject( AnimatedObject.ObjectName );
           tmpVector := object3d.Position;
 
-          AnimatedObject.PositionKeys[pk].KeyValue.X := AnimatedObject.PositionKeys[pk].KeyValue.X+Root.PositionKeys[pk].KeyValue.X + tmpVector.X;
-          AnimatedObject.PositionKeys[pk].KeyValue.Y := AnimatedObject.PositionKeys[pk].KeyValue.Y+Root.PositionKeys[pk].KeyValue.Y + tmpVector.Y;
-          AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;   // per non farlo volare
+       //   AnimatedObject.PositionKeys[pk].KeyValue.X := AnimatedObject.PositionKeys[pk].KeyValue.X+Root.PositionKeys[pk].KeyValue.X + tmpVector.X;
+        //  AnimatedObject.PositionKeys[pk].KeyValue.Y := AnimatedObject.PositionKeys[pk].KeyValue.Y+Root.PositionKeys[pk].KeyValue.Y + tmpVector.Y;
+        //  AnimatedObject.PositionKeys[pk].KeyValue.Z := tmpVector.Z;   // per non farlo volare
 
 //          AnimatedObject.PositionKeys[pk].KeyValue.X := ParentAnimatedObject3d.PositionKeys[pk].KeyValue.X;// + tmpVector.X;
 //          AnimatedObject.PositionKeys[pk].KeyValue.Y := ParentAnimatedObject3d.PositionKeys[pk].KeyValue.Y;// + tmpVector.Y;
@@ -1879,7 +1900,7 @@ begin
           AnimatedObject.OrientationKeys[ok].KeyValue.Y := AnimatedObject.OrientationKeys[ok].KeyValue.Y + tmpVector.Y;
           AnimatedObject.OrientationKeys[ok].KeyValue.Z := AnimatedObject.OrientationKeys[ok].KeyValue.Z + tmpVector.Z;
           AnimatedObject.OrientationKeys[ok].Angle := AnimatedObject.OrientationKeys[ok].Angle;}
-       {   object3d := FindObject( AnimatedObject.ObjectName );
+        {  object3d := FindObject( AnimatedObject.ObjectName );
           tmpVector := object3d.Orientation;
           AnimatedObject.OrientationKeys[ok].KeyValue.X := AnimatedObject.OrientationKeys[ok].KeyValue.X + root.OrientationKeys[ok].KeyValue.x;
           AnimatedObject.OrientationKeys[ok].KeyValue.Y := AnimatedObject.OrientationKeys[ok].KeyValue.Y + root.OrientationKeys[ok].KeyValue.y;
@@ -1896,16 +1917,18 @@ begin
   // in pratica Object3d.CurrentAnimatedObject sono le informazione che il render tratta.
   // le modifiche all'animazione le faccio sopra, questo è solo il risultato finale
 
-  for i := 0 to ObjectCount -1 do begin
-    Object3d := Objects[i];
     Object3d.CurrentAnimatedObject.Clear;
 
     For ao := 0 to Animation.AnimatedObjectCount -1 do begin
-     AnimatedObject:= Animation.AnimatedObjects [ao];
-      if AnimatedObject.ObjectName = Objects[i].ObjectName then begin  // this Object
+      AnimatedObject:= Animation.AnimatedObjects [ao];
+      object3d := FindObject( AnimatedObject.ObjectName );
+
+      if object3d <> nil then begin
+
   //        if Objects[i].ObjectName = 'Deer_body' then asm int 3 ; end;
          Object3d.CurrentAnimatedObject.CurrentTime := 0;
          Object3d.CurrentAnimatedObject.AnimLength := Animation.FLength;
+         Object3d.CurrentAnimatedObject.ParentAnimatedObject3d:= FindObject( AnimatedObject.ObjectName );
 
          SetLength( Object3d.CurrentAnimatedObject.PositionKeys, AnimatedObject.PositionKeyCount);
          for pk := 0 to AnimatedObject.PositionKeyCount -1 do begin
@@ -1924,7 +1947,6 @@ begin
         // Continue;
       end;
     end;
-  end;
 end;
 
 procedure T3DModel.Draw;
@@ -2196,6 +2218,7 @@ end;
 function T3DModel.LoadGeometry(const fmodel: TextFile;  MdlPath, TexturePath:string): string;
 var  aString, newmodel : string; Object3d,ParentObject3d,Child : T3DObject; TmpVector : TVector3D;i: Integer;
     aQuaternion: Tquaternion;
+    label retry;
 
 begin
   while LeftStr( aString ,12 ) <> 'endmodelgeom' do begin
@@ -2209,13 +2232,16 @@ begin
     used to group objects or indicate special locations to the engine like target coordinates for spells and projectiles.}
     else if (Leftstr(  aString , 14) = 'beginmodelgeom') then begin
       while  Leftstr(  aString , 12) <> 'endmodelgeom' do begin
+RETRY:
         Readln ( fModel, aString);
         aString := TrimLeft(aString);
         if (Leftstr(  aString , 12) = 'node trimesh') or ( Leftstr(  aString , 10) = 'node dummy')   or ( Leftstr(  aString , 15) = 'node danglymesh') then begin
+
               Object3d :=  AddObject;
               Object3d.FModel:= Self;
-
               Object3d.ObjectName := ExtractWordL (3,aString,' ');
+             // if not ((Object3d.ObjectName = 'Deer_body') or (Object3d.ObjectName = 'rootdummy')) then goto retry;
+
               Object3d.ObjectType :=  ExtractWordL (2,aString,' ');
               Object3d.TransformList.AddTransformEx (  ttTranslate , 0, Object3d.position.X , Object3d.position.Y,Object3d.position.Z);
               Object3d.TransformList.AddTransformEx (  ttRotate , 0, Object3d.orientation.X , Object3d.orientation.Y,Object3d.orientation.Z);
@@ -2396,6 +2422,7 @@ var
   IndexAllpos: Integer;
   newPK: TAnimatedFrame;
   flog : TextFile;
+  label retry;
 begin
 
   Anim :=  AddAnimation;
@@ -2404,15 +2431,19 @@ begin
 
   while Leftstr(  aString , 8) <> 'doneanim' do begin
  //         if Anim.FAnimationName = 'ca1slashl' then asm int 3 ; end;
+retry:
     Readln ( fModel, aString);  aString := TrimLeft(aString);
     if Leftstr(  aString , 6) ='length' then Anim.FLength := StrToFloat(ExtractWordL( 2,aString,' ' )) // Milliseconds
     else if Leftstr(  aString , 9) ='transtime' then Anim.FTranstime:= StrToFloat(ExtractWordL( 2,aString,' ' ))
     else if Leftstr(  aString , 8) ='animroot' then Anim.AnimationRoot:= ExtractWordL( 2,aString,' ' )
+
    // else if Leftstr(  aString , 8) ='event' then Anim.AnimationRoot:= ExtractWordL( 2,aString,' ' ) { TODO : event 0.5 hit }
 
     else if  (leftstr ( aString, 10) = 'node dummy' )or ( Leftstr(  aString , 12) = 'node trimesh')   or ( Leftstr(  aString , 15) = 'node danglymesh') then begin
       AnimatedObject:=Anim.AddAnimatedObject;
       AnimatedObject.ObjectName :=  ExtractWordL( 3,aString,' ' ) ;
+//      if not ((AnimatedObject.ObjectName = 'Deer_body') or (AnimatedObject.ObjectName = 'rootdummy')) then goto retry;
+
      // if AnimatedObject.ObjectName ='a_ba' then
      //   AnimatedObject.ObjectName := objects[0].ObjectName;
        //   if AnimatedObject.ObjectName = 'Deer_body' then asm int 3 ; end;
@@ -2423,6 +2454,7 @@ begin
           if AnimatedObject.ParentAnimatedObjectName <> 'NULL' then begin
             AnimatedObject.ParentAnimatedObject := Anim.FindAnimatedObject(AnimatedObject.ParentAnimatedObjectName);
             AnimatedObject.ParentAnimatedObject.AddChildren ( AnimatedObject ) ;
+            AnimatedObject.ParentAnimatedObject3d := FindObject(AnimatedObject.ParentAnimatedObjectName);
           end;
 
         end

@@ -79,7 +79,7 @@ begin
     GL_LINEAR                - BiLinear filtering
     GL_LINEAR_MIPMAP_NEAREST - Basic mipmapped texture
     GL_LINEAR_MIPMAP_LINEAR  - BiLinear Mipmapped texture
-  }  
+  }
 
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); { only first two can be used }
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); { all of the above can be used }

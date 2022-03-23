@@ -314,7 +314,7 @@ begin
 // see in later samples, the Select method of T3DModel class also returns
 // an object pointer to the selected object. You can use this pointer for
 // changing color for example.
- // SelectedObject:= Model.Select(Selected(X, Y));
+  SelectedObject:= Model.Select(Selected(X, Y));
   if SelectedObject <> nil then begin
     Label1.Caption := SelectedObject.ObjectName;
     Edit1.Text := FloatToStr( SelectedObject.Position.X );
@@ -364,7 +364,7 @@ begin
   Inc(nFrames);
   ms := GetTickCount;
   ElapsedTime := (ms - lastTickCount) / 1000;
-  Model.Anim (ElapsedTime);  // anim the complete MDL file
+ // Model.Anim (ElapsedTime);  // anim the complete MDL file
   //Caption := floattostr(elapsedtime);
   Caption := Floattostr(cframe) ;
   LastTickCount := ms;
