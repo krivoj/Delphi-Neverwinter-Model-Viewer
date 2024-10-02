@@ -1468,7 +1468,7 @@ begin
     CurrentPosition.Z :=0;
 
     //versione ciclo e sommma
-{    for p := 0 to CurrentAnimatedObject.PositionKeyCount -1 do begin
+ {   for p := 0 to CurrentAnimatedObject.PositionKeyCount -1 do begin
       CurrentPosition.X := CurrentPosition.X + CurrentAnimatedObject.PositionKeys[p].KeyValue.X;
       CurrentPosition.Y := CurrentPosition.Y + CurrentAnimatedObject.PositionKeys[p].KeyValue.Y;
       CurrentPosition.Z := CurrentPosition.Z + CurrentAnimatedObject.PositionKeys[p].KeyValue.Z;
@@ -1486,13 +1486,13 @@ begin
           TTransformation(Children[c].TransformList.Items[0]).Z := CurrentPosition.Z;
 
         end;
-    end;        }
+    end;    }
 
 //vesrsione singolo frame
       CurrentPosition.X := CurrentPosition.X + CurrentAnimatedObject.PositionKeys[i].KeyValue.X;
       CurrentPosition.Y := CurrentPosition.Y + CurrentAnimatedObject.PositionKeys[i].KeyValue.Y;
       CurrentPosition.Z := CurrentPosition.Z + CurrentAnimatedObject.PositionKeys[i].KeyValue.Z;
-        for c := 0 to ChildrenCount -1 do begin
+      {  for c := 0 to ChildrenCount -1 do begin
           Children[c].CurrentAnimatedObject.PositionKeys[i].KeyValue.X :=
             Children[c].CurrentAnimatedObject.PositionKeys[i].KeyValue.X + CurrentPosition.X;
           Children[c].CurrentAnimatedObject.PositionKeys[i].KeyValue.y :=
@@ -1501,11 +1501,11 @@ begin
             Children[c].CurrentAnimatedObject.PositionKeys[i].KeyValue.Z + CurrentPosition.z;
 
           TTransformation(Children[c].TransformList.Items[0]).Angle := 0  ; //
-          TTransformation(Children[c].TransformList.Items[0]).X := CurrentPosition.X;
-          TTransformation(Children[c].TransformList.Items[0]).Y := CurrentPosition.Y;
-          TTransformation(Children[c].TransformList.Items[0]).Z := CurrentPosition.Z;
+          TTransformation(Children[c].TransformList.Items[0]).X := Children[c].CurrentAnimatedObject.PositionKeys[i].KeyValue.X;
+          TTransformation(Children[c].TransformList.Items[0]).Y := Children[c].CurrentAnimatedObject.PositionKeys[i].KeyValue.Y;
+          TTransformation(Children[c].TransformList.Items[0]).Z := Children[c].CurrentAnimatedObject.PositionKeys[i].KeyValue.Z;
 
-        end;
+        end;  }
 
     TTransformation(TransformList.Items[0]).Angle := 0  ; //
     TTransformation(TransformList.Items[0]).X := CurrentPosition.X;
@@ -1515,7 +1515,7 @@ begin
 
   end;
   Rotation:
-
+  exit;
   //if ParentObject <> nil then begin
 
   //  PPosition[0] := PPosition[0] + ParentObject.Position.X;
@@ -1935,21 +1935,7 @@ end;
 
 procedure T3DModel.Anim (ms: Single) ;
 var
-  ao, i,c,ok:Integer; TmpVector: TVector3D; flog: TextFile; DeltaTime, fraction: Single;
-//  m_rel,	m_frame : clsMatrix;
-    	pPosition : array [0..2] of single;
-  	rRotation : array [0..3] of single;
-    startRotation : array [0..2] of single;
-	//	m_relative : clsMatrix;				// fixed transformation matrix relative to parent
-	//	m_final : clsMatrix;				  // absolute in accordance to animation
-		startPosition : array [0..2] of single;
-    tempm : array [0..15] of single;
-    aRoot : T3DObject;
-    aQuaternion: Tquaternion;
-    frame,pp,o:Integer;
-    CurrentPosition: TVector3D;
-    CurrentOrientation: TVector4D;
-    label rotation, normalo;
+i: integer;
 begin
 
   for I := Low(Objects) to High(Objects) do  begin
