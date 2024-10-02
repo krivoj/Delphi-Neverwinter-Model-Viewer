@@ -147,7 +147,7 @@ procedure TForm1.Button1Click(Sender: TObject);
 begin
   cframe := cframe + 0.1;
   Model.Anim( cframe  );
-  if cframe > 10 then cframe:=0;
+  if cframe > 1 then cframe:=0;
 
 end;
 
@@ -281,7 +281,7 @@ procedure TForm1.FormCreate(Sender: TObject);
 var
   i: Integer;
 begin
-  cframe := -1;
+  cframe := 0;
   FormatSettings.DecimalSeparator :='.';
   MdlPath := ExtractFilePath(Application.ExeName) + 'mdl\';
   TexturePath := ExtractFilePath(Application.ExeName) + 'Textures\';
