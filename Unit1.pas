@@ -147,7 +147,7 @@ procedure TForm1.Button1Click(Sender: TObject);
 begin
   cframe := cframe + 0.1;
   Model.Anim( cframe  );
-  if cframe > 1 then cframe:=0;
+  if cframe > 10 then cframe:=0;
 
 end;
 
